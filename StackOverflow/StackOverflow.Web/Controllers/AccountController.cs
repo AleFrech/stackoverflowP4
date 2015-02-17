@@ -22,6 +22,8 @@ namespace StackOverflow.Web.Controllers
             {
                 AutoMapper.Mapper.CreateMap<Account, AccountRegisterModel>().ReverseMap();
                 Account newAccount = AutoMapper.Mapper.Map<AccountRegisterModel, Account>(model);
+                return RedirectToAction("Login");
+              
             }
             return View(model);
         }
@@ -30,6 +32,40 @@ namespace StackOverflow.Web.Controllers
         {
             return View(new AccountLoginModel());
         }
+
+        [HttpPost]
+        public ActionResult Login(AccountLoginModel model)
+        {
+
+            return RedirectToAction("Index","Question");
+        }
+
+        public ActionResult PasswordRecovery()
+        {
+            return View(new AccountPasswordRecoveryModel());
+        }
+
+        [HttpPost]
+        public ActionResult PasswordRecovery(AccountPasswordRecoveryModel model)
+        {
+            return RedirectToAction("PasswordCode");
+        }
+
+        public ActionResult PasswordCode()
+        {
+            return View(new AccountPasswordCodeModel());
+        }
+        [HttpPost]
+        public ActionResult PasswordCode(AccountPasswordCodeModel model)
+        {
+            return RedirectToAction("Login");
+        }
+
+
+
+
+        
+
 
 
     }

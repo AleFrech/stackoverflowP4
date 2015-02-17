@@ -8,6 +8,7 @@ namespace StackOverflow.Domain.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
         public Account()
         {
             Id = Guid.NewGuid();

@@ -58,7 +58,30 @@ namespace StackOverflow.Web.Controllers
         [HttpPost]
         public ActionResult PasswordCode(AccountPasswordCodeModel model)
         {
+            return RedirectToAction("NewPassword");
+        }
+
+        public ActionResult NewPassword()
+        {
+            return View(new AccountNewPasswordModel());
+        }
+        [HttpPost]
+        public ActionResult NewPassword(AccountNewPasswordModel model)
+        {
             return RedirectToAction("Login");
+        }
+        public ActionResult Profile()
+        {
+            ProfileModel modelTest = new ProfileModel();
+            modelTest.Name = "Pedro";
+            modelTest.Email = "Pedro@example.com";
+            modelTest.Reputacion = 100;
+            return View(modelTest);
+        }
+        [HttpPost]
+        public ActionResult Profile(ProfileModel model)
+        {
+            return View(model);
         }
 
 

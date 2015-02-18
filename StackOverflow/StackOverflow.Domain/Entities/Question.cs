@@ -15,6 +15,7 @@ namespace StackOverflow.Domain.Entities
         public string Title { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModififcationnDate { get; set; }
+        public List<Answer> AnswersToQuestions { get; set; }
 
     
 

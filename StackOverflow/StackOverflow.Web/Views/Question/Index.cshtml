@@ -1,4 +1,6 @@
-﻿@model IEnumerable<StackOverflow.Web.Models.QuestionListModel>
+﻿@using System.Web.Mvc.Html
+@using System.Web.UI.WebControls
+@model IEnumerable<StackOverflow.Web.Models.QuestionListModel>
 
 @{
     ViewBag.Title = "Index";
@@ -7,12 +9,13 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "NewQuestion")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Votes)
@@ -29,7 +32,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @*@Html.DisplayFor(modelItem => item.Title)*@
+            @Html.ActionLink(item.Title,"Detail",new { id =item.QuestionID})
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Votes)
@@ -38,12 +42,12 @@
             @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.OwnerName)
+            @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID },null)
+            @*@Html.DisplayFor(modelItem => item.OwnerName)*@
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new {  id=item.QuestionID  }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuestionID })
         </td>
     </tr>
 }

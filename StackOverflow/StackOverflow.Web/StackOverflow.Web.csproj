@@ -127,6 +127,9 @@
     <Compile Include="Models\AccountLoginModel.cs" />
     <Compile Include="Models\AccountPasswordRecoveryModel.cs" />
     <Compile Include="Models\AccountPasswordCodeModel.cs" />
+    <Compile Include="Models\AccountNewPasswordModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\NewQuestionModel.cs" />
     <Compile Include="Models\QuestionListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,6 +171,9 @@
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Account\PasswordRecovery.cshtml" />
     <Content Include="Views\Account\PasswordCode.cshtml" />
+    <Content Include="Views\Question\NewQuestion.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\NewPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

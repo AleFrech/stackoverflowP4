@@ -3,13 +3,17 @@
     <div>
         <hr/>
         <dl class="dl-horizontal">
-            <div>
-                <button type="submit" id="btnUpVote" name="Command" value="UpVote">Up Vote</button>
-            </div>
-            <div>
-                <button type="submit" id="btnDownVote" name="Command" value="DownVote">Down Vote</button>
-            </div>
-            <dt>
+     
+                @using (Html.BeginForm("QuestionDetail", "Question", FormMethod.Post, new {id = "submitForm"}))
+                {
+                    <div>
+                        <button type="submit" id="btnUpVote" name="Command" value="UpVote">Up Vote</button>
+                    </div>
+                    <div>
+                        <button type="submit" id="btnDownVote" name="Command" value="DownVote">Down Vote</button>
+                    </div>
+                }
+                <dt>
                 @Html.DisplayNameFor(model => model.Title)
             </dt>
 

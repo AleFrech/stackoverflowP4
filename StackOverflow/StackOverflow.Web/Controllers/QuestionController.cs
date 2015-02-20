@@ -43,12 +43,17 @@ namespace StackOverflow.Web.Controllers
             return View(new QuestionDetailModel());
         }
 
-        //[HttpPost]
-        //public ActionResult QuestionDetail(QuestionDetailModel model,string Command)
-        //{
-            
-        //    return View(model);
-        //}
+        [HttpPost]
+        public ActionResult QuestionDetail(QuestionDetailModel model, string Command)
+        {
+            if (Command == "UpVote")
+            {
+                model.Votes = model.Votes + 1;
+ 
+            }
+
+            return View(model);
+        }
        
     }
 }

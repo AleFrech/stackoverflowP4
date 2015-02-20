@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using AutoMapper;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
 
-namespace StackOverflow.Web.Controllers
-{
+namespace StackOverflow.Web.Controllers{
+
+
     public class AccountController : Controller
     {
+        private readonly IMappingEngine _mappingEngine;
+        public AccountController(IMappingEngine mappingEngine)
+        {
+            _mappingEngine = mappingEngine;
+        }
         public ActionResult Register()
         {
             return View(new AccountRegisterModel());
@@ -20,14 +28,12 @@ namespace StackOverflow.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                AutoMapper.Mapper.CreateMap<Account, AccountRegisterModel>().ReverseMap();
-                Account newAccount = AutoMapper.Mapper.Map<AccountRegisterModel, Account>(model);
+                var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
                 return RedirectToAction("Login");
-              
             }
-            return View(model);
-        }
+            return  View(model);
 
+        }
         public ActionResult Login()
         {
             return View(new AccountLoginModel());
@@ -36,8 +42,14 @@ namespace StackOverflow.Web.Controllers
         [HttpPost]
         public ActionResult Login(AccountLoginModel model)
         {
-
+            FormsAuthentication.SetAuthCookie(model.Email,false);
             return RedirectToAction("Index","Question");
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Question");
         }
 
         public ActionResult PasswordRecovery()
@@ -50,7 +62,6 @@ namespace StackOverflow.Web.Controllers
         {
             return RedirectToAction("PasswordCode");
         }
-
         public ActionResult PasswordCode()
         {
             return View(new AccountPasswordCodeModel());
@@ -58,9 +69,14 @@ namespace StackOverflow.Web.Controllers
         [HttpPost]
         public ActionResult PasswordCode(AccountPasswordCodeModel model)
         {
+            
+            if(model.Code=="1234")
             return RedirectToAction("NewPassword");
-        }
 
+            ViewBag.Me = "Error";
+            return View(new AccountPasswordCodeModel());
+            
+        }
         public ActionResult NewPassword()
         {
             return View(new AccountNewPasswordModel());
@@ -68,8 +84,11 @@ namespace StackOverflow.Web.Controllers
         [HttpPost]
         public ActionResult NewPassword(AccountNewPasswordModel model)
         {
+
             return RedirectToAction("Login");
         }
+
+
         public ActionResult Profile()
         {
             ProfileModel modelTest = new ProfileModel();
@@ -83,13 +102,6 @@ namespace StackOverflow.Web.Controllers
         {
             return View(model);
         }
-
-
-
-
-        
-
-
-
+     
     }
 }

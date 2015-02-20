@@ -1,0 +1,41 @@
+﻿@model StackOverflow.Web.Controllers.QuestionDetailModel
+
+    <div>
+        <hr/>
+        <dl class="dl-horizontal">
+            <div>
+                <button type="submit" id="btnUpVote" name="Command" value="UpVote">Up Vote</button>
+            </div>
+            <div>
+                <button type="submit" id="btnDownVote" name="Command" value="DownVote">Down Vote</button>
+            </div>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Decription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Decription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Votes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Votes)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */})
+    </p>
+

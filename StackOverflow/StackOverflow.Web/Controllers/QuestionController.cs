@@ -7,9 +7,11 @@ using StackOverflow.Web.Models;
 
 namespace StackOverflow.Web.Controllers
 {
+    [Authorize]
     public class QuestionController : Controller
     {
         // GET: Question
+        [AllowAnonymous]
         public ActionResult Index()
         {
             List<QuestionListModel>models =new List<QuestionListModel>();
@@ -35,6 +37,18 @@ namespace StackOverflow.Web.Controllers
         {
             return View( model);
         }
+
+        public ActionResult QuestionDetail()
+        {
+            return View(new QuestionDetailModel());
+        }
+
+        //[HttpPost]
+        //public ActionResult QuestionDetail(QuestionDetailModel model,string Command)
+        //{
+            
+        //    return View(model);
+        //}
        
     }
 }

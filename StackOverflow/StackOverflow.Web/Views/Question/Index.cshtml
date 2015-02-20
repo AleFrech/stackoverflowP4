@@ -32,8 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @*@Html.DisplayFor(modelItem => item.Title)*@
-            @Html.ActionLink(item.Title,"Detail",new { id =item.QuestionID})
+            @Html.ActionLink(item.Title,"QuestionDetail",new { id =item.QuestionID})
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Votes)
@@ -43,11 +42,16 @@
         </td>
         <td>
             @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID },null)
-            @*@Html.DisplayFor(modelItem => item.OwnerName)*@
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.QuestionID  }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.QuestionID })
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.QuestionID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.QuestionID })
+                </p>
+              
+            }
         </td>
     </tr>
 }

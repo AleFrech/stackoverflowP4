@@ -23,29 +23,29 @@ namespace StackOverflow.Web
             AutoMapperConfig.RegisterMaps();
         }
     }
-    public class ReadOnlyRepository : IReadOnlyRepository
-    {
-        public Account GetById(Guid Id)
-        {
-            return new Account();
-        }
-    }
+    //public class ReadOnlyRepository : IReadOnlyRepository
+    //{
+    //    public Account GetById(Guid Id)
+    //    {
+    //        return new Account();
+    //    }
+    //}
 
-    public class ReadAndWrite : IReadAndWriteRepository
-    {
-        public Account GetById(Guid Id)
-        {
-            return new Account();
-        }
-    }
+    //public class ReadAndWrite : IReadAndWriteRepository
+    //{
+    //    public Account GetById(Guid Id)
+    //    {
+    //        return new Account();
+    //    }
+    //}
 
-    public interface IReadOnlyRepository
-    {
-        Account GetById(Guid Id);
-    }
+    //public interface IReadOnlyRepository
+    //{
+    //    Account GetById(Guid Id);
+    //}
 
-    public interface IReadAndWriteRepository : IReadOnlyRepository
-    {
+    //public interface IReadAndWriteRepository : IReadOnlyRepository
+    //{
 
-    }
+    //}
 }

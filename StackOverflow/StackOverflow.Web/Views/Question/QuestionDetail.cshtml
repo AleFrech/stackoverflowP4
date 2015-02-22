@@ -1,18 +1,10 @@
-﻿@model StackOverflow.Web.Controllers.QuestionDetailModel
+﻿@using StackOverflow.Web.Controllers
+@model StackOverflow.Web.Controllers.QuestionDetailModel
 
     <div>
         <hr/>
         <dl class="dl-horizontal">
      
-                @using (Html.BeginForm("QuestionDetail", "Question", FormMethod.Post, new {id = "submitForm"}))
-                {
-                    <div>
-                        <button type="submit" id="btnUpVote" name="Command" value="UpVote">Up Vote</button>
-                    </div>
-                    <div>
-                        <button type="submit" id="btnDownVote" name="Command" value="DownVote">Down Vote</button>
-                    </div>
-                }
                 <dt>
                 @Html.DisplayNameFor(model => model.Title)
             </dt>
@@ -40,6 +32,7 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */})
+        @Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */}) | @Html.ActionLink("AnswerList", "AnswerIndex", "Answer")
+       
     </p>
 

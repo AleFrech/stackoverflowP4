@@ -1,5 +1,6 @@
 using AutoMapper;
 using StackOverflow.Domain.Entities;
+using StackOverflow.Web.Controllers;
 using StackOverflow.Web.Models;
 
 namespace StackOverflow.Web
@@ -10,6 +11,8 @@ namespace StackOverflow.Web
         {
             Mapper.CreateMap<AccountRegisterModel, Account>().ReverseMap();
             Mapper.CreateMap<AccountLoginModel, Account>().ReverseMap();
+            Mapper.CreateMap<NewQuestionModel, Question>().ReverseMap();
+            Mapper.CreateMap<QuestionDetailModel, Question>().ReverseMap();
         }
     }
 }

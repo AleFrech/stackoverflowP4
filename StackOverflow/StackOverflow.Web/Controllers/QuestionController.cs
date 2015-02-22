@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using AutoMapper;
+using StackOverflow.Data;
+using StackOverflow.Domain.Entities;
+using StackOverflow.Web.Controllers;
 using StackOverflow.Web.Models;
 
 namespace StackOverflow.Web.Controllers
@@ -10,20 +16,32 @@ namespace StackOverflow.Web.Controllers
     [Authorize]
     public class QuestionController : Controller
     {
+         private readonly IMappingEngine _mappingEngine;
+        public QuestionController(IMappingEngine mappingEngine)
+        {
+            _mappingEngine = mappingEngine;
+        }
         // GET: Question
         [AllowAnonymous]
         public ActionResult Index()
         {
             List<QuestionListModel>models =new List<QuestionListModel>();
-            QuestionListModel modelTest = new QuestionListModel();
-            modelTest.Title = "title test";
-            modelTest.OwnerName="Pedro";
-            modelTest.Votes = 1;
-            modelTest.CreationDate =DateTime.Now;
-            modelTest.OwnerID = Guid.NewGuid();
-            modelTest.QuestionID = Guid.NewGuid();
+            var context = new StackOverflowContext();
+            foreach (Question q in context.Questions)
+            {
 
-            models.Add(modelTest);
+                QuestionListModel question = new QuestionListModel();
+                question.Title = q.Title;
+                question.OwnerID = q.Owner.Id;
+                question.OwnerName = q.Owner.Name;
+                question.CreationDate = q.CreationDate;
+                question.Votes = q.Votes;
+                question.QuestionID = q.Id;
+                models.Add(question);
+             
+            }
+
+ 
             return View(models);
         }
 
@@ -35,21 +53,46 @@ namespace StackOverflow.Web.Controllers
         [HttpPost]
         public ActionResult NewQuestion(NewQuestionModel model)
         {
-            return View( model);
-        }
-
-        public ActionResult QuestionDetail()
-        {
-            return View(new QuestionDetailModel());
-        }
-
-        [HttpPost]
-        public ActionResult QuestionDetail(QuestionDetailModel model, string Command)
-        {
-            if (Command == "UpVote")
+            if (ModelState.IsValid)
             {
-                model.Votes = model.Votes + 1;
- 
+                var question = _mappingEngine.Map<NewQuestionModel,Question>(model);
+                var context = new StackOverflowContext();
+                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                if(cookie!=null)
+                {
+                     FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                     Guid ownerId = Guid.Parse(ticket.Name);
+                     question.CreationDate = DateTime.Now;
+                     question.ModififcationnDate = DateTime.Now;
+                     question.Votes = 0;
+                     question.Owner = context.Accounts.FirstOrDefault(x=>x.Id==ownerId);
+                     context.Questions.Add(question);        
+                      context.SaveChanges();
+                }
+              
+               return RedirectToAction("Index");            
+                
+            }
+            return View(model);
+
+       
+        }
+
+        //public ActionResult QuestionDetail()
+        //{
+        //    return View(new QuestionDetailModel());
+        //}
+
+        public ActionResult QuestionDetail(QuestionDetailModel model, Guid ID)
+        {
+            if (ModelState.IsValid)
+            {
+                var question = _mappingEngine.Map<QuestionDetailModel, Question>(model);
+                var context = new StackOverflowContext();
+                model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
+                model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
+                return View(model);
+
             }
 
             return View(model);

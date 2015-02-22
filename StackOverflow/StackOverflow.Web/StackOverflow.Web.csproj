@@ -51,6 +51,12 @@
     <Reference Include="AutoMapper.Net4">
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -126,8 +132,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Models\AccountPasswordInfoModel.cs" />
     <Compile Include="Models\QuestionDetailModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -135,7 +144,6 @@
     <Compile Include="Models\AccountRegisterModel.cs" />
     <Compile Include="Models\AccountLoginModel.cs" />
     <Compile Include="Models\AccountPasswordRecoveryModel.cs" />
-    <Compile Include="Models\AccountPasswordCodeModel.cs" />
     <Compile Include="Models\AccountNewPasswordModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\NewQuestionModel.cs" />
@@ -143,6 +151,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\StackOverflow.Data.StackOverflowContext.mdf" />
+    <Content Include="App_Data\StackOverflow.Data.StackOverflowContext_log.ldf">
+      <DependentUpon>StackOverflow.Data.StackOverflowContext.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -179,15 +191,15 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Account\PasswordRecovery.cshtml" />
-    <Content Include="Views\Account\PasswordCode.cshtml" />
     <Content Include="Views\Question\NewQuestion.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\NewPassword.cshtml" />
     <Content Include="Views\Question\QuestionDetail.cshtml" />
+    <Content Include="Views\Account\AccountPasswordInfo.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Answer\AnswerIndex.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -196,6 +208,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StackOverflow.Data\StackOverflow.Data.csproj">
+      <Project>{A64760C0-D492-4BBA-BB34-24F2041EA1D4}</Project>
+      <Name>StackOverflow.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Domain\StackOverflow.Domain.csproj">
       <Project>{60112DD0-3BBC-4185-9E46-BDE31A764D29}</Project>
       <Name>StackOverflow.Domain</Name>

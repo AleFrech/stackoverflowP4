@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
+using StackOverflow.Data;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
 
@@ -26,9 +27,13 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Register(AccountRegisterModel model )
         {
+
             if (ModelState.IsValid)
             {
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
+                var context = new StackOverflowContext();
+                context.Accounts.Add(account);
+                context.SaveChanges();
                 return RedirectToAction("Login");
             }
             return  View(model);
@@ -42,8 +47,14 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Login(AccountLoginModel model)
         {
-            FormsAuthentication.SetAuthCookie(model.Email,false);
-            return RedirectToAction("Index","Question");
+            var context = new StackOverflowContext();
+            var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+            if (account != null)
+            {
+                FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
+                return RedirectToAction("Index", "Question");
+            }
+            return View(model);
         }
 
         public ActionResult LogOut()
@@ -60,48 +71,77 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult PasswordRecovery(AccountPasswordRecoveryModel model)
         {
-            return RedirectToAction("PasswordCode");
+
+            var context = new StackOverflowContext();
+            var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email);
+            if (account != null)
+            {
+                return RedirectToAction("AccountPasswordInfo",account);
+            }
+            return View(model);
+           
         }
-        public ActionResult PasswordCode()
+
+        public ActionResult AccountPasswordInfo(AccountPasswordInfoModel model, Account account)
         {
-            return View(new AccountPasswordCodeModel());
+            if (account != null)
+            {
+                model.password = account.Password;
+                return View(model);
+            }
+            return View(new AccountPasswordInfoModel());
         }
-        [HttpPost]
-        public ActionResult PasswordCode(AccountPasswordCodeModel model)
-        {
+      
+   
+        //public ActionResult NewPassword()
+        //{
             
-            if(model.Code=="1234")
-            return RedirectToAction("NewPassword");
-
-            ViewBag.Me = "Error";
-            return View(new AccountPasswordCodeModel());
+        //    return View(new AccountNewPasswordModel());
+        //}
+        //[HttpPost]
+        //public ActionResult NewPassword(AccountNewPasswordModel model,Account account)
+        //{
+        //    var context = new StackOverflowContext();
+        //    Account newAccount = account;
+        //    newAccount.Password = model.Password;
+        //    if (account != null)
+        //    {
+        //        context.Entry(account).CurrentValues.SetValues(newAccount);
+        //        context.SaveChanges();
+        //        return RedirectToAction("Login");
+        //    }
+        //    return View(model);
             
-        }
-        public ActionResult NewPassword()
-        {
-            return View(new AccountNewPasswordModel());
-        }
-        [HttpPost]
-        public ActionResult NewPassword(AccountNewPasswordModel model)
-        {
-
-            return RedirectToAction("Login");
-        }
+        //}
 
 
-        public ActionResult Profile()
+        public ActionResult Profile(ProfileModel model,Guid ID)
         {
-            ProfileModel modelTest = new ProfileModel();
-            modelTest.Name = "Pedro";
-            modelTest.Email = "Pedro@example.com";
-            modelTest.Reputacion = 100;
-            return View(modelTest);
+            var context = new StackOverflowContext();
+         
+                model.Email = context.Accounts.FirstOrDefault(x => x.Id == ID).Email;
+                model.Name = context.Accounts.FirstOrDefault(x => x.Id == ID).Name;
+                model.Reputacion = 0;
+
+            return View(model); 
         }
-        [HttpPost]
-        public ActionResult Profile(ProfileModel model)
+
+        public ActionResult UserProfile(ProfileModel model)
         {
+            var context = new StackOverflowContext();
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid UserId = Guid.Parse(ticket.Name);
+                model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
+                model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
+            }
             return View(model);
         }
-     
+       
+
     }
+
+  
 }

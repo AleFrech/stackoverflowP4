@@ -10,12 +10,11 @@ namespace StackOverflow.Domain.Entities
     {
         public Guid Id { get; private set; }
         public int Votes { get; set; }
-        public string Owner { get; set; }
-        public string Date { get; set; }
+        public virtual Account Owner { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModififcationnDate { get; set; }
 
-        public string Answertxt{get; set; }
+        public string Description{get; set; }
 
         public Answer()
         {

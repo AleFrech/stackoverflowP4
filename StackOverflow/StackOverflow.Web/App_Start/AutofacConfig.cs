@@ -13,8 +13,6 @@ namespace StackOverflow.Web
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterFilterProvider();
             builder.RegisterSource(new ViewRegistrationSource());
-            builder.RegisterType<ReadOnlyRepository>().As<IReadOnlyRepository>();
-
             builder.Register(c => Mapper.Engine).As<IMappingEngine>();
 
             var container = builder.Build();

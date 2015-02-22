@@ -1,12 +1,7 @@
 ﻿@model StackOverflow.Web.Models.ProfileModel
 
-@{
-    ViewBag.Title = "Profile";
-}
-
-<h2>Profile</h2>
-
 <div>
+    <h4>ProfileModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -34,8 +29,8 @@
         </dd>
 
     </dl>
-  
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) @*| @Html.ActionLink("Change Password", "NewPassword", new { /* id = Model.PrimaryKey */ })*@
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

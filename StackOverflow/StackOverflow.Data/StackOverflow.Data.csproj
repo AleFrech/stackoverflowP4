@@ -46,13 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201502210125283_InitialCreate.cs" />
-    <Compile Include="Migrations\201502210125283_InitialCreate.Designer.cs">
-      <DependentUpon>201502210125283_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502210143236_addquestion.cs" />
-    <Compile Include="Migrations\201502210143236_addquestion.Designer.cs">
-      <DependentUpon>201502210143236_addquestion.cs</DependentUpon>
+    <Compile Include="Migrations\201502222032047_addInitial.cs" />
+    <Compile Include="Migrations\201502222032047_addInitial.Designer.cs">
+      <DependentUpon>201502222032047_addInitial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -69,11 +65,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502210125283_InitialCreate.resx">
-      <DependentUpon>201502210125283_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502210143236_addquestion.resx">
-      <DependentUpon>201502210143236_addquestion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502222032047_addInitial.resx">
+      <DependentUpon>201502222032047_addInitial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,6 +13,8 @@ namespace StackOverflow.Web
             Mapper.CreateMap<AccountLoginModel, Account>().ReverseMap();
             Mapper.CreateMap<NewQuestionModel, Question>().ReverseMap();
             Mapper.CreateMap<QuestionDetailModel, Question>().ReverseMap();
+            Mapper.CreateMap<AnswerCreateModel, Answer>();
+            Mapper.CreateMap<AnswerDetailModel, Answer>();
         }
     }
 }

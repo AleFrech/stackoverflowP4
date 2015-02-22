@@ -133,10 +133,12 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Models\AccountPasswordInfoModel.cs" />
+    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\QuestionDetailModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -151,10 +153,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\StackOverflow.Data.StackOverflowContext.mdf" />
-    <Content Include="App_Data\StackOverflow.Data.StackOverflowContext_log.ldf">
-      <DependentUpon>StackOverflow.Data.StackOverflowContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -197,9 +195,12 @@
     <Content Include="Views\Question\QuestionDetail.cshtml" />
     <Content Include="Views\Account\AccountPasswordInfo.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Answer\CreateAnswer.cshtml" />
     <Content Include="Views\Answer\AnswerIndex.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

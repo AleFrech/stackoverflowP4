@@ -4,8 +4,16 @@
 <div>
 
     <hr/>
-    @Html.ActionLink("UpVote","UpVote", "Answer",new{ID=Model.AnswerID}, null)
-   <div>@Html.ActionLink("DownVote", "DownVote", "Answer", new { ID = Model.AnswerID }, null)</div>
+    @using (Html.BeginForm("UpVote", "Answer", new { ID = Model.AnswerID }))
+    {
+        <button type="submit">Up Vote</button>
+    }
+    <div>
+        @using (Html.BeginForm("DownVote", "Answer", new { ID = Model.AnswerID }))
+        {
+            <button type="submit">Down Vote</button>
+        }
+    </div>
     <dl class="dl-horizontal">
        
         <dt>

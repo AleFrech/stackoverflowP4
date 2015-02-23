@@ -38,8 +38,10 @@ namespace StackOverflow.Web.Controllers
                 question.Votes = q.Votes;
                 question.QuestionID = q.Id;
                 models.Add(question);
-             
+
+
             }
+            context.SaveChanges();
 
  
             return View(models);
@@ -78,10 +80,6 @@ namespace StackOverflow.Web.Controllers
        
         }
 
-        //public ActionResult QuestionDetail()
-        //{
-        //    return View(new QuestionDetailModel());
-        //}
         [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {

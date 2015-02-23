@@ -14,17 +14,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
-
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Votes)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OwnerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
         </th>
         <th></th>
     </tr>
@@ -32,24 +31,24 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Title,"QuestionDetail",new { id =item.QuestionID})
+            @Html.DisplayFor(modelItem => item.Votes)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Votes)
+            @Html.ActionLink(item.Title, "QuestionDetail", new { id = item.QuestionID })
+        </td>
+        <td>
+            @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
-            @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID },null)
-        </td>
-        <td>
             @if (Context.User.Identity.IsAuthenticated)
             {
-                <p>
+                @*<p>
                     @Html.ActionLink("Edit", "Edit", new { id = item.QuestionID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.QuestionID })
-                </p>
+                </p>*@
               
             }
         </td>

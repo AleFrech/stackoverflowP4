@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
 using StackOverflow.Data;
+using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
 
@@ -31,6 +32,7 @@ namespace StackOverflow.Web.Controllers{
             if (ModelState.IsValid)
             {
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
+                account.Password = EncruptDecrypt.Encrypt(model.Password);
                 var context = new StackOverflowContext();
                 context.Accounts.Add(account);
                 context.SaveChanges();
@@ -48,13 +50,14 @@ namespace StackOverflow.Web.Controllers{
         public ActionResult Login(AccountLoginModel model)
         {
             var context = new StackOverflowContext();
-            var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+            string pass= EncruptDecrypt.Encrypt(model.Password);
+            var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
             if (account != null)
             {
                 FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
                 return RedirectToAction("Index", "Question");
             }
-            return View(model);
+            return View(new AccountLoginModel());
         }
 
         public ActionResult LogOut()
@@ -86,7 +89,7 @@ namespace StackOverflow.Web.Controllers{
         {
             if (account != null)
             {
-                model.password = account.Password;
+                model.password = EncruptDecrypt.Decrypt(account.Password);
                 return View(model);
             }
             return View(new AccountPasswordInfoModel());
@@ -125,7 +128,7 @@ namespace StackOverflow.Web.Controllers{
 
             return View(model); 
         }
-
+        [Authorize]
         public ActionResult UserProfile(ProfileModel model)
         {
             var context = new StackOverflowContext();

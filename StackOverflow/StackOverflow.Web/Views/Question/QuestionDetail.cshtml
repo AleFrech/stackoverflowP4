@@ -3,9 +3,15 @@
 
     <div>
         <hr/>
-        @Html.ActionLink("UpVote", "UpVote", "Question", new { ID = Model.QuestionId }, null)
+        @using (Html.BeginForm("UpVote", "Question", new { ID = Model.QuestionId }))
+        {
+            <button type="submit">Up Vote</button>
+        }
         <div>
-            @Html.ActionLink("DownVote", "DownVote", "Question", new {ID = Model.QuestionId}, null)
+            @using (Html.BeginForm("DownVote", "Question", new { ID = Model.QuestionId }))
+            {
+                <button type="submit">Down Vote</button>
+            }
         </div>
 
         <dl class="dl-horizontal">
@@ -37,7 +43,7 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */}) | @Html.ActionLink("AnswerList", "AnswerIndex", "Answer")
+        @*@Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */}) |*@ @Html.ActionLink("AnswerList", "AnswerIndex", "Answer")
        
     </p>
 

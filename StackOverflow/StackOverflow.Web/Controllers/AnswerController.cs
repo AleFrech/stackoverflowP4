@@ -28,7 +28,7 @@ namespace StackOverflow.Web.Controllers
             {
 
                 AnswerListModel answer = new AnswerListModel();
-                answer.AnswerCount = "Answer" + count++;
+                answer.AnswerCount = "Answer " + count++;
                 answer.OwnerID = a.Owner.Id;
                 answer.OwnerName = a.Owner.Name;
                 answer.CreationDate = a.CreationDate;

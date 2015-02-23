@@ -135,7 +135,6 @@
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Models\AccountPasswordInfoModel.cs" />
     <Compile Include="Models\AnswerDetailModel.cs" />

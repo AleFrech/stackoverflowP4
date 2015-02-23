@@ -8,7 +8,7 @@ namespace StackOverflow.Domain.Entities
 {
     public class Answer:IEntity
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
         public int Votes { get; set; }
         public virtual Account Owner { get; set; }
         public DateTime CreationDate { get; set; }

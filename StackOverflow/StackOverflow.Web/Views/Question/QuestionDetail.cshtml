@@ -3,6 +3,11 @@
 
     <div>
         <hr/>
+        @Html.ActionLink("UpVote", "UpVote", "Question", new { ID = Model.QuestionId }, null)
+        <div>
+            @Html.ActionLink("DownVote", "DownVote", "Question", new {ID = Model.QuestionId}, null)
+        </div>
+
         <dl class="dl-horizontal">
      
                 <dt>

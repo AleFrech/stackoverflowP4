@@ -82,20 +82,40 @@ namespace StackOverflow.Web.Controllers
         //{
         //    return View(new QuestionDetailModel());
         //}
-
-        public ActionResult QuestionDetail(QuestionDetailModel model, Guid ID)
+        [AllowAnonymous]
+        public ActionResult QuestionDetail( Guid ID)
         {
+            QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
+                
                 var question = _mappingEngine.Map<QuestionDetailModel, Question>(model);
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
+                model.QuestionId = ID;
+                model.Votes = context.Questions.FirstOrDefault(x => x.Id == ID).Votes;
                 return View(model);
 
             }
 
             return View(model);
+        }
+
+        public ActionResult UpVote(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            context.Questions.Find(ID).Votes++;
+            context.SaveChanges();
+            return RedirectToAction("QuestionDetail", new { ID = ID });
+        }
+
+        public ActionResult DownVote(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            context.Questions.Find(ID).Votes--;
+            context.SaveChanges();
+            return RedirectToAction("QuestionDetail", new { ID = ID });
         }
        
     }

@@ -34,13 +34,13 @@ namespace StackOverflow.Web.Controllers
                 answer.CreationDate = a.CreationDate;
                 answer.ModificationDate = a.ModififcationnDate;
                 answer.Votes = a.Votes;
-                answer.AnswerID=new Guid();
+                answer.AnswerID=a.Id;
                 models.Add(answer);
 
             }
             return View(models);
         }
-
+        [Authorize]
         public ActionResult CreateAnswer()
         {
             return View(new AnswerCreateModel());
@@ -75,7 +75,30 @@ namespace StackOverflow.Web.Controllers
 
         public ActionResult AnswerDetails(Guid ID)
         {
-            var context = new AnswerDetailModel();
+            var context = new StackOverflowContext();
+            var answer = context.Answers.Find(ID);
+            AnswerDetailModel model = _mappingEngine.Map<Answer, AnswerDetailModel>(answer);
+            model.AnswerID = ID;
+            return View(model);
+
+        }
+
+        [Authorize]
+        public ActionResult UpVote(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            context.Answers.Find(ID).Votes++;
+            context.SaveChanges();
+           return  RedirectToAction("AnswerDetails", new{ID=ID});
+        }
+
+        [Authorize]
+        public ActionResult DownVote(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            context.Answers.Find(ID).Votes--;
+            context.SaveChanges();
+            return RedirectToAction("AnswerDetails", new { ID = ID });
         }
     }
 }

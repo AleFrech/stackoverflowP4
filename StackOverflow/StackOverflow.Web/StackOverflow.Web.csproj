@@ -138,7 +138,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Models\AccountPasswordInfoModel.cs" />
-    <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\AnswerDetailModel.cs" />
     <Compile Include="Models\QuestionDetailModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -197,6 +197,7 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Answer\CreateAnswer.cshtml" />
     <Content Include="Views\Answer\AnswerIndex.cshtml" />
+    <Content Include="Views\Answer\AnswerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

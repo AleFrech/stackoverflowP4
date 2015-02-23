@@ -1,3 +1,5 @@
+using System;
+
 namespace StackOverflow.Web.Controllers
 {
     public class QuestionDetailModel
@@ -6,6 +8,8 @@ namespace StackOverflow.Web.Controllers
         public string Decription { get; set; }
 
         public int Votes { get; set; }
+
+        public Guid QuestionId { set; get; }
 
     }
 }

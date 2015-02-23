@@ -16,6 +16,8 @@ namespace StackOverflow.Domain.Entities
         public DateTime CreationDate { get; set; }
         public DateTime ModififcationnDate { get; set; }
 
+        public bool HavedMark { get; set; }
+
 
     
 

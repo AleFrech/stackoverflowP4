@@ -10,5 +10,6 @@ namespace StackOverflow.Web.Models
         public string Description { set; get; }
         public int Votes { set; get; }
         public Guid AnswerID { get; set; }
+        public Guid QuestionID { get; set; }
     }
 }

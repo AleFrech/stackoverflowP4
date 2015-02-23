@@ -19,23 +19,28 @@ namespace StackOverflow.Web.Controllers
             _mappingEngine = mappingEngine;
         }
         // GET: Answer
-        public ActionResult AnswerIndex(AnswerListModel model)
+        public ActionResult AnswerIndex(Guid qID)
         {
+            ViewData["id"] = qID.ToString();
             List<AnswerListModel>models=new List<AnswerListModel>();
             var context = new StackOverflowContext();
             int count = 1;
             foreach (Answer a in context.Answers)
             {
-
+                var question = context.Questions.Find(qID);
                 AnswerListModel answer = new AnswerListModel();
-                answer.AnswerCount = "Answer " + count++;
-                answer.OwnerID = a.Owner.Id;
-                answer.OwnerName = a.Owner.Name;
-                answer.CreationDate = a.CreationDate;
-                answer.ModificationDate = a.ModififcationnDate;
-                answer.Votes = a.Votes;
-                answer.AnswerID=a.Id;
-                models.Add(answer);
+                if (a.QuestionId == qID)
+                {
+                    answer.AnswerCount = "Answer " + count++;
+                    answer.OwnerID = a.Owner.Id;
+                    answer.OwnerName = a.Owner.Name;
+                    answer.CreationDate = a.CreationDate;
+                    answer.ModificationDate = a.ModififcationnDate;
+                    answer.Votes = a.Votes;
+                    answer.AnswerID = a.Id;
+                    answer.Marked = a.Marked;
+                    models.Add(answer); 
+                }
 
             }
             return View(models);
@@ -47,7 +52,7 @@ namespace StackOverflow.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateAnswer(AnswerCreateModel model)
+        public ActionResult CreateAnswer(AnswerCreateModel model, string qID)
         {
             if (ModelState.IsValid)
             {
@@ -62,23 +67,25 @@ namespace StackOverflow.Web.Controllers
                     answer.ModififcationnDate = DateTime.Now;
                     answer.Votes = 0;
                     answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
+                    answer.QuestionId = Guid.Parse(qID);
                     context.Answers.Add(answer);
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("AnswerIndex");
+                return RedirectToAction("AnswerIndex",new{qID=qID});
 
             }
             return View(model);
           
         }
 
-        public ActionResult AnswerDetails(Guid ID)
+        public ActionResult AnswerDetails(Guid ID,string qID)
         {
             var context = new StackOverflowContext();
             var answer = context.Answers.Find(ID);
             AnswerDetailModel model = _mappingEngine.Map<Answer, AnswerDetailModel>(answer);
             model.AnswerID = ID;
+            model.QuestionID = Guid.Parse(qID);
             return View(model);
 
         }
@@ -99,6 +106,21 @@ namespace StackOverflow.Web.Controllers
             context.Answers.Find(ID).Votes--;
             context.SaveChanges();
             return RedirectToAction("AnswerDetails", new { ID = ID });
+        }
+
+        [Authorize]
+        public ActionResult MarkAnswer(Guid ID,Guid qId)
+        {
+            var context = new StackOverflowContext();
+            var answers = context.Answers;
+            if (!context.Questions.Find(qId).HavedMark)
+            {
+                context.Answers.Find(ID).Marked = true;
+                context.Questions.Find(qId).HavedMark = true;
+                context.SaveChanges();
+            }
+            
+            return RedirectToAction("AnswerIndex",new{qID=qId});
         }
     }
 }

@@ -38,8 +38,6 @@ namespace StackOverflow.Web.Controllers
                 question.Votes = q.Votes;
                 question.QuestionID = q.Id;
                 models.Add(question);
-
-
             }
             context.SaveChanges();
 

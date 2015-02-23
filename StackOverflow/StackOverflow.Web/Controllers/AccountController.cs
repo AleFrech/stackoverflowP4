@@ -79,45 +79,32 @@ namespace StackOverflow.Web.Controllers{
             var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email);
             if (account != null)
             {
-                return RedirectToAction("AccountPasswordInfo",account);
+                Guid ID = context.Accounts.FirstOrDefault(x => x.Email == model.Email).Id;
+                return RedirectToAction("ChangePassword", new { ID = ID });
             }
             return View(model);
            
         }
 
-        public ActionResult AccountPasswordInfo(AccountPasswordInfoModel model, Account account)
+        public ActionResult ChangePassword()
         {
-            if (account != null)
-            {
-                model.password = EncruptDecrypt.Decrypt(account.Password);
-                return View(model);
-            }
-            return View(new AccountPasswordInfoModel());
+            return View(new AccountChangePasswordModel());
         }
-      
+
+        [HttpPost]
+        public ActionResult ChangePassword(AccountChangePasswordModel model,Guid ID)
+        {
+            if (ModelState.IsValid)
+            {
+                var context = new StackOverflowContext();
+                context.Accounts.Find(ID).Password = EncruptDecrypt.Encrypt(model.Password);
+                context.SaveChanges();
+                return RedirectToAction("Login");
+            }
+            return View(model);
+        }
+
    
-        //public ActionResult NewPassword()
-        //{
-            
-        //    return View(new AccountNewPasswordModel());
-        //}
-        //[HttpPost]
-        //public ActionResult NewPassword(AccountNewPasswordModel model,Account account)
-        //{
-        //    var context = new StackOverflowContext();
-        //    Account newAccount = account;
-        //    newAccount.Password = model.Password;
-        //    if (account != null)
-        //    {
-        //        context.Entry(account).CurrentValues.SetValues(newAccount);
-        //        context.SaveChanges();
-        //        return RedirectToAction("Login");
-        //    }
-        //    return View(model);
-            
-        //}
-
-
         public ActionResult Profile(ProfileModel model,Guid ID)
         {
             var context = new StackOverflowContext();
@@ -139,6 +126,7 @@ namespace StackOverflow.Web.Controllers{
                 Guid UserId = Guid.Parse(ticket.Name);
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
+                model.UserID = UserId;
             }
             return View(model);
         }

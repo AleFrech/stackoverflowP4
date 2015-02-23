@@ -6,7 +6,7 @@
 <h2>Answers</h2>
 
 <p>
-   @Html.ActionLink("Create New Answer", "CreateAnswer")
+   @Html.ActionLink("Create New Answer", "CreateAnswer",new{qID=ViewData["id"]})
 </p>
 <table class="table">
     <tr>
@@ -19,9 +19,9 @@
         <th>
             @Html.DisplayNameFor(model => model.OwnerName)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.ModificationDate)
-        </th>*@
+        <th>
+            Marked Answer
+        </th>
         @*th>
             @Html.DisplayNameFor(model => model.OwnerID)
         </th>
@@ -44,14 +44,22 @@
                 @Html.DisplayFor(modelItem => item.Votes)
             </td>
             <td>
-                @Html.ActionLink(item.AnswerCount, "AnswerDetails", "Answer", new { id = item.AnswerID }, null)
+                @Html.ActionLink(item.AnswerCount, "AnswerDetails", "Answer", new { id = item.AnswerID,qID=ViewData["id"] }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OwnerName)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ModificationDate)
-            </td>*@
+            <td>
+                @if (item.Marked)
+                {
+                    <p>Best Answer!!</p>
+                }
+                else
+                {
+                    <p>""</p>
+                }
+                @*@Html.DisplayFor(modelItem => item.Marked)*@
+            </td>
             @*<td>
             @Html.DisplayFor(modelItem => item.OwnerID)
         </td>

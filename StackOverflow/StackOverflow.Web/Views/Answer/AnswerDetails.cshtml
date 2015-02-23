@@ -9,9 +9,15 @@
         <button type="submit">Up Vote</button>
     }
     <div>
-        @using (Html.BeginForm("DownVote", "Answer", new { ID = Model.AnswerID }))
+        @using (Html.BeginForm("DownVote", "Answer", new {ID = Model.AnswerID}))
         {
             <button type="submit">Down Vote</button>
+        }
+    </div>
+    <div>
+        @using (Html.BeginForm("MarkAnswer", "Answer", new { ID = Model.AnswerID,qId=Model.QuestionID }))
+        {
+            <button type="submit">Mark Answer</button>
         }
     </div>
     <dl class="dl-horizontal">

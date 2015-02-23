@@ -13,6 +13,9 @@ namespace StackOverflow.Domain.Entities
         public virtual Account Owner { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModififcationnDate { get; set; }
+        public Guid  QuestionId { get; set; }
+
+        public bool Marked = false;
 
         public string Description{get; set; }
 

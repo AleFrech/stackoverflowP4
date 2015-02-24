@@ -96,7 +96,7 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             context.Answers.Find(ID).Votes++;
             context.SaveChanges();
-           return  RedirectToAction("AnswerDetails", new{ID=ID});
+           return  RedirectToAction("AnswerDetails", new{ID=ID,qID=context.Answers.Find(ID).QuestionId});
         }
 
         [Authorize]
@@ -105,21 +105,29 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             context.Answers.Find(ID).Votes--;
             context.SaveChanges();
-            return RedirectToAction("AnswerDetails", new { ID = ID });
+            return RedirectToAction("AnswerDetails", new { ID = ID, qID = context.Answers.Find(ID).QuestionId });
         }
 
         [Authorize]
         public ActionResult MarkAnswer(Guid ID,Guid qId)
         {
             var context = new StackOverflowContext();
-            var answers = context.Answers;
-            if (!context.Questions.Find(qId).HavedMark)
+            var questions = context.Questions.Find(qId);
+            var answer = context.Answers.Find(ID);
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
             {
-                context.Answers.Find(ID).Marked = true;
-                context.Questions.Find(qId).HavedMark = true;
-                context.SaveChanges();
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                if (!questions.HavedMark && questions.Owner.Id ==ownerId)
+                {
+                    answer.Marked = true;
+                    questions.HavedMark = true;
+
+                    context.SaveChanges();
+                }
             }
-            
+
             return RedirectToAction("AnswerIndex",new{qID=qId});
         }
     }

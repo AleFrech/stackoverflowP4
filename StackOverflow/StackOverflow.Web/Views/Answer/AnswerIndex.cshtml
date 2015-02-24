@@ -17,10 +17,10 @@
             Answer #   
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OwnerName)
+            Owner
         </th>
         <th>
-            Marked Answer
+            Best Answer
         </th>
         @*th>
             @Html.DisplayNameFor(model => model.OwnerID)
@@ -47,7 +47,7 @@
                 @Html.ActionLink(item.AnswerCount, "AnswerDetails", "Answer", new { id = item.AnswerID,qID=ViewData["id"] }, null)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OwnerName)
+                @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
             </td>
             <td>
                 @if (item.Marked)
@@ -56,7 +56,7 @@
                 }
                 else
                 {
-                    <p>""</p>
+                    <p> </p>
                 }
                 @*@Html.DisplayFor(modelItem => item.Marked)*@
             </td>
@@ -82,5 +82,5 @@
 
 </table>
 <p>
-    @Html.ActionLink("Back to Home", "Index", "Question")
+    @Html.ActionLink("Back to Question", "QuestionDetail", "Question",new{ID=ViewData["id"]},null)
 </p>

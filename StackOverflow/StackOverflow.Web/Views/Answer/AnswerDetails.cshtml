@@ -41,5 +41,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to List", "AnswerIndex","Answer")
+    @Html.ActionLink("Back to Answers", "AnswerIndex","Answer",new{ID=Model.AnswerID,qID=Model.QuestionID},null)
 </p>

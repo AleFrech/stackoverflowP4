@@ -18,7 +18,6 @@ namespace StackOverflow.Domain.Entities
 
         public bool HavedMark { get; set; }
 
-
     
 
         public Question()

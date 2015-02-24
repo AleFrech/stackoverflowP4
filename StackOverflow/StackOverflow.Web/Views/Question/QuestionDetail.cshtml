@@ -43,7 +43,7 @@
         </dl>
     </div>
     <p>
-        @*@Html.ActionLink("Edit", "Edit", new {/* id = Model.PrimaryKey */}) |*@ @Html.ActionLink("AnswerList", "AnswerIndex", "Answer", new { qID = Model.QuestionId },null)
+        @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("AnswerList", "AnswerIndex", "Answer", new { qID = Model.QuestionId },null)
        
     </p>
 

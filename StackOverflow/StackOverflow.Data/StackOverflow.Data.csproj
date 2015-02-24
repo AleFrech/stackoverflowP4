@@ -62,6 +62,14 @@
     <Compile Include="Migrations\201502232343181_AnswermarkFinal.Designer.cs">
       <DependentUpon>201502232343181_AnswermarkFinal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502240138082_updateHAvemak.cs" />
+    <Compile Include="Migrations\201502240138082_updateHAvemak.Designer.cs">
+      <DependentUpon>201502240138082_updateHAvemak.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502240220167_updatemark.cs" />
+    <Compile Include="Migrations\201502240220167_updatemark.Designer.cs">
+      <DependentUpon>201502240220167_updatemark.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StackOverflowContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +96,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502232343181_AnswermarkFinal.resx">
       <DependentUpon>201502232343181_AnswermarkFinal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502240138082_updateHAvemak.resx">
+      <DependentUpon>201502240138082_updateHAvemak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502240220167_updatemark.resx">
+      <DependentUpon>201502240220167_updatemark.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

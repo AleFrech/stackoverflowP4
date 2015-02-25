@@ -130,5 +130,30 @@ namespace StackOverflow.Web.Controllers
 
             return RedirectToAction("AnswerIndex",new{qID=qId});
         }
+
+        [Authorize]
+        public ActionResult DelteAnswer(Guid ID,Guid qID)
+        {
+            var context = new StackOverflowContext();
+            var answer = context.Answers.Find(ID);
+              HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                if (answer.Owner.Id == ownerId)
+                {
+                    context.Answers.Remove(answer);
+                    context.SaveChanges();
+                    return RedirectToAction("AnswerIndex", new {qID = answer.QuestionId});
+                }
+                   return RedirectToAction("AnswerDetails",new{ID=ID,qID=qID.ToString()});
+
+            }
+
+            return RedirectToAction("AnswerDetails",new{ID=ID,qID=qID.ToString()});
+
+
+        }
     }
 }

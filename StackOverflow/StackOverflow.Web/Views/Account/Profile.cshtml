@@ -4,38 +4,27 @@
     ViewBag.Title = "Profile";
 }
 
-<h2>Profile</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Reputacion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Reputacion)
-        </dd>
-
-    </dl>
-  
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            @Html.DisplayFor(model => model.Name)
+                        </h4>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i> @Html.DisplayFor(model => model.Email)
+                            <br />
+                            <br />
+                            <i class="glyphicon glyphicon-bookmark"></i> @Html.DisplayFor(model => model.Reputacion)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })*@ 
-</p>

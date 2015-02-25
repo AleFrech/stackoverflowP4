@@ -1,47 +1,50 @@
 ﻿@using StackOverflow.Web.Controllers
 @model StackOverflow.Web.Controllers.QuestionDetailModel
 
+<div>
+    <hr/>
+    @using (Html.BeginForm("UpVote", "Question", new {ID = Model.QuestionId}))
+    {
+        <button type="submit">Up Vote</button>
+    }
     <div>
-        <hr/>
-        @using (Html.BeginForm("UpVote", "Question", new { ID = Model.QuestionId }))
+        @using (Html.BeginForm("DownVote", "Question", new {ID = Model.QuestionId}))
         {
-            <button type="submit">Up Vote</button>
+            <button type="submit">Down Vote</button>
         }
-        <div>
-            @using (Html.BeginForm("DownVote", "Question", new { ID = Model.QuestionId }))
-            {
-                <button type="submit">Down Vote</button>
-            }
-        </div>
-
-        <dl class="dl-horizontal">
-     
-                <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Decription)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Decription)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Votes)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Votes)
-            </dd>
-
-        </dl>
     </div>
+
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Decription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Decription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Votes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Votes)
+        </dd>
+
+    </dl>
+</div>
+    <p>
+     @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
+    </p>
     <p>
         @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("AnswerList", "AnswerIndex", "Answer", new { qID = Model.QuestionId },null)
        

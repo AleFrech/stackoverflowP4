@@ -22,18 +22,27 @@ namespace StackOverflow.Web.Controllers{
         }
         public ActionResult Register()
         {
-            return View(new AccountRegisterModel());
+            var model = new AccountRegisterModel();
+            model.Error = "";
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Register(AccountRegisterModel model )
         {
-
+             var  context = new StackOverflowContext();
+            foreach (Account a in context.Accounts)
+            {
+                if (model.Email == a.Email)
+                {
+                    model.Error="same email";
+                    return View(model);
+                }                    
+            }
             if (ModelState.IsValid)
             {
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
                 account.Password = EncruptDecrypt.Encrypt(model.Password);
-                var context = new StackOverflowContext();
                 context.Accounts.Add(account);
                 context.SaveChanges();
                 return RedirectToAction("Login");
@@ -130,7 +139,42 @@ namespace StackOverflow.Web.Controllers{
             }
             return View(model);
         }
-       
+
+        public ActionResult EditProfile()
+        {
+            var model = new EditProfileModel();
+
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+             var context = new StackOverflowContext();
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid UserId = Guid.Parse(ticket.Name);
+                model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
+                model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
+                return View(model);
+            }
+            return RedirectToAction("UserProfile");
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(EditProfileModel model)
+        {
+
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            var context = new StackOverflowContext();
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid UserId = Guid.Parse(ticket.Name);
+                context.Accounts.FirstOrDefault(x => x.Id == UserId).Email=model.Email;
+                context.Accounts.FirstOrDefault(x => x.Id == UserId).Name=model.Name;
+                context.SaveChanges();
+                return RedirectToAction("UserProfile");
+            }
+            return RedirectToAction("UserProfile");
+          
+        }
 
     }
 

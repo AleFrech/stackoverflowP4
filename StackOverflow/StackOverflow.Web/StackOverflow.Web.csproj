@@ -139,6 +139,7 @@
     <Compile Include="Models\AccountPasswordInfoModel.cs" />
     <Compile Include="Models\AnswerDetailModel.cs" />
     <Compile Include="Models\AccountChangePasswordModel.cs" />
+    <Compile Include="Models\EditProfileModel.cs" />
     <Compile Include="Models\QuestionDetailModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,6 +199,7 @@
     <Content Include="Views\Answer\AnswerIndex.cshtml" />
     <Content Include="Views\Answer\AnswerDetails.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

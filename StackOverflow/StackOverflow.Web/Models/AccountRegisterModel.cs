@@ -27,6 +27,8 @@ namespace StackOverflow.Web.Models
         [RegularExpression("[a-zA-Z0-9]*", ErrorMessage = "Password must contain only letters and numbers")]
         public string ConfirmPassword { get; set; }
 
+        public string Error { set; get; }
+
         [Required(ErrorMessage = "*required")]
         public bool TermsAndConditions { get; set; }
 

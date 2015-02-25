@@ -115,6 +115,36 @@ namespace StackOverflow.Web.Controllers
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", new { ID = ID });
         }
+
+        public ActionResult DeleteQuestion(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            var question = context.Questions.Find(ID);
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                if (question.Owner.Id == ownerId)
+                {
+                    foreach (Answer a in context.Answers)
+                    {
+                        if (a.QuestionId == ID)
+                        {
+                            context.Answers.Remove(a);
+                        } 
+                    }
+                    context.Questions.Remove(question);
+
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("QuestionDetail", new { ID = ID});
+
+            }
+
+            return RedirectToAction("QuestionDetail", new { ID = ID});
+        }
        
     }
 }

@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,29 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201502222032047_addInitial.cs" />
-    <Compile Include="Migrations\201502222032047_addInitial.Designer.cs">
-      <DependentUpon>201502222032047_addInitial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502232101272_Answermark.cs" />
-    <Compile Include="Migrations\201502232101272_Answermark.Designer.cs">
-      <DependentUpon>201502232101272_Answermark.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502232312335_hadmark.cs" />
-    <Compile Include="Migrations\201502232312335_hadmark.Designer.cs">
-      <DependentUpon>201502232312335_hadmark.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502232343181_AnswermarkFinal.cs" />
-    <Compile Include="Migrations\201502232343181_AnswermarkFinal.Designer.cs">
-      <DependentUpon>201502232343181_AnswermarkFinal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502240138082_updateHAvemak.cs" />
-    <Compile Include="Migrations\201502240138082_updateHAvemak.Designer.cs">
-      <DependentUpon>201502240138082_updateHAvemak.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502240220167_updatemark.cs" />
-    <Compile Include="Migrations\201502240220167_updatemark.Designer.cs">
-      <DependentUpon>201502240220167_updatemark.cs</DependentUpon>
+    <Compile Include="Migrations\201502270148487_addinital.cs" />
+    <Compile Include="Migrations\201502270148487_addinital.Designer.cs">
+      <DependentUpon>201502270148487_addinital.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -85,23 +66,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502222032047_addInitial.resx">
-      <DependentUpon>201502222032047_addInitial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502232101272_Answermark.resx">
-      <DependentUpon>201502232101272_Answermark.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502232312335_hadmark.resx">
-      <DependentUpon>201502232312335_hadmark.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502232343181_AnswermarkFinal.resx">
-      <DependentUpon>201502232343181_AnswermarkFinal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502240138082_updateHAvemak.resx">
-      <DependentUpon>201502240138082_updateHAvemak.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502240220167_updatemark.resx">
-      <DependentUpon>201502240220167_updatemark.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502270148487_addinital.resx">
+      <DependentUpon>201502270148487_addinital.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

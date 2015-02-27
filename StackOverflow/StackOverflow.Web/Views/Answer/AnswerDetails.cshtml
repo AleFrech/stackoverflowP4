@@ -41,8 +41,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Back to Answers", "AnswerIndex","Answer",new{ID=Model.AnswerID,qID=Model.QuestionID},null) |@if (Model.)
-                                                                                                                  {
-                                                                                                                      @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = Model.AnswerID, qID = Model.QuestionID }, null)
-                                                                                                                  }
+    @Html.ActionLink("Back to Answers", "AnswerIndex","Answer",new{ID=Model.AnswerID,qID=Model.QuestionID},null) | @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = Model.AnswerID, qID = Model.QuestionID }, null)
+                                                                                                                  
 </p>

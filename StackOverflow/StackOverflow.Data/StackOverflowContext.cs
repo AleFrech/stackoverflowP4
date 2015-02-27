@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace StackOverflow.Data
 {
     public class StackOverflowContext:DbContext
     {
-        public StackOverflowContext() : base("StackOverlow")
+        public StackOverflowContext() : base(ConectionString.get())
         {
             
         }
@@ -18,5 +19,14 @@ namespace StackOverflow.Data
         public DbSet<Question> Questions  { get; set; }
 
         public DbSet<Answer> Answers { get; set; } 
+    }
+
+    public static class ConectionString
+    {
+        public static string get()
+        {
+            var Environment = ConfigurationManager.AppSettings["Environment"];
+            return string.Format("name={0}", Environment);
+        }
     }
 }

@@ -41,6 +41,13 @@ namespace StackOverflow.Web.Controllers
                     answer.Marked = a.Marked;
                     models.Add(answer); 
                 }
+                HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                if (cookie != null)
+                {
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                    Guid ownerId = Guid.Parse(ticket.Name);
+                    ViewData["loginUser"] = ownerId;
+                }
 
             }
             return View(models);

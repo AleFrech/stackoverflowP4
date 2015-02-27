@@ -37,7 +37,14 @@
             @Html.ActionLink(item.Title, "QuestionDetail", new { id = item.QuestionID })
         </td>
         <td>
-            @Html.ActionLink(item.OwnerName, "Profile", "Account", new {id = item.OwnerID}, null)
+            @if (item.OwnerID.Equals(ViewData["loginUser"]))
+            {
+                @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new {id = item.OwnerID}, null)
+            }
+            else
+            {
+                @Html.ActionLink(item.OwnerName, "Profile", "Account", new {id = item.OwnerID}, null)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreationDate)

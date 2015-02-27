@@ -47,7 +47,14 @@
                 @Html.ActionLink(item.AnswerCount, "AnswerDetails", "Answer", new { id = item.AnswerID,qID=ViewData["id"] }, null)
             </td>
             <td>
-                @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
+                @if (item.OwnerID.Equals(ViewData["loginUser"]))
+                {
+                    @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new { id = item.OwnerID }, null)
+                }
+                else
+                {
+                    @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
+                }
             </td>
             <td>
                 @if (item.Marked)

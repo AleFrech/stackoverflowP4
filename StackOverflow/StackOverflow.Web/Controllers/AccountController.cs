@@ -88,11 +88,30 @@ namespace StackOverflow.Web.Controllers{
             var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email);
             if (account != null)
             {
-                Guid ID = context.Accounts.FirstOrDefault(x => x.Email == model.Email).Id;
-                return RedirectToAction("ChangePassword", new { ID = ID });
+                Random rnd = new Random();
+                int cod = rnd.Next(10000, 99999);
+                string code = cod.ToString();
+                Guid ID = account.Id;
+                EmailVerifcations.SendSimpleMessage(account.Email, code);
+                return RedirectToAction("VerifyCode", new { ID = ID ,Code=code});
             }
             return View(model);
            
+        }
+
+        public ActionResult VerifyCode()
+        {
+            return View(new VerifyCodeModel());
+        }
+        [HttpPost]
+        public ActionResult VerifyCode(VerifyCodeModel model,string Code,Guid ID)
+        {
+           
+            if (Code.Equals(model.code))
+            {
+                return RedirectToAction("ChangePassword", new { ID = ID });
+            }
+            return View(model);
         }
 
         public ActionResult ChangePassword()
@@ -136,6 +155,8 @@ namespace StackOverflow.Web.Controllers{
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
                 model.UserID = UserId;
+ 
+ 
             }
             return View(model);
         }

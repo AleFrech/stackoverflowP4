@@ -3,91 +3,60 @@
 @model IEnumerable<StackOverflow.Web.Controllers.AnswerListModel>
 
 
-<h2>Answers</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Answers</h2>
+            <h5>@Html.ActionLink("Create New Answer", "CreateAnswer", new { qID = ViewData["id"] })</h5>
+            <h2 class="page-header"> </h2>
+            <section class="comment-list">
+                <!-- First Comment -->
+                @foreach (var item in Model)
+                {
+                    <article class="row">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <figure class="thumbnail">
+                                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
+                                <figcaption class="text-center">@if (item.OwnerID.Equals(ViewData["loginUser"]))
+                                                                {
+                                                                    @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new {id = item.OwnerID}, null)
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.ActionLink(item.OwnerName, "Profile", "Account", new {id = item.OwnerID}, null)
+                                                                }</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <div class="panel panel-default arrow left">
+                                <div class="panel-body">
+                                    <header class="text-left">
+                                        <div class="comment-user"><i class="fa fa-user"></i> @Html.DisplayNameFor(model => model.Votes) : @Html.DisplayFor(modelItem => item.Votes)
+                                        </div>
+                                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
+                                    </header>
+                                    <div class="comment-post">
+                                        @Html.ActionLink("Description", "AnswerDetails", "Answer", new {id = item.AnswerID, qID = ViewData["id"]}, null)
+                                        <p>
+                                            Best Answer : @if (item.Marked)
+                                                          {
+                                                              <img src="https://cdn4.iconfinder.com/data/icons/pc_de_hamburg_icon_pack/32x32/bestseller.png"/>
+                                                          }
+                                                          else
+                                                          {
 
+                                                          }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </section>
+        </div>
+    </div>
+</div>
 <p>
-   @Html.ActionLink("Create New Answer", "CreateAnswer",new{qID=ViewData["id"]})
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Votes)
-        </th>
-        <th>
-            Answer #   
-        </th>
-        <th>
-            Owner
-        </th>
-        <th>
-            Best Answer
-        </th>
-        @*th>
-            @Html.DisplayNameFor(model => model.OwnerID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AnswerID)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Votes)
-            </td>
-            <td>
-                @Html.ActionLink(item.AnswerCount, "AnswerDetails", "Answer", new { id = item.AnswerID,qID=ViewData["id"] }, null)
-            </td>
-            <td>
-                @if (item.OwnerID.Equals(ViewData["loginUser"]))
-                {
-                    @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new { id = item.OwnerID }, null)
-                }
-                else
-                {
-                    @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
-                }
-            </td>
-            <td>
-                @if (item.Marked)
-                {
-                    <p><img src="https://cdn4.iconfinder.com/data/icons/pc_de_hamburg_icon_pack/32x32/bestseller.png" /></p>
-                }
-                else
-                {
-                    <p> </p>
-                }
-                @*@Html.DisplayFor(modelItem => item.Marked)*@
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.OwnerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuestionID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AnswerID)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-                @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
-                @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})*@
-            </td>
-        </tr>
-    }
-
-</table>
-<p>
-    @Html.ActionLink("Back to Question", "QuestionDetail", "Question",new{ID=ViewData["id"]},null)
+    @Html.ActionLink("Back to Question", "QuestionDetail", "Question", new { ID = ViewData["id"] }, null)
 </p>

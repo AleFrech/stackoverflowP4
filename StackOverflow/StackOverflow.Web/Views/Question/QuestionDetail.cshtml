@@ -3,18 +3,20 @@
 
 <div>
     <hr/>
-    @using (Html.BeginForm("UpVote", "Question", new {ID = Model.QuestionId}))
-    {
-        <button type="submit">Up Vote</button>
-    }
-    <div>
-        @using (Html.BeginForm("DownVote", "Question", new {ID = Model.QuestionId}))
-        {
-            <button type="submit">Down Vote</button>
-        }
-    </div>
 
     <dl class="dl-horizontal">
+        <div>
+            <a href="@Url.Action("UpVote", "Question", new { ID = Model.QuestionId })">
+
+                <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
+            </a>
+        </div>
+        <div>
+            <a href="@Url.Action("DownVote", "Question", new {ID = Model.QuestionId})">
+
+                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px; rotation: 180deg">
+            </a>
+        </div>
 
         <dt>
             @Html.DisplayNameFor(model => model.Title)

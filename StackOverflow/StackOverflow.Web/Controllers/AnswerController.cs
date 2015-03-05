@@ -50,7 +50,7 @@ namespace StackOverflow.Web.Controllers
                 }
 
             }
-            return View(models);
+            return PartialView(models);
         }
         [System.Web.Mvc.Authorize]
         public ActionResult CreateAnswer()
@@ -79,7 +79,7 @@ namespace StackOverflow.Web.Controllers
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("AnswerIndex",new{qID=qID});
+                return RedirectToAction("QuestionDetail","Question",new{ID=Guid.Parse(qID)});
 
             }
             return View(model);
@@ -152,7 +152,7 @@ namespace StackOverflow.Web.Controllers
                 {
                     context.Answers.Remove(answer);
                     context.SaveChanges();
-                    return RedirectToAction("AnswerIndex", new {qID = answer.QuestionId});
+                    return RedirectToAction("QuestionDetail", "Question", new {ID =qID });
                 }
                    return RedirectToAction("AnswerDetails",new{ID=ID,qID=qID.ToString()});
 

@@ -6,9 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h2>Answers</h2>
             <h5>@Html.ActionLink("Create New Answer", "CreateAnswer", new { qID = ViewData["id"] })</h5>
-            <h2 class="page-header"> </h2>
             <section class="comment-list">
                 <!-- First Comment -->
                 @foreach (var item in Model)
@@ -57,6 +55,3 @@
         </div>
     </div>
 </div>
-<p>
-    @Html.ActionLink("Back to Question", "QuestionDetail", "Question", new { ID = ViewData["id"] }, null)
-</p>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -21,31 +22,7 @@ namespace StackOverflow.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMaps();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
-    //public class ReadOnlyRepository : IReadOnlyRepository
-    //{
-    //    public Account GetById(Guid Id)
-    //    {
-    //        return new Account();
-    //    }
-    //}
-
-    //public class ReadAndWrite : IReadAndWriteRepository
-    //{
-    //    public Account GetById(Guid Id)
-    //    {
-    //        return new Account();
-    //    }
-    //}
-
-    //public interface IReadOnlyRepository
-    //{
-    //    Account GetById(Guid Id);
-    //}
-
-    //public interface IReadAndWriteRepository : IReadOnlyRepository
-    //{
-
-    //}
 }

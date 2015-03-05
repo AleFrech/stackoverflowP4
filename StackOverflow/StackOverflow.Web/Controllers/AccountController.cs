@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.WebPages;
 using AutoMapper;
 using StackOverflow.Data;
 using StackOverflow.Domain;
@@ -16,6 +17,7 @@ namespace StackOverflow.Web.Controllers{
     public class AccountController : Controller
     {
         private readonly IMappingEngine _mappingEngine;
+        UnitOfWork unit = new UnitOfWork();
         public AccountController(IMappingEngine mappingEngine)
         {
             _mappingEngine = mappingEngine;
@@ -30,7 +32,7 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Register(AccountRegisterModel model )
         {
-             var  context = new StackOverflowContext();
+            var  context = new StackOverflowContext();
             foreach (Account a in context.Accounts)
             {
                 if (model.Email == a.Email)
@@ -43,6 +45,8 @@ namespace StackOverflow.Web.Controllers{
             {
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
                 account.Password = EncruptDecrypt.Encrypt(model.Password);
+                //unit.AccountRepository.Insert(account);
+                //unit.Save();
                 context.Accounts.Add(account);
                 context.SaveChanges();
                 return RedirectToAction("Login");
@@ -58,6 +62,8 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Login(AccountLoginModel model)
         {
+            if(model.Email.IsEmpty()||model.Password.IsEmpty())
+                return View(new AccountLoginModel());
             var context = new StackOverflowContext();
             string pass= EncruptDecrypt.Encrypt(model.Password);
             var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);

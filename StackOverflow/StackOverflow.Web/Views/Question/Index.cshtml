@@ -6,60 +6,52 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Questions</h2>
+            <h5>@Html.ActionLink("Create New Question", "NewQuestion")</h5>
+            <h2 class="page-header"> </h2>
+            <section class="comment-list">
+                <!-- First Comment -->
+                @foreach (var item in Model)
+                {
+                    <article class="row">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <figure class="thumbnail">
+                                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                <figcaption class="text-center">
+                                    @if (item.OwnerID.Equals(ViewData["loginUser"]))
+                                    {
+                                        @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new { id = item.OwnerID }, null)
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
+                                    }
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <div class="panel panel-default arrow left">
+                            <div class="panel-body">
+                                <header class="text-left">
+                                    <div class="comment-user">
+                                        <i class="fa fa-user"></i> @Html.DisplayNameFor(model => model.Votes) : @Html.DisplayFor(modelItem => item.Votes)
+                                    </div>
+                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
+                                </header>
+                                <div class="comment-post">
+                                 @Html.ActionLink(item.Title, "QuestionDetail", new { id = item.QuestionID })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                }
+            </section>
+        </div>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New Question", "NewQuestion")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Votes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-           Owner
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Votes)
-        </td>
-        <td>
-            @Html.ActionLink(item.Title, "QuestionDetail", new { id = item.QuestionID })
-        </td>
-        <td>
-            @if (item.OwnerID.Equals(ViewData["loginUser"]))
-            {
-                @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new {id = item.OwnerID}, null)
-            }
-            else
-            {
-                @Html.ActionLink(item.OwnerName, "Profile", "Account", new {id = item.OwnerID}, null)
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @if (Context.User.Identity.IsAuthenticated)
-            {
-                @*<p>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.QuestionID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.QuestionID })
-                </p>*@
-              
-            }
-        </td>
-    </tr>
-}
-
-</table>

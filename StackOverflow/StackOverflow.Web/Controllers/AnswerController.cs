@@ -52,13 +52,13 @@ namespace StackOverflow.Web.Controllers
             }
             return View(models);
         }
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult CreateAnswer()
         {
             return View(new AnswerCreateModel());
         }
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult CreateAnswer(AnswerCreateModel model, string qID)
         {
             if (ModelState.IsValid)
@@ -97,7 +97,7 @@ namespace StackOverflow.Web.Controllers
 
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult UpVote(Guid ID)
         {
             var context = new StackOverflowContext();
@@ -106,7 +106,7 @@ namespace StackOverflow.Web.Controllers
            return  RedirectToAction("AnswerDetails", new{ID=ID,qID=context.Answers.Find(ID).QuestionId});
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult DownVote(Guid ID)
         {
             var context = new StackOverflowContext();
@@ -115,7 +115,7 @@ namespace StackOverflow.Web.Controllers
             return RedirectToAction("AnswerDetails", new { ID = ID, qID = context.Answers.Find(ID).QuestionId });
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult MarkAnswer(Guid ID,Guid qId)
         {
             var context = new StackOverflowContext();
@@ -138,7 +138,7 @@ namespace StackOverflow.Web.Controllers
             return RedirectToAction("AnswerIndex",new{qID=qId});
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult DelteAnswer(Guid ID,Guid qID)
         {
             var context = new StackOverflowContext();

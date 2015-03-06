@@ -34,7 +34,7 @@
                                         <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
                                     </header>
                                     <div class="comment-post">
-                                        @Html.ActionLink("Description", "AnswerDetails", "Answer", new {id = item.AnswerID, qID = ViewData["id"]}, null)
+                                        @{ Html.RenderAction("AnswerDetails", "Answer",new {id = item.AnswerID, qID = ViewData["id"]});}
                                         <p>
                                             Best Answer : @if (item.Marked)
                                                           {
@@ -44,6 +44,10 @@
                                                           {
 
                                                           }
+                                        </p>
+                                        <p>
+                                            @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = item.AnswerID, qID = ViewData["id"] }, null)
+
                                         </p>
                                     </div>
                                 </div>

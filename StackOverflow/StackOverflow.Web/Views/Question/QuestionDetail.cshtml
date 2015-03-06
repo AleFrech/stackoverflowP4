@@ -42,12 +42,13 @@
     </dl>
 </div>
     <p>
-     @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
+        @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
     </p>
 <p>
-    @*@Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("AnswerList", "AnswerIndex", "Answer", new {qID = Model.QuestionId}, null)*@
+   
 
 <div class="row">
     @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}
 </div>
 
+    

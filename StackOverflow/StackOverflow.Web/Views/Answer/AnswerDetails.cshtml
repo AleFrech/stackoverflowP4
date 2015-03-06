@@ -3,11 +3,9 @@
 
 <div>
 
-    <hr/>
-
     <dl class="dl-horizontal">
       
-        <div class="row">
+        <div class="comment-post">
             <a href="@Url.Action("UpVote", "Answer", new {ID = Model.AnswerID})">
 
                 <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
@@ -21,28 +19,14 @@
                 <img src="http://cliparts.co/cliparts/qcB/Bex/qcBBexbc5.png" style="height: 32px; width: 32px; rotation: 180deg">
             </a>
         </div>
+        <div class="comment-post">
+            <div class="">
+                <strong>Answer: </strong>
+            </div>
+          
+                @Html.DisplayFor(model => model.Description)
+        </div>
        
-
-        <dt>
-
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Votes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Votes)
-        </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to Question", "QuestionDetail","Question",new{ID=Model.QuestionID},null) | @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = Model.AnswerID, qID = Model.QuestionID }, null)
-                                                                                                                  
-</p>
+

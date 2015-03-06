@@ -93,7 +93,7 @@ namespace StackOverflow.Web.Controllers
             AnswerDetailModel model = _mappingEngine.Map<Answer, AnswerDetailModel>(answer);
             model.AnswerID = ID;
             model.QuestionID = Guid.Parse(qID);
-            return View(model);
+            return PartialView(model);
 
         }
 
@@ -103,7 +103,7 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             context.Answers.Find(ID).Votes++;
             context.SaveChanges();
-           return  RedirectToAction("AnswerDetails", new{ID=ID,qID=context.Answers.Find(ID).QuestionId});
+            return RedirectToAction("QuestionDetail", "Question", new {ID = context.Answers.Find(ID).QuestionId});
         }
 
         [System.Web.Mvc.Authorize]
@@ -112,7 +112,7 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             context.Answers.Find(ID).Votes--;
             context.SaveChanges();
-            return RedirectToAction("AnswerDetails", new { ID = ID, qID = context.Answers.Find(ID).QuestionId });
+            return RedirectToAction("QuestionDetail","Question", new {ID = context.Answers.Find(ID).QuestionId });
         }
 
         [System.Web.Mvc.Authorize]
@@ -135,7 +135,7 @@ namespace StackOverflow.Web.Controllers
                 }
             }
 
-            return RedirectToAction("AnswerIndex",new{qID=qId});
+          return RedirectToAction("QuestionDetail","Question", new {ID = qId });
         }
 
         [System.Web.Mvc.Authorize]

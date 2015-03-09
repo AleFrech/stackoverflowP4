@@ -14,5 +14,6 @@ namespace StackOverflow.Web.Models
 
         public Guid OwnerID { get; set; }
         public Guid QuestionID { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

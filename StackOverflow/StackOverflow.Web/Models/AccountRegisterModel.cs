@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json.Serialization;
+using StackOverflow.Web.CostumeDataNotations;
 
 namespace StackOverflow.Web.Models
 {
@@ -11,6 +12,7 @@ namespace StackOverflow.Web.Models
         [DataType(DataType.Text)]
         [StringLength(20, ErrorMessage = "First name should be between 5 and 20 characters.", MinimumLength = 5)]
         public string Name { get; set; }
+        [EmailExist(ErrorMessage = "Email already exist!")]
         [Required(ErrorMessage = "*required")]
         [EmailAddress(ErrorMessage = "Invalid Type")]
         [StringLength(50, ErrorMessage = "Email should be between 10 and 50 characters.", MinimumLength = 10)]
@@ -26,9 +28,6 @@ namespace StackOverflow.Web.Models
         [Compare("Password", ErrorMessage = "Password and Confirm Password are not the same")]
         [RegularExpression("[a-zA-Z0-9]*", ErrorMessage = "Password must contain only letters and numbers")]
         public string ConfirmPassword { get; set; }
-
-        public string Error { set; get; }
-
         [Required(ErrorMessage = "*required")]
         public bool TermsAndConditions { get; set; }
 

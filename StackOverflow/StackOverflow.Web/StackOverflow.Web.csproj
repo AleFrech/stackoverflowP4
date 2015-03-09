@@ -153,6 +153,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
+    <Compile Include="CostumeDataNotations\PasswordAttribute.cs" />
     <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Controllers\QuestionController.cs" />

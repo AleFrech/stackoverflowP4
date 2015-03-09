@@ -12,7 +12,7 @@
             </a>
             <a href="@Url.Action("DownVote", "Question", new {ID = Model.QuestionId})">
 
-                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px; rotation: 180deg">
+                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px;">
             </a>
         </div>
         <dt>
@@ -28,7 +28,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Decription)
+            <div style="word-wrap:break-word;">
+                @Html.DisplayFor(model => model.Decription)
+            </div>
         </dd>
 
         <dt>

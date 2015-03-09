@@ -6,7 +6,14 @@
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
-                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="" class="img-rounded img-responsive" />
+                        @if (Model.ImageUrl != null)
+                        {
+                            <img src=@Model.ImageUrl alt="" class="img-rounded img-responsive" style="height: 128px; width: 128px"/>
+                        }
+                        else
+                        {
+                            <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="" class="img-rounded img-responsive"/>
+                        }
                     </div>
                     <div class="col-sm-6 col-md-8">
                         <h4>

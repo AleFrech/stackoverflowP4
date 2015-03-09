@@ -14,7 +14,14 @@
                     <article class="row">
                         <div class="col-md-2 col-sm-2 hidden-xs">
                             <figure class="thumbnail">
-                                <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
+                                @if (item.ImageUrl != null)
+                                {
+                                    <img class="img-responsive" src=@item.ImageUrl style="height: 70px; width: 70px" />
+                                }
+                                else
+                                {
+                                    <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                }
                                 <figcaption class="text-center">@if (item.OwnerID.Equals(ViewData["loginUser"]))
                                                                 {
                                                                     @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new {id = item.OwnerID}, null)
@@ -40,14 +47,9 @@
                                                           {
                                                               <img src="https://cdn4.iconfinder.com/data/icons/pc_de_hamburg_icon_pack/32x32/bestseller.png"/>
                                                           }
-                                                          else
-                                                          {
-
-                                                          }
-                                        </p>
-                                        <p>
+                                            <div>
                                             @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = item.AnswerID, qID = ViewData["id"] }, null)
-
+                                            </div>
                                         </p>
                                     </div>
                                 </div>

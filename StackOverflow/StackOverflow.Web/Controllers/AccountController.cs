@@ -25,7 +25,6 @@ namespace StackOverflow.Web.Controllers{
         public ActionResult Register()
         {
             var model = new AccountRegisterModel();
-            model.Error = "";
             return View(model);
         }
 
@@ -33,14 +32,7 @@ namespace StackOverflow.Web.Controllers{
         public ActionResult Register(AccountRegisterModel model )
         {
             var  context = new StackOverflowContext();
-            foreach (Account a in context.Accounts)
-            {
-                if (model.Email == a.Email)
-                {
-                    model.Error="same email";
-                    return View(model);
-                }                    
-            }
+          
             if (ModelState.IsValid)
             {
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
@@ -62,15 +54,18 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Login(AccountLoginModel model)
         {
-            if(model.Email.IsEmpty()||model.Password.IsEmpty())
-                return View(new AccountLoginModel());
-            var context = new StackOverflowContext();
-            string pass= EncruptDecrypt.Encrypt(model.Password);
-            var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
-            if (account != null)
+            if (ModelState.IsValid)
             {
-                FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
-                return RedirectToAction("Index", "Question");
+                if (model.Email.IsEmpty() || model.Password.IsEmpty())
+                    return View(new AccountLoginModel());
+                var context = new StackOverflowContext();
+                string pass = EncruptDecrypt.Encrypt(model.Password);
+                var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
+                if (account != null)
+                {
+                    FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
+                    return RedirectToAction("Index", "Question");
+                }
             }
             return View(new AccountLoginModel());
         }
@@ -92,14 +87,17 @@ namespace StackOverflow.Web.Controllers{
 
             var context = new StackOverflowContext();
             var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email);
-            if (account != null)
+            if (ModelState.IsValid)
             {
-                Random rnd = new Random();
-                int cod = rnd.Next(10000, 99999);
-                string code = cod.ToString();
-                Guid ID = account.Id;
-                EmailVerifcations.SendSimpleMessage(account.Email, code);
-                return RedirectToAction("VerifyCode", new { ID = ID ,Code=code});
+                if (account != null)
+                {
+                    Random rnd = new Random();
+                    int cod = rnd.Next(10000, 99999);
+                    string code = cod.ToString();
+                    Guid ID = account.Id;
+                    EmailVerifcations.SendSimpleMessage(account.Email, code);
+                    return RedirectToAction("VerifyCode", new {ID = ID, Code = code});
+                }
             }
             return View(model);
            
@@ -145,6 +143,7 @@ namespace StackOverflow.Web.Controllers{
          
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == ID).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == ID).Name;
+                model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == ID).ImageUrl;
                 model.Reputacion = 0;
 
             return View(model); 
@@ -160,6 +159,7 @@ namespace StackOverflow.Web.Controllers{
                 Guid UserId = Guid.Parse(ticket.Name);
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
+                model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl;
                 model.UserID = UserId;
  
  
@@ -196,6 +196,7 @@ namespace StackOverflow.Web.Controllers{
                 Guid UserId = Guid.Parse(ticket.Name);
                 context.Accounts.FirstOrDefault(x => x.Id == UserId).Email=model.Email;
                 context.Accounts.FirstOrDefault(x => x.Id == UserId).Name=model.Name;
+                context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl = model.ImageUrl;
                 context.SaveChanges();
                 return RedirectToAction("UserProfile");
             }

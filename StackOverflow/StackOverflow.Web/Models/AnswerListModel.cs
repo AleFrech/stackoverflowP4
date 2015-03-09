@@ -12,6 +12,8 @@ namespace StackOverflow.Web.Controllers
         public Guid QuestionID { get; set; }
         public Guid AnswerID { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public bool Marked { get; set; }
 
         public string AnswerCount { get; set; }

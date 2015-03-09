@@ -37,6 +37,7 @@ namespace StackOverflow.Web.Controllers
                 question.CreationDate = q.CreationDate;
                 question.Votes = q.Votes;
                 question.QuestionID = q.Id;
+                question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
 
 

@@ -51,6 +51,14 @@
     <Compile Include="Migrations\201502270148487_addinital.Designer.cs">
       <DependentUpon>201502270148487_addinital.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503070206127_addmigration.cs" />
+    <Compile Include="Migrations\201503070206127_addmigration.Designer.cs">
+      <DependentUpon>201503070206127_addmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503091456489_addimgUrl.cs" />
+    <Compile Include="Migrations\201503091456489_addimgUrl.Designer.cs">
+      <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -72,6 +80,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502270148487_addinital.resx">
       <DependentUpon>201502270148487_addinital.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503070206127_addmigration.resx">
+      <DependentUpon>201503070206127_addmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503091456489_addimgUrl.resx">
+      <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

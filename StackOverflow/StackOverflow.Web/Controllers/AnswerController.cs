@@ -39,6 +39,7 @@ namespace StackOverflow.Web.Controllers
                     answer.Votes = a.Votes;
                     answer.AnswerID = a.Id;
                     answer.Marked = a.Marked;
+                    answer.ImageUrl = context.Accounts.Find(a.Owner.Id).ImageUrl;
                     models.Add(answer); 
                 }
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];

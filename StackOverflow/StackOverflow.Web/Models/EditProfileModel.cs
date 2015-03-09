@@ -16,5 +16,7 @@ namespace StackOverflow.Web.Models
         [EmailAddress(ErrorMessage = "Invalid Type")]
         [StringLength(50, ErrorMessage = "Email should be between 10 and 50 characters.", MinimumLength = 10)]
        public string Email { set; get; }
+
+        public string ImageUrl { get; set; }
     }
 }

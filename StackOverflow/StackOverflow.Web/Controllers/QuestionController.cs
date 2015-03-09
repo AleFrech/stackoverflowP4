@@ -39,7 +39,7 @@ namespace StackOverflow.Web.Controllers
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-
+                
 
             }
             context.SaveChanges();

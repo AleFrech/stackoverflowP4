@@ -122,21 +122,29 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             var questions = context.Questions.Find(qId);
             var answer = context.Answers.Find(ID);
+            var answers = context.Answers;
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
             if (cookie != null)
             {
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                 Guid ownerId = Guid.Parse(ticket.Name);
-                if (!questions.HavedMark && questions.Owner.Id ==ownerId)
+                foreach (Answer a in answers)
+                {
+                    if (a.QuestionId == qId)
+                    {
+                        a.Marked = false;
+                    }
+                }
+                questions.HavedMark = false;
+                if (!questions.HavedMark && questions.Owner.Id == ownerId)
                 {
                     answer.Marked = true;
                     questions.HavedMark = true;
-
                     context.SaveChanges();
                 }
+               
             }
-
-          return RedirectToAction("QuestionDetail","Question", new {ID = qId });
+            return RedirectToAction("QuestionDetail", "Question", new { ID = qId });
         }
 
         [System.Web.Mvc.Authorize]

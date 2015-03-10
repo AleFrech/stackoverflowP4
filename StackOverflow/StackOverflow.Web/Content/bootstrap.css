@@ -1750,6 +1750,8 @@ fieldset[disabled] .form-control {
 
 textarea.form-control {
   height: auto;
+    max-width: 1000px;
+    width: 1000px;
 }
 
 .form-group {

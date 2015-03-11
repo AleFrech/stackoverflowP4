@@ -35,9 +35,10 @@
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-camera"></i>
                                             </span>
-                                            @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control", @placeholder = "Img" } })
-                                            @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.ImageUrl, new {htmlAttributes = new {@class = "form-control", @placeholder = "Img"}})
+                                            @Html.ValidationMessageFor(model => model.ImageUrl, "", new {@class = "text-danger"})
                                         </div>
+                                        *Enter Url of the image you want as Profile pic
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Save Changes">

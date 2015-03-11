@@ -155,6 +155,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\PasswordAttribute.cs" />
+    <Compile Include="CostumeDataNotations\TermsandConditions.cs" />
     <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -224,6 +225,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\registerprueva.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

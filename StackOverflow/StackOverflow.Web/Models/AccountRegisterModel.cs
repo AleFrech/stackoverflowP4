@@ -28,7 +28,7 @@ namespace StackOverflow.Web.Models
         [Compare("Password", ErrorMessage = "Password and Confirm Password are not the same")]
         [RegularExpression("[a-zA-Z0-9]*", ErrorMessage = "Password must contain only letters and numbers")]
         public string ConfirmPassword { get; set; }
-        [Required(ErrorMessage = "*required")]
+        [TermsandConditions(ErrorMessage = "Accept Terms&Conditions")]
         public bool TermsAndConditions { get; set; }
 
     }

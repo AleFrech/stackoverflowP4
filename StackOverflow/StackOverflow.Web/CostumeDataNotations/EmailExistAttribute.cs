@@ -8,6 +8,8 @@ namespace StackOverflow.Web.CostumeDataNotations
     {
         public override bool IsValid(object value)
         {
+            if (value == null)
+                return false;
             var stringEmail = value.ToString();
             var context = new StackOverflowContext();
             foreach (Account a in context.Accounts)

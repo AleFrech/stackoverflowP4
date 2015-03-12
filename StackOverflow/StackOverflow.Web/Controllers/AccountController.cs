@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.WebPages;
 using AutoMapper;
 using StackOverflow.Data;
+using StackOverflow.Data.Migrations;
 using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
@@ -144,7 +145,8 @@ namespace StackOverflow.Web.Controllers{
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == ID).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == ID).Name;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == ID).ImageUrl;
-                model.Reputacion = 0;
+                CalculateReputation(ID);
+                model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == ID).Reputation;
 
             return View(model); 
         }
@@ -160,6 +162,8 @@ namespace StackOverflow.Web.Controllers{
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl;
+                CalculateReputation(UserId);
+                model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == UserId).Reputation;
                 model.UserID = UserId;
  
  
@@ -202,6 +206,35 @@ namespace StackOverflow.Web.Controllers{
             }
             return RedirectToAction("UserProfile");
           
+        }
+
+        private void CalculateReputation(Guid OwnerId)
+        {
+            var context = new StackOverflowContext();
+            var answers = context.Answers;
+            var questions = context.Questions;
+            int Vquestion = 0;
+            int Vanswer = 0;
+
+            
+            foreach (var q in questions)
+            {
+                if (q.Owner.Id == OwnerId)
+                {
+                    Vquestion += q.Votes;
+                }
+            }
+
+            foreach (var a in answers)
+            {
+                if (a.Owner.Id == OwnerId)
+                {
+                    Vanswer += a.Votes;
+                }
+            }
+
+            context.Accounts.FirstOrDefault(x => x.Id == OwnerId).Reputation = (Vanswer + Vquestion)/5;
+            context.SaveChanges();
         }
 
     }

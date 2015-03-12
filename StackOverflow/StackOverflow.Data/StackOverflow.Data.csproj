@@ -59,6 +59,10 @@
     <Compile Include="Migrations\201503091456489_addimgUrl.Designer.cs">
       <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503122112125_addaReputation.cs" />
+    <Compile Include="Migrations\201503122112125_addaReputation.Designer.cs">
+      <DependentUpon>201503122112125_addaReputation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -86,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503091456489_addimgUrl.resx">
       <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503122112125_addaReputation.resx">
+      <DependentUpon>201503122112125_addaReputation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

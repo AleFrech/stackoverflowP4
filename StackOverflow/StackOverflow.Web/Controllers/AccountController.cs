@@ -216,7 +216,6 @@ namespace StackOverflow.Web.Controllers{
             int Vquestion = 0;
             int Vanswer = 0;
             int Marked = 0;
-
             
             foreach (var q in questions)
             {
@@ -231,7 +230,6 @@ namespace StackOverflow.Web.Controllers{
                 if (a.Marked)
                     Marked+=2;
             }
-
 
             context.Accounts.FirstOrDefault(x => x.Id == OwnerId).Reputation = ((Vanswer + Vquestion)/5)+Marked;
             context.SaveChanges();

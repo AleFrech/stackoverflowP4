@@ -215,25 +215,25 @@ namespace StackOverflow.Web.Controllers{
             var questions = context.Questions;
             int Vquestion = 0;
             int Vanswer = 0;
+            int Marked = 0;
 
             
             foreach (var q in questions)
             {
                 if (q.Owner.Id == OwnerId)
-                {
                     Vquestion += q.Votes;
-                }
             }
 
             foreach (var a in answers)
             {
                 if (a.Owner.Id == OwnerId)
-                {
                     Vanswer += a.Votes;
-                }
+                if (a.Marked)
+                    Marked+=2;
             }
 
-            context.Accounts.FirstOrDefault(x => x.Id == OwnerId).Reputation = (Vanswer + Vquestion)/5;
+
+            context.Accounts.FirstOrDefault(x => x.Id == OwnerId).Reputation = ((Vanswer + Vquestion)/5)+Marked;
             context.SaveChanges();
         }
 

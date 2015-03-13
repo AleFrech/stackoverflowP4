@@ -18,7 +18,7 @@ namespace StackOverflow.Web.Controllers{
     public class AccountController : Controller
     {
         private readonly IMappingEngine _mappingEngine;
-        UnitOfWork unit = new UnitOfWork();
+        private UnitOfWork unit = new UnitOfWork();
         public AccountController(IMappingEngine mappingEngine)
         {
             _mappingEngine = mappingEngine;
@@ -49,6 +49,7 @@ namespace StackOverflow.Web.Controllers{
         }
         public ActionResult Login()
         {
+   
             return View(new AccountLoginModel());
         }
 
@@ -145,6 +146,7 @@ namespace StackOverflow.Web.Controllers{
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == ID).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == ID).Name;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == ID).ImageUrl;
+                model.LastName = context.Accounts.FirstOrDefault(x => x.Id == ID).LastName;
                 CalculateReputation(ID);
                 model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == ID).Reputation;
 
@@ -161,6 +163,7 @@ namespace StackOverflow.Web.Controllers{
                 Guid UserId = Guid.Parse(ticket.Name);
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
+                model.LastName = context.Accounts.FirstOrDefault(x => x.Id == UserId).LastName;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl;
                 CalculateReputation(UserId);
                 model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == UserId).Reputation;
@@ -182,6 +185,7 @@ namespace StackOverflow.Web.Controllers{
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                 Guid UserId = Guid.Parse(ticket.Name);
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
+                model.LastName = context.Accounts.FirstOrDefault(x => x.Id == UserId).LastName;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
                 return View(model);
             }
@@ -200,6 +204,7 @@ namespace StackOverflow.Web.Controllers{
                 Guid UserId = Guid.Parse(ticket.Name);
                 context.Accounts.FirstOrDefault(x => x.Id == UserId).Email=model.Email;
                 context.Accounts.FirstOrDefault(x => x.Id == UserId).Name=model.Name;
+                context.Accounts.FirstOrDefault(x => x.Id == UserId).LastName = model.LastName;
                 context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl = model.ImageUrl;
                 context.SaveChanges();
                 return RedirectToAction("UserProfile");

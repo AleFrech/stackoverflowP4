@@ -153,8 +153,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="CostumeDataNotations\EmailDosentExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
-    <Compile Include="CostumeDataNotations\PasswordAttribute.cs" />
+    <Compile Include="CostumeDataNotations\MustcontaincapitalletterPassword.cs" />
+    <Compile Include="CostumeDataNotations\MustcontainNumberPassword.cs" />
+    <Compile Include="CostumeDataNotations\MustcontainvocalletterPassword.cs" />
+    <Compile Include="CostumeDataNotations\MustNotrepeathenextLetter.cs" />
     <Compile Include="CostumeDataNotations\TermsandConditions.cs" />
     <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />

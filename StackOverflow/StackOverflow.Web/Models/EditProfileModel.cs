@@ -10,8 +10,12 @@ namespace StackOverflow.Web.Models
     {
         [Required(ErrorMessage = "*required") ]
         [DataType(DataType.Text)]
-        [StringLength(20, ErrorMessage = "First name should be between 5 and 20 characters.", MinimumLength = 5)]
+        [StringLength(50, ErrorMessage = "First name should be between 5 and 20 characters.", MinimumLength = 2)]
         public string Name { get; set; }
+        [Required(ErrorMessage = "*required")]
+        [DataType(DataType.Text)]
+        [StringLength(50, ErrorMessage = "Last name should be between 5 and 20 characters.", MinimumLength = 2)]
+        public string LastName { get; set; }
         [Required(ErrorMessage = "*required")]
         [EmailAddress(ErrorMessage = "Invalid Type")]
         [StringLength(50, ErrorMessage = "Email should be between 10 and 50 characters.", MinimumLength = 10)]

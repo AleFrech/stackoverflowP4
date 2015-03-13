@@ -24,8 +24,8 @@ namespace StackOverflow.Domain
             request.AddParameter("from","StackOverflow_verify@proga4.com");
             String email =destination;
             request.AddParameter("to", email);
-            request.AddParameter("subject", "Password Code");
-            request.AddParameter("text", code);
+            request.AddParameter("subject", "ForgotPassword ");
+            request.AddParameter("text", "Enter the verification code: "+code);
             request.Method = Method.POST;
             return client.Execute(request);
         }

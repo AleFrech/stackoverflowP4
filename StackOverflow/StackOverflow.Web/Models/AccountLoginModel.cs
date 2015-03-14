@@ -8,6 +8,7 @@ namespace StackOverflow.Web.Models
 {
     public class AccountLoginModel
     {
+        //[EmailDosentExist(ErrorMessage = "Email Dosent exsist")]
         [Required(ErrorMessage = "*required")]
         [EmailAddress(ErrorMessage = "Email is not valid.")]
         public string Email { get; set; }

@@ -1,7 +1,18 @@
-﻿@model StackOverflow.Web.Models.AccountLoginModel
+﻿@using Microsoft.Ajax.Utilities
+@model StackOverflow.Web.Models.AccountLoginModel
 
 @{
     ViewBag.Title = "Sign In";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">@ViewBag.Message</div>
+}
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">@ViewBag.Success</div>
 }
 
 

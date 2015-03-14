@@ -19,9 +19,11 @@ namespace StackOverflow.Web.Controllers{
     {
         private readonly IMappingEngine _mappingEngine;
         private UnitOfWork unit = new UnitOfWork();
+        
         public AccountController(IMappingEngine mappingEngine)
         {
             _mappingEngine = mappingEngine;
+            
         }
         public ActionResult Register()
         {
@@ -49,8 +51,9 @@ namespace StackOverflow.Web.Controllers{
         }
         public ActionResult Login()
         {
-   
+            ViewBag.Success = TempData["ss"];
             return View(new AccountLoginModel());
+
         }
 
         [HttpPost]
@@ -63,12 +66,15 @@ namespace StackOverflow.Web.Controllers{
                 var context = new StackOverflowContext();
                 string pass = EncruptDecrypt.Encrypt(model.Password);
                 var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
+                
                 if (account != null)
                 {
                     FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
                     return RedirectToAction("Index", "Question");
                 }
+               
             }
+            ViewBag.Message = "Invalid Email or Password";
             return View(new AccountLoginModel());
         }
 
@@ -133,6 +139,8 @@ namespace StackOverflow.Web.Controllers{
                 var context = new StackOverflowContext();
                 context.Accounts.Find(ID).Password = EncruptDecrypt.Encrypt(model.Password);
                 context.SaveChanges();
+                TempData["ss"]="You Have Succesfully Change your Password";
+                FormsAuthentication.SignOut();
                 return RedirectToAction("Login");
             }
             return View(model);

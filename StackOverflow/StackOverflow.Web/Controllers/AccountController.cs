@@ -103,8 +103,9 @@ namespace StackOverflow.Web.Controllers{
                     int cod = rnd.Next(10000, 99999);
                     string code = cod.ToString();
                     Guid ID = account.Id;
-                    EmailVerifcations.SendSimpleMessage(account.Email, code);
-                    return RedirectToAction("VerifyCode", new {ID = ID, Code = code});
+                    EmailVerifcations.SendSimpleMessage(account.Email, code,ID);
+                    Session["code"] = code;
+                    ViewBag.EmailVerify = "We have sent you an email with instructions to recover your password";
                 }
             }
             return View(model);
@@ -116,9 +117,9 @@ namespace StackOverflow.Web.Controllers{
             return View(new VerifyCodeModel());
         }
         [HttpPost]
-        public ActionResult VerifyCode(VerifyCodeModel model,string Code,Guid ID)
+        public ActionResult VerifyCode(VerifyCodeModel model,Guid ID)
         {
-           
+            var Code = Session["code"].ToString();
             if (Code.Equals(model.code))
             {
                 return RedirectToAction("ChangePassword", new { ID = ID });

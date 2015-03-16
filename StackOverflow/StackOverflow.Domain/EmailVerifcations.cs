@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using RestSharp;
 
 namespace StackOverflow.Domain
 {
-   public static  class EmailVerifcations
+    public static class EmailVerifcations
     {
-        public static IRestResponse SendSimpleMessage(string destination, string code)
+        public static IRestResponse SendSimpleMessage(string destination, string code,Guid accId)
         {
             var client = new RestClient
             {
@@ -21,14 +23,18 @@ namespace StackOverflow.Domain
             request.AddParameter("domain",
                 "app5dcaf6d377cc4ddcb696b827eabcb975.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
-            request.AddParameter("from","StackOverflow_verify@proga4.com");
-            String email =destination;
+            request.AddParameter("from", "StackOverflow_verify@proga4.com");
+            String email = destination;
             request.AddParameter("to", email);
-            request.AddParameter("subject", "ForgotPassword ");
-            request.AddParameter("text", "Enter the verification code: "+code);
-
+            request.AddParameter("subject", "Password Recovery ");
+             var verifyUrl = HttpContext.Current.Request.Url.GetLeftPart
+            (UriPartial.Authority) + "/Account/VerifyCode/"+accId;
+            request.AddParameter("text", "Enter the verification code: " + code + " In the folowing link to cahnge your Password : " +verifyUrl);
+           
+ 
             request.Method = Method.POST;
             return client.Execute(request);
-        }
+        } 
+
     }
 }

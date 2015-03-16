@@ -29,7 +29,7 @@ namespace StackOverflow.Domain
             request.AddParameter("subject", "Password Recovery ");
              var verifyUrl = HttpContext.Current.Request.Url.GetLeftPart
             (UriPartial.Authority) + "/Account/VerifyCode/"+accId;
-            request.AddParameter("text", "Enter the verification code: " + code + " In the folowing link to cahnge your Password : " +verifyUrl);
+            request.AddParameter("text", "Enter the verification code: " + code + " In the folowing link to change your Password : " +verifyUrl);
            
  
             request.Method = Method.POST;

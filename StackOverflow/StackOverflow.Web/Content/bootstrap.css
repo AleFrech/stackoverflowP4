@@ -165,6 +165,7 @@ textarea {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
+    resize: none;
 }
 
 button,
@@ -217,6 +218,7 @@ input::-moz-focus-inner {
 textarea {
   overflow: auto;
   vertical-align: top;
+    resize: none;
 }
 
 table {
@@ -325,6 +327,7 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  resize: none
 }
 
 button,
@@ -332,6 +335,7 @@ input,
 select[multiple],
 textarea {
   background-image: none;
+    resize: none;
 }
 
 a {
@@ -1752,6 +1756,7 @@ textarea.form-control {
   height: auto;
     max-width: 1000px;
     width: 1000px;
+    resize: none;
 }
 
 .form-group {
@@ -1835,6 +1840,7 @@ select.input-sm {
 
 textarea.input-sm {
   height: auto;
+    resize: none;
 }
 
 .input-lg {
@@ -1852,6 +1858,7 @@ select.input-lg {
 
 textarea.input-lg {
   height: auto;
+    resize: none;
 }
 
 .has-warning .help-block,
@@ -3670,6 +3677,7 @@ textarea.input-group-lg > .form-control,
 textarea.input-group-lg > .input-group-addon,
 textarea.input-group-lg > .input-group-btn > .btn {
   height: auto;
+    resize: none;
 }
 
 .input-group-sm > .form-control,
@@ -3693,6 +3701,7 @@ textarea.input-group-sm > .form-control,
 textarea.input-group-sm > .input-group-addon,
 textarea.input-group-sm > .input-group-btn > .btn {
   height: auto;
+    resize: none;
 }
 
 .input-group-addon,

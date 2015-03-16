@@ -163,7 +163,6 @@
     <Compile Include="Models\AnswerCreateModel.cs" />
     <Compile Include="Models\AnswerListModel.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
-    <Compile Include="Models\AccountPasswordInfoModel.cs" />
     <Compile Include="Models\AnswerDetailModel.cs" />
     <Compile Include="Models\AccountChangePasswordModel.cs" />
     <Compile Include="Models\VerifyCodeModel.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Models\AccountRegisterModel.cs" />
     <Compile Include="Models\AccountLoginModel.cs" />
     <Compile Include="Models\AccountPasswordRecoveryModel.cs" />
-    <Compile Include="Models\AccountNewPasswordModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\NewQuestionModel.cs" />
     <Compile Include="Models\QuestionListModel.cs" />
@@ -202,7 +200,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -220,7 +220,6 @@
     <Content Include="Views\Account\PasswordRecovery.cshtml" />
     <Content Include="Views\Question\NewQuestion.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
-    <Content Include="Views\Account\NewPassword.cshtml" />
     <Content Include="Views\Question\QuestionDetail.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Answer\CreateAnswer.cshtml" />

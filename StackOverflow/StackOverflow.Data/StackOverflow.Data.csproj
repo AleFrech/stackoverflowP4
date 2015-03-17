@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201503131727591_addLastname.Designer.cs">
       <DependentUpon>201503131727591_addLastname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503170526216_addverifyemail.cs" />
+    <Compile Include="Migrations\201503170526216_addverifyemail.Designer.cs">
+      <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -100,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503131727591_addLastname.resx">
       <DependentUpon>201503131727591_addLastname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503170526216_addverifyemail.resx">
+      <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,8 @@
 ﻿@using StackOverflow.Web.Controllers
 @model StackOverflow.Web.Controllers.QuestionDetailModel
-
 <div>
     <hr/>
+    
 
     <dl class="dl-horizontal">
         <div class="row">
@@ -47,10 +47,13 @@
         @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
     </p>
 <p>
-   
+
 
 <div class="row">
     @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}
 </div>
+    <div class="row">
+        @{Html.RenderAction("CreateAnswer", "Answer", new { qID =Model.QuestionId.ToString()});}
+    </div>
 
     

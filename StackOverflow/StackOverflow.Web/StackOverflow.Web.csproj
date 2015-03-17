@@ -155,6 +155,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="CostumeDataNotations\EmailDosentExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
+    <Compile Include="CostumeDataNotations\EmailVerifyAttribute.cs" />
     <Compile Include="CostumeDataNotations\MustcontaincapitalletterPassword.cs" />
     <Compile Include="CostumeDataNotations\MustcontainNumberPassword.cs" />
     <Compile Include="CostumeDataNotations\MustcontainvocalletterPassword.cs" />

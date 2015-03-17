@@ -27,7 +27,7 @@ namespace StackOverflow.Web.Controllers
         {
             List<QuestionListModel>models =new List<QuestionListModel>();
             var context = new StackOverflowContext();
-            foreach (Question q in context.Questions)
+            foreach (var q in context.Questions)
             {
 
                 QuestionListModel question = new QuestionListModel();
@@ -39,7 +39,9 @@ namespace StackOverflow.Web.Controllers
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-                
+               // context.Accounts.Remove(q);
+
+
             }
             context.SaveChanges();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 

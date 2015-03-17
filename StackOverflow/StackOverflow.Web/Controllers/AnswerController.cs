@@ -62,6 +62,7 @@ namespace StackOverflow.Web.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult CreateAnswer(AnswerCreateModel model, string qID)
         {
+            ViewData["id"] = qID;
             if (ModelState.IsValid)
             {
                 var answer = _mappingEngine.Map<AnswerCreateModel,Answer>(model);
@@ -80,10 +81,8 @@ namespace StackOverflow.Web.Controllers
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("QuestionDetail","Question",new{ID=Guid.Parse(qID)});
-
             }
-            return View(model);
+            return PartialView(model);
           
         }
 

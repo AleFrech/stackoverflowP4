@@ -19,7 +19,7 @@ namespace StackOverflow.Web.Controllers{
     {
         private readonly IMappingEngine _mappingEngine;
         private UnitOfWork unit = new UnitOfWork();
-        
+
         public AccountController(IMappingEngine mappingEngine)
         {
             _mappingEngine = mappingEngine;
@@ -33,36 +33,33 @@ namespace StackOverflow.Web.Controllers{
 
         [HttpPost]
         public ActionResult Register(AccountRegisterModel model )
-        {
-           
-          
+        {      
             if (ModelState.IsValid)
             {
+                var context = new StackOverflowContext();
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
                 account.Password = EncruptDecrypt.Encrypt(model.Password);
-                //unit.AccountRepository.Insert(account);
-                //unit.Save();
-                Session["Account"] = account;
-                EmailVerifcations.SendConfirmationMessage(model.Email, "/Account/EmailConfirmation");
+                account.VerifyEmail = false;
+                context.Accounts.Add(account);
+                context.SaveChanges();
+                EmailVerifcations.SendConfirmationMessage(model.Email,account.Id);
                 ViewBag.EmailConfirm = "We have sent you an email with instructions to Verify your Account";
             }
             return  View(model);
-
         }
-
-        public ActionResult EmailConfirmation()
+   
+        public ActionResult EmailConfy(Guid Aid)
         {
-            var account = (Account)Session["Account"];
             var context = new StackOverflowContext();
-            context.Accounts.Add(account);
+            context.Accounts.Find(Aid).VerifyEmail = true;
             context.SaveChanges();
             return RedirectToAction("Login");
         }
+
         public ActionResult Login()
         {
             ViewBag.Success = TempData["ss"];
             return View(new AccountLoginModel());
-
         }
 
         [HttpPost]
@@ -75,13 +72,12 @@ namespace StackOverflow.Web.Controllers{
                 var context = new StackOverflowContext();
                 string pass = EncruptDecrypt.Encrypt(model.Password);
                 var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
-                
-                if (account != null)
+                if (account!=null)
                 {
                     FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
                     return RedirectToAction("Index", "Question");
                 }
-               
+                
             }
             ViewBag.Message = "Invalid Email or Password";
             return View(new AccountLoginModel());
@@ -254,6 +250,4 @@ namespace StackOverflow.Web.Controllers{
         }
 
     }
-
-  
 }

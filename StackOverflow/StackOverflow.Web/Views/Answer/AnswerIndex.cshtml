@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h5>@Html.ActionLink("Create New Answer", "CreateAnswer", new { qID = ViewData["id"] })</h5>
+
             <section class="comment-list">
                 <!-- First Comment -->
                 @foreach (var item in Model)
@@ -16,11 +16,11 @@
                             <figure class="thumbnail">
                                 @if (item.ImageUrl != null)
                                 {
-                                    <img class="img-responsive" src=@item.ImageUrl style="height: 70px; width: 70px" />
+                                    <img class="img-responsive" src=@item.ImageUrl style="height: 70px; width: 70px"/>
                                 }
                                 else
                                 {
-                                    <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                    <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
                                 }
                                 <figcaption class="text-center">@if (item.OwnerID.Equals(ViewData["loginUser"]))
                                                                 {
@@ -41,14 +41,14 @@
                                         <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
                                     </header>
                                     <div class="comment-post">
-                                        @{ Html.RenderAction("AnswerDetails", "Answer",new {id = item.AnswerID, qID = ViewData["id"]});}
+                                        @{ Html.RenderAction("AnswerDetails", "Answer", new {id = item.AnswerID, qID = ViewData["id"]});}
                                         <p>
                                             Best Answer : @if (item.Marked)
                                                           {
                                                               <img src="https://cdn4.iconfinder.com/data/icons/pc_de_hamburg_icon_pack/32x32/bestseller.png"/>
                                                           }
                                             <div>
-                                            @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new { ID = item.AnswerID, qID = ViewData["id"] }, null)
+                                                @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new {ID = item.AnswerID, qID = ViewData["id"]}, null)
                                             </div>
                                         </p>
                                     </div>
@@ -61,3 +61,4 @@
         </div>
     </div>
 </div>
+

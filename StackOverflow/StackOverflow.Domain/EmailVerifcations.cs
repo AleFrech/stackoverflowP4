@@ -38,7 +38,7 @@ namespace StackOverflow.Domain
             return client.Execute(request);
         } 
 
-        public static IRestResponse SendConfirmationMessage(string destination,string urlRightPart)
+        public static IRestResponse SendConfirmationMessage(string destination,Guid accId)
         {
             var client = new RestClient
             {
@@ -52,14 +52,14 @@ namespace StackOverflow.Domain
             String email = destination;
             request.AddParameter("to", email);
             request.AddParameter("subject", "Email Confirmation");
-            var verifyUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)+ urlRightPart;
+            var verifyUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/EmailConfy/?Aid=" + accId;
             if (verifyUrl.Contains("localhost"))
             {
                 request.AddParameter("text","Pleasr click the following link to verify your Email: " + verifyUrl);
                 request.Method = Method.POST;
                 return client.Execute(request);
             }
-            verifyUrl = "http://stackoverflowp4.apphb.com"+ urlRightPart;
+            verifyUrl = "http://stackoverflowp4.apphb.com/Account/EmailConfy/?Aid=" + accId;
             request.AddParameter("text", "Pleasr click the following link to verify your Email: " + verifyUrl);
             request.Method = Method.POST;
             return client.Execute(request);

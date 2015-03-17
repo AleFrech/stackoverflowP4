@@ -12,6 +12,7 @@ namespace StackOverflow.Domain.Entities
         public string ConfirmPassword { get; set; }
         public int Reputation { set; get; }
         public string ImageUrl { get; set; }
+        public bool VerifyEmail { set; get; }
         public Account()
         {
             Id = Guid.NewGuid();

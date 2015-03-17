@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -12,6 +13,8 @@ using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
 using WebGrease.Css.Extensions;
+using Recaptcha.Web;
+using Recaptcha.Web.Mvc;
 
 namespace StackOverflow.Web.Controllers{
 
@@ -64,8 +67,20 @@ namespace StackOverflow.Web.Controllers{
         }
 
         [HttpPost]
-        public ActionResult Login(AccountLoginModel model)
+        public async Task<ActionResult> Login(AccountLoginModel model)
         {
+            RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+            if (String.IsNullOrEmpty(recaptchaHelper.Response))
+            {
+                ViewBag.CapisEmpty = "Captcha answer cannot be empty";
+                return View(model);
+            }
+            RecaptchaVerificationResult recaptchaResult = await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+            if (recaptchaResult != RecaptchaVerificationResult.Success)
+            {
+               ViewBag.CapWrong = "Incorrect captcha answer";
+                return View(model);
+            }
             if (ModelState.IsValid)
             {
                 var context = new StackOverflowContext();
@@ -78,7 +93,7 @@ namespace StackOverflow.Web.Controllers{
                 }
                 ViewBag.Message = "Invalid Email or Password";
             }
-            return View(new AccountLoginModel());
+            return View(model);
         }
 
         public ActionResult LogOut()

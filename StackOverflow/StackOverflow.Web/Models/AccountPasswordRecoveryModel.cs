@@ -8,6 +8,7 @@ using StackOverflow.Web.CostumeDataNotations;
 namespace StackOverflow.Web.Models
 {
     public class AccountPasswordRecoveryModel{
+        [EmailVerify(ErrorMessage = "Must Confirm Email")]
         [EmailDosentExist(ErrorMessage = "Email dosent exist")]
         [Required(ErrorMessage = "*required")]
         [EmailAddress(ErrorMessage = "Email is not valid.")]

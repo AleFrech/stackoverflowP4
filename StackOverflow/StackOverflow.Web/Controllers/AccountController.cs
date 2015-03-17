@@ -11,6 +11,7 @@ using StackOverflow.Data.Migrations;
 using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;
+using WebGrease.Css.Extensions;
 
 namespace StackOverflow.Web.Controllers{
 
@@ -67,19 +68,16 @@ namespace StackOverflow.Web.Controllers{
         {
             if (ModelState.IsValid)
             {
-                if (model.Email.IsEmpty() || model.Password.IsEmpty())
-                    return View(new AccountLoginModel());
                 var context = new StackOverflowContext();
                 string pass = EncruptDecrypt.Encrypt(model.Password);
-                var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);
+                var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);    
                 if (account!=null)
                 {
-                    FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
-                    return RedirectToAction("Index", "Question");
+                FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
+                return RedirectToAction("Index", "Question");
                 }
-                
+                ViewBag.Message = "Invalid Email or Password";
             }
-            ViewBag.Message = "Invalid Email or Password";
             return View(new AccountLoginModel());
         }
 

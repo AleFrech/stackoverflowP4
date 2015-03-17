@@ -103,7 +103,7 @@ namespace StackOverflow.Web.Controllers{
                     int cod = rnd.Next(10000, 99999);
                     string code = cod.ToString();
                     Guid ID = account.Id;
-                    EmailVerifcations.SendSimpleMessage(account.Email, code,ID);
+                    EmailVerifcations.SendForgotPasswordMessage(account.Email, code,ID);
                     Session["code"] = code;
                     ViewBag.EmailVerify = "We have sent you an email with instructions to recover your password";
                 }
@@ -233,7 +233,6 @@ namespace StackOverflow.Web.Controllers{
                 if (q.Owner.Id == OwnerId)
                     Vquestion += q.Votes;
             }
-
             foreach (var a in answers)
             {
                 if (a.Owner.Id == OwnerId)
@@ -241,7 +240,6 @@ namespace StackOverflow.Web.Controllers{
                 if (a.Marked)
                     Marked+=2;
             }
-
             context.Accounts.FirstOrDefault(x => x.Id == OwnerId).Reputation = ((Vanswer + Vquestion)/5)+Marked;
             context.SaveChanges();
         }

@@ -34,7 +34,7 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public ActionResult Register(AccountRegisterModel model )
         {
-            var  context = new StackOverflowContext();
+           
           
             if (ModelState.IsValid)
             {
@@ -42,12 +42,21 @@ namespace StackOverflow.Web.Controllers{
                 account.Password = EncruptDecrypt.Encrypt(model.Password);
                 //unit.AccountRepository.Insert(account);
                 //unit.Save();
-                context.Accounts.Add(account);
-                context.SaveChanges();
-                return RedirectToAction("Login");
+                Session["Account"] = account;
+                EmailVerifcations.SendConfirmationMessage(model.Email, "/Account/EmailConfirmation");
+                ViewBag.EmailConfirm = "We have sent you an email with instructions to Verify your Account";
             }
             return  View(model);
 
+        }
+
+        public ActionResult EmailConfirmation()
+        {
+            var account = (Account)Session["Account"];
+            var context = new StackOverflowContext();
+            context.Accounts.Add(account);
+            context.SaveChanges();
+            return RedirectToAction("Login");
         }
         public ActionResult Login()
         {

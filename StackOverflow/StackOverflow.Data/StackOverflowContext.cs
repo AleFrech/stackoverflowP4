@@ -17,8 +17,8 @@ namespace StackOverflow.Data
         }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Question> Questions  { get; set; }
-
-        public DbSet<Answer> Answers { get; set; } 
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 
     public static class ConectionString

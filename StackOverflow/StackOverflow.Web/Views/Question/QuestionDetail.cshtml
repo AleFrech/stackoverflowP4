@@ -47,7 +47,9 @@
         @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
     </p>
 <p>
-
+    <div class="row">
+        @{ Html.RenderAction("CommentIndex", "Comment", new { Fid = Model.QuestionId });}
+    </div>
 
 <div class="row">
     @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}

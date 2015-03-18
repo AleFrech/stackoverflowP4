@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201503170526216_addverifyemail.Designer.cs">
       <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503181725393_addComment.cs" />
+    <Compile Include="Migrations\201503181725393_addComment.Designer.cs">
+      <DependentUpon>201503181725393_addComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503181820457_addComments.cs" />
+    <Compile Include="Migrations\201503181820457_addComments.Designer.cs">
+      <DependentUpon>201503181820457_addComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -107,6 +115,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503170526216_addverifyemail.resx">
       <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503181725393_addComment.resx">
+      <DependentUpon>201503181725393_addComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503181820457_addComments.resx">
+      <DependentUpon>201503181820457_addComments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

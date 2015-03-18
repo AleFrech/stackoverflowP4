@@ -155,6 +155,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Models\CommentCreateModel.cs" />
+    <Compile Include="Models\CommentListModel.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="CostumeDataNotations\EmailDosentExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
@@ -233,6 +236,8 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Comment\CreateComment.cshtml" />
+    <Content Include="Views\Comment\CommentIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

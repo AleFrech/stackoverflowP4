@@ -15,6 +15,7 @@ namespace StackOverflow.Web
             Mapper.CreateMap<QuestionDetailModel, Question>().ReverseMap();
             Mapper.CreateMap<AnswerCreateModel, Answer>();
             Mapper.CreateMap<AnswerDetailModel, Answer>().ReverseMap();
+            Mapper.CreateMap<CommentCreateModel, Comment>().ReverseMap();
         }
     }
 }

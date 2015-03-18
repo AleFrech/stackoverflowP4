@@ -27,7 +27,6 @@ namespace StackOverflow.Web.Controllers
             int count = 1;
             foreach (Answer a in context.Answers)
             {
-                var question = context.Questions.Find(qID);
                 AnswerListModel answer = new AnswerListModel();
                 if (a.QuestionId == qID)
                 {
@@ -56,13 +55,12 @@ namespace StackOverflow.Web.Controllers
         [System.Web.Mvc.Authorize]
         public ActionResult CreateAnswer()
         {
-            return View(new AnswerCreateModel());
+            return PartialView(new AnswerCreateModel());
         }
 
         [System.Web.Mvc.HttpPost]
         public ActionResult CreateAnswer(AnswerCreateModel model, string qID)
         {
-            ViewData["id"] = qID;
             if (ModelState.IsValid)
             {
                 var answer = _mappingEngine.Map<AnswerCreateModel,Answer>(model);
@@ -82,7 +80,7 @@ namespace StackOverflow.Web.Controllers
                 }
 
             }
-            return PartialView(model);
+            return RedirectToAction("QuestionDetail","Question",new { ID=Guid.Parse(qID)});
           
         }
 

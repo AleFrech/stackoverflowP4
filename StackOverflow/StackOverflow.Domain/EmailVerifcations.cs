@@ -63,6 +63,25 @@ namespace StackOverflow.Domain
             request.AddParameter("text", "Pleasr click the following link to verify your Email: " + verifyUrl);
             request.Method = Method.POST;
             return client.Execute(request);
+        }
+        public static IRestResponse SendAlertMessage(string destination)
+        {
+            var client = new RestClient
+            {
+                BaseUrl = new Uri("https://api.mailgun.net/v2"),
+                Authenticator = new HttpBasicAuthenticator("api", "key-8tw489mxfegaqewx93in2xo449q5p3l0")
+            };
+            var request = new RestRequest();
+            request.AddParameter("domain", "app5dcaf6d377cc4ddcb696b827eabcb975.mailgun.org", ParameterType.UrlSegment);
+            request.Resource = "{domain}/messages";
+            request.AddParameter("from", "StackOverflow_verify@proga4.com");
+            String email = destination;
+            request.AddParameter("to", email);
+            request.AddParameter("subject", "Email Alert");
+            request.AddParameter("text", "Some one is trying to enter with your Email!!!!");
+            request.Method = Method.POST;
+            return client.Execute(request);
+                     
         } 
 
     }

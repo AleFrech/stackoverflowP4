@@ -9,7 +9,6 @@ namespace StackOverflow.Web.Models
 {
     public class AccountLoginModel
     {
-    
         [EmailVerify(ErrorMessage = "Must Confirm Email")]
         [Required(ErrorMessage = "*required")]
         [EmailAddress(ErrorMessage = "Email is not valid.")]

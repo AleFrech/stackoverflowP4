@@ -2,7 +2,7 @@
 @model StackOverflow.Web.Controllers.QuestionDetailModel
 <div>
     <hr/>
-    
+
 
     <dl class="dl-horizontal">
         <div class="row">
@@ -28,7 +28,7 @@
         </dt>
 
         <dd>
-            <div style="word-wrap:break-word;">
+            <div style="word-wrap: break-word;">
                 @Html.DisplayFor(model => model.Decription)
             </div>
         </dd>
@@ -47,9 +47,10 @@
         @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
     </p>
 <p>
-    <div class="row">
-        @{ Html.RenderAction("CommentIndex", "Comment", new { Fid = Model.QuestionId });}
-    </div>
+<div class="row">
+    @{ Html.RenderAction("CommentIndex", "Comment", new {Fid = Model.QuestionId});}
+</div>
+    @Html.ActionLink("Create New Comment", "CreateComment", "Comment", new { Fid = Model.QuestionId.ToString() }, null)
 
 <div class="row">
     @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}

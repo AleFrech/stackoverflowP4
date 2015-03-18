@@ -24,16 +24,13 @@
                                         Votes: @Html.DisplayFor(modelItem => item.Votes)
                                         </div>
                                     </div>
-                                    <div class="action">
-                                        <button type="button" class="btn btn-primary btn-xs" title="Edit">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-success btn-xs" title="Approved">
+                                    <div >
+                                        <a href=@Url.Action("UpVote", "Comment",new{ID=item.CommentId}) class="btn btn-success btn-xs" title="Approve">
                                             <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                                        </a>
+                                        <a href=@Url.Action("DelteComment", "Comment",new{ID=item.CommentId}) class="btn btn-danger btn-xs" title="Delete">
                                             <span class="glyphicon glyphicon-trash"></span>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -41,7 +38,6 @@
                         </li>
                     }
                 </ul>
-                @Html.ActionLink("Create New Comment", "CreateComment", "Comment", new { Fid = ViewData["id"] }, null)
             </div>
     </div>
 </div>

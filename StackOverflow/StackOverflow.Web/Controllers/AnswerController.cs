@@ -145,7 +145,7 @@ namespace StackOverflow.Web.Controllers
         }
 
         [System.Web.Mvc.Authorize]
-        public ActionResult DelteAnswer(Guid ID,Guid qID)
+        public ActionResult DelteAnswer(Guid ID)
         {
             var context = new StackOverflowContext();
             var answer = context.Answers.Find(ID);
@@ -158,14 +158,10 @@ namespace StackOverflow.Web.Controllers
                 {
                     context.Answers.Remove(answer);
                     context.SaveChanges();
-                    return RedirectToAction("QuestionDetail", "Question", new {ID =qID });
-                }
-                   return RedirectToAction("AnswerDetails",new{ID=ID,qID=qID.ToString()});
-
+                }    
             }
 
-            return RedirectToAction("AnswerDetails",new{ID=ID,qID=qID.ToString()});
-
+            return RedirectToAction("QuestionDetail", "Question", new { ID = answer.QuestionId });
 
         }
     }

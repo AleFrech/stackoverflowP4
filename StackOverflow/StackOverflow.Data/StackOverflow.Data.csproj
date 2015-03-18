@@ -47,37 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201502270148487_addinital.cs" />
-    <Compile Include="Migrations\201502270148487_addinital.Designer.cs">
-      <DependentUpon>201502270148487_addinital.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503070206127_addmigration.cs" />
-    <Compile Include="Migrations\201503070206127_addmigration.Designer.cs">
-      <DependentUpon>201503070206127_addmigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503091456489_addimgUrl.cs" />
-    <Compile Include="Migrations\201503091456489_addimgUrl.Designer.cs">
-      <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503122112125_addaReputation.cs" />
-    <Compile Include="Migrations\201503122112125_addaReputation.Designer.cs">
-      <DependentUpon>201503122112125_addaReputation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503131727591_addLastname.cs" />
-    <Compile Include="Migrations\201503131727591_addLastname.Designer.cs">
-      <DependentUpon>201503131727591_addLastname.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503170526216_addverifyemail.cs" />
-    <Compile Include="Migrations\201503170526216_addverifyemail.Designer.cs">
-      <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503181725393_addComment.cs" />
-    <Compile Include="Migrations\201503181725393_addComment.Designer.cs">
-      <DependentUpon>201503181725393_addComment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503181820457_addComments.cs" />
-    <Compile Include="Migrations\201503181820457_addComments.Designer.cs">
-      <DependentUpon>201503181820457_addComments.cs</DependentUpon>
+    <Compile Include="Migrations\201503182202019_Initial.cs" />
+    <Compile Include="Migrations\201503182202019_Initial.Designer.cs">
+      <DependentUpon>201503182202019_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
@@ -98,29 +70,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502270148487_addinital.resx">
-      <DependentUpon>201502270148487_addinital.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503070206127_addmigration.resx">
-      <DependentUpon>201503070206127_addmigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503091456489_addimgUrl.resx">
-      <DependentUpon>201503091456489_addimgUrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503122112125_addaReputation.resx">
-      <DependentUpon>201503122112125_addaReputation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503131727591_addLastname.resx">
-      <DependentUpon>201503131727591_addLastname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503170526216_addverifyemail.resx">
-      <DependentUpon>201503170526216_addverifyemail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503181725393_addComment.resx">
-      <DependentUpon>201503181725393_addComment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503181820457_addComments.resx">
-      <DependentUpon>201503181820457_addComments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503182202019_Initial.resx">
+      <DependentUpon>201503182202019_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

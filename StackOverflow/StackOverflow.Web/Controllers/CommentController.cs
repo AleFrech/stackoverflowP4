@@ -22,7 +22,6 @@ namespace StackOverflow.Web.Controllers
 
         public ActionResult CommentIndex(Guid Fid)
         {
-            ViewData["id"] = Fid.ToString();
             List<CommentListModel> models = new List<CommentListModel>();
             var context = new StackOverflowContext();
             foreach (Comment c in context.Comments)
@@ -50,7 +49,7 @@ namespace StackOverflow.Web.Controllers
             return PartialView(models);
         }
 
-
+        [System.Web.Mvc.Authorize]
         public ActionResult CreateComment()
         {
             return View(new CommentCreateModel());
@@ -59,6 +58,7 @@ namespace StackOverflow.Web.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult CreateComment(CommentCreateModel model, string Fid)
         {
+            ViewData["Fid"] = Fid;
             if (ModelState.IsValid)
             {
                 var comment = _mappingEngine.Map<CommentCreateModel, Comment>(model);
@@ -78,6 +78,34 @@ namespace StackOverflow.Web.Controllers
 
             }
             return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(Fid)});
+
+        }
+        [System.Web.Mvc.Authorize]
+        public ActionResult UpVote(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            context.Comments.Find(ID).Votes++;
+            context.SaveChanges();
+            return RedirectToAction("QuestionDetail", "Question", new { ID = context.Comments.Find(ID).FatherId });
+        }
+        [System.Web.Mvc.Authorize]
+        public ActionResult DelteComment(Guid ID)
+        {
+            var context = new StackOverflowContext();
+            var comment = context.Comments.Find(ID);
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                if (comment.Owner.Id == ownerId)
+                {
+                    context.Comments.Remove(comment);
+                    context.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("QuestionDetail", "Question", new { ID = comment.FatherId });
 
         }
     }

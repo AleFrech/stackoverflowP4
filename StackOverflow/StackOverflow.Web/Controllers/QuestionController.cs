@@ -39,7 +39,7 @@ namespace StackOverflow.Web.Controllers
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-              // context.Accounts.Remove(q);
+                //context.Accounts.Remove(q);
 
 
             }
@@ -89,14 +89,12 @@ namespace StackOverflow.Web.Controllers
        
         }
 
-        [AllowAnonymous]
+         [System.Web.Mvc.AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
-                
-                var question = _mappingEngine.Map<QuestionDetailModel, Question>(model);
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
@@ -143,16 +141,24 @@ namespace StackOverflow.Web.Controllers
                             context.Answers.Remove(a);
                         } 
                     }
+                    foreach (Comment c in context.Comments)
+                    {
+                        if (c.FatherId == ID)
+                        {
+                            context.Comments.Remove(c);
+                        }
+                    }
                     context.Questions.Remove(question);
 
                     context.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return RedirectToAction("QuestionDetail", new { ID = ID});
+                
 
             }
 
-            return RedirectToAction("QuestionDetail", new { ID = ID});
+            return RedirectToAction("QuestionDetail", new { ID = ID });
+
         }
        
     }

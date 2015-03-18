@@ -9,7 +9,7 @@ namespace StackOverflow.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(StackOverflow.Data.StackOverflowContext context)

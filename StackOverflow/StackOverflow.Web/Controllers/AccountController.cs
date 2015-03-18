@@ -8,7 +8,6 @@ using System.Web.Security;
 using System.Web.WebPages;
 using AutoMapper;
 using StackOverflow.Data;
-using StackOverflow.Data.Migrations;
 using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
 using StackOverflow.Web.Models;

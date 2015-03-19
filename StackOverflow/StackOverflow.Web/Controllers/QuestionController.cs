@@ -38,10 +38,10 @@ namespace StackOverflow.Web.Controllers
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-              //context.Accounts.Remove(q);
-
-
+              //context.Accounts.Remove(q)
             }
+            models=models.OrderByDescending(x => x.CreationDate).ToList();
+            
            //context.SaveChanges();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)

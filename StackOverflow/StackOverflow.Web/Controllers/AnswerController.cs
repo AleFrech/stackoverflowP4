@@ -50,6 +50,21 @@ namespace StackOverflow.Web.Controllers
                 }
 
             }
+            if (models.Find(x => x.Marked == true) != null)
+            {
+                models = models.OrderByDescending(x => x.CreationDate).ToList();
+                var tmp = models.Find(x => x.Marked == true);
+                models.Remove(models.Find(x => x.Marked == true));
+                models.Insert(0, tmp);
+                tmp = null;
+                
+            }
+            if(models.Find(x => x.Marked == true) == null)
+            {
+                models = models.OrderByDescending(x => x.Votes).ThenByDescending(x=>x.CreationDate).ToList();
+            }
+           
+
             return PartialView(models);
         }
         

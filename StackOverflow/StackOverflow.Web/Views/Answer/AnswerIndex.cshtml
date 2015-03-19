@@ -50,12 +50,18 @@
                                             <div>
                                                 @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new {ID = item.AnswerID}, null)
                                             </div>
+
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </article>
+        <div class="row">
+            @{ Html.RenderAction("CommentIndex", "Comment", new { Fid = item.AnswerID });}
+        </div>
+        @Html.ActionLink("Create New Comment", "CreateAnswerComment", "Comment", new { qID = ViewData["id"], ansID = item.AnswerID }, null)
+    
                 }
             </section>
         </div>

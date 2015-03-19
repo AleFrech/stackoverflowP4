@@ -22,6 +22,8 @@ namespace StackOverflow.Web.Controllers
 
         public ActionResult CommentIndex(Guid Fid)
         {
+            if( TempData["qID"]!=null)
+                ViewData["qID"]=TempData["qID"];
             List<CommentListModel> models = new List<CommentListModel>();
             var context = new StackOverflowContext();
             foreach (Comment c in context.Comments)
@@ -58,7 +60,6 @@ namespace StackOverflow.Web.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult CreateComment(CommentCreateModel model, string Fid)
         {
-            ViewData["Fid"] = Fid;
             if (ModelState.IsValid)
             {
                 var comment = _mappingEngine.Map<CommentCreateModel, Comment>(model);
@@ -80,16 +81,47 @@ namespace StackOverflow.Web.Controllers
             return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(Fid)});
 
         }
+
         [System.Web.Mvc.Authorize]
-        public ActionResult UpVote(Guid ID)
+        public ActionResult CreateAnswerComment()
+        {
+            return View(new CommentCreateModel());
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult CreateAnswerComment(CommentCreateModel model, string qID,Guid ansID)
+        {
+            if (ModelState.IsValid)
+            {
+                var comment = _mappingEngine.Map<CommentCreateModel, Comment>(model);
+                var context = new StackOverflowContext();
+                HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                if (cookie != null)
+                {
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                    Guid ownerId = Guid.Parse(ticket.Name);
+                    comment.CreationDate = DateTime.Now;
+                    comment.Votes = 0;
+                    comment.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
+                    comment.FatherId = ansID;
+                    context.Comments.Add(comment);
+                    context.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qID)});
+
+        }
+        [System.Web.Mvc.Authorize]
+        public ActionResult UpVote(Guid ID,Guid qID)
         {
             var context = new StackOverflowContext();
             context.Comments.Find(ID).Votes++;
             context.SaveChanges();
-            return RedirectToAction("QuestionDetail", "Question", new { ID = context.Comments.Find(ID).FatherId });
+            return RedirectToAction("QuestionDetail", "Question", new { ID = qID});
         }
         [System.Web.Mvc.Authorize]
-        public ActionResult DelteComment(Guid ID)
+        public ActionResult DelteComment(Guid ID,Guid qID)
         {
             var context = new StackOverflowContext();
             var comment = context.Comments.Find(ID);
@@ -105,7 +137,7 @@ namespace StackOverflow.Web.Controllers
                 }
             }
 
-            return RedirectToAction("QuestionDetail", "Question", new { ID = comment.FatherId });
+            return RedirectToAction("QuestionDetail", "Question", new { ID = qID});
 
         }
     }

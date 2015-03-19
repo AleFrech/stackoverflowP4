@@ -238,6 +238,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Comment\CreateComment.cshtml" />
     <Content Include="Views\Comment\CommentIndex.cshtml" />
+    <Content Include="Views\Comment\CreateAnswerComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

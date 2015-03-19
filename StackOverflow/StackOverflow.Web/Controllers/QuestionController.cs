@@ -91,7 +91,10 @@ namespace StackOverflow.Web.Controllers
         [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
-            addQuestionViews(ID);
+            TempData["qID"] = ID;
+           if(Request.UrlReferrer!=null)
+               if (Request.UrlReferrer.AbsoluteUri.Equals("http://localhost:16470/") || Request.UrlReferrer.AbsoluteUri.Equals("http://stackoverflowp4.apphb.com/"))
+                    addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {

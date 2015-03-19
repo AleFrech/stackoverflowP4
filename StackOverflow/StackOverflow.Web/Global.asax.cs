@@ -24,8 +24,6 @@ namespace StackOverflow.Web
             AutoMapperConfig.RegisterMaps();
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
-
         
-
     }
 }

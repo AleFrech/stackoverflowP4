@@ -91,10 +91,7 @@ namespace StackOverflow.Web.Controllers
         [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
-            TempData["qID"] = ID;
-           if(Request.UrlReferrer!=null)
-               if (Request.UrlReferrer.AbsoluteUri.Equals("http://localhost:16470/") || Request.UrlReferrer.AbsoluteUri.Equals("http://stackoverflowp4.apphb.com/"))
-                    addQuestionViews(ID);
+            addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
@@ -169,9 +166,12 @@ namespace StackOverflow.Web.Controllers
         {
           
             var context = new StackOverflowContext();
-            context.Questions.Find(qId).Views++;
-            context.SaveChanges();
-    
+            if (Session["HasCountedThisVisitor"] == null)
+            {
+                context.Questions.Find(qId).Views++;
+                context.SaveChanges();
+                Session["HasCountedThisVisitor"] = true;
+            }    
         }
        
     }

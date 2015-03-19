@@ -1,7 +1,7 @@
 ﻿@using StackOverflow.Web.Controllers
 @model StackOverflow.Web.Controllers.QuestionDetailModel
 <div>
-    <hr/>
+    <hr />
     <dl class="dl-horizontal">
         <div class="row">
             <a href="@Url.Action("UpVote", "Question", new {ID = Model.QuestionId})">
@@ -48,19 +48,19 @@
 
     </dl>
 </div>
-        @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question","DeleteQuestion",new{ID=Model.QuestionId},null)
-   
-@{ Html.RenderAction("CommentIndex", "Comment", new {Fid = Model.QuestionId});}
+@Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question", "DeleteQuestion", new { ID = Model.QuestionId }, null)
+
+@{ Html.RenderAction("CommentIndex", "Comment", new { Fid = Model.QuestionId });}
 @Html.ActionLink("Create New Comment", "CreateComment", "Comment", new { Fid = Model.QuestionId.ToString() }, null)
 
 <div class="row">
-    @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}
+    @{ Html.RenderAction("AnswerIndex", "Answer", new { qID = Model.QuestionId });}
 </div>
-    <div class="row">
-        @if (Context.User.Identity.IsAuthenticated)
-        {
-          Html.RenderAction("CreateAnswer", "Answer", new {qID = Model.QuestionId.ToString()});  
-        }
-    </div>
+<div class="row">
 
-    
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        Html.RenderAction("CreateAnswer", "Answer", new {qID = Model.QuestionId});
+    }
+</div>
+

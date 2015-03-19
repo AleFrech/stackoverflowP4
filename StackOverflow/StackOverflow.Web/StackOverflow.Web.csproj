@@ -228,7 +228,6 @@
     <Content Include="Views\Account\PasswordRecovery.cshtml" />
     <Content Include="Views\Question\NewQuestion.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
-    <Content Include="Views\Question\QuestionDetail.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Answer\CreateAnswer.cshtml" />
     <Content Include="Views\Answer\AnswerIndex.cshtml" />
@@ -239,6 +238,7 @@
     <Content Include="Views\Comment\CreateComment.cshtml" />
     <Content Include="Views\Comment\CommentIndex.cshtml" />
     <Content Include="Views\Comment\CreateAnswerComment.cshtml" />
+    <Content Include="Views\Question\QuestionDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -91,10 +91,12 @@ namespace StackOverflow.Web.Controllers
         [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
+           
             addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
+
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
@@ -104,9 +106,10 @@ namespace StackOverflow.Web.Controllers
                 return View(model);
 
             }
-
+            
             return View(model);
         }
+
         [Authorize]
         public ActionResult UpVote(Guid ID)
         {
@@ -164,13 +167,13 @@ namespace StackOverflow.Web.Controllers
 
         private void addQuestionViews(Guid qId)
         {
-          
+         
             var context = new StackOverflowContext();
-            if (Session["HasCountedThisVisitor"] == null)
+            if (Session[qId.ToString()] == null)
             {
                 context.Questions.Find(qId).Views++;
                 context.SaveChanges();
-                Session["HasCountedThisVisitor"] = true;
+                Session[qId.ToString()] = "y";
             }    
         }
        

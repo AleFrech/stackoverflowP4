@@ -13,7 +13,6 @@ using StackOverflow.Web.Models;
 
 namespace StackOverflow.Web.Controllers
 {
-    [Authorize]
     public class QuestionController : Controller
     {
          private readonly IMappingEngine _mappingEngine;
@@ -21,8 +20,7 @@ namespace StackOverflow.Web.Controllers
         {
             _mappingEngine = mappingEngine;
         }
-        // GET: Question
-        [AllowAnonymous]
+        
         public ActionResult Index()
         {
             List<QuestionListModel>models =new List<QuestionListModel>();
@@ -36,14 +34,15 @@ namespace StackOverflow.Web.Controllers
                 question.OwnerName = q.Owner.Name;
                 question.CreationDate = q.CreationDate;
                 question.Votes = q.Votes;
+                question.Views = q.Views;
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-                //context.Accounts.Remove(q);
+              //context.Accounts.Remove(q);
 
 
             }
-            context.SaveChanges();
+           //context.SaveChanges();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)
             {
@@ -55,7 +54,7 @@ namespace StackOverflow.Web.Controllers
  
             return View(models);
         }
-
+        [Authorize]
         public ActionResult NewQuestion()
         {
             return View(new NewQuestionModel());
@@ -76,9 +75,10 @@ namespace StackOverflow.Web.Controllers
                      question.CreationDate = DateTime.Now;
                      question.ModififcationnDate = DateTime.Now;
                      question.Votes = 0;
+                     question.Views = 0;
                      question.Owner = context.Accounts.FirstOrDefault(x=>x.Id==ownerId);
                      context.Questions.Add(question);        
-                      context.SaveChanges();
+                     context.SaveChanges();
                 }
               
                return RedirectToAction("Index");            
@@ -88,10 +88,10 @@ namespace StackOverflow.Web.Controllers
 
        
         }
-
-         [System.Web.Mvc.AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
+            addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
@@ -100,13 +100,14 @@ namespace StackOverflow.Web.Controllers
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
                 model.QuestionId = ID;
                 model.Votes = context.Questions.FirstOrDefault(x => x.Id == ID).Votes;
+                model.Views = context.Questions.FirstOrDefault(x => x.Id == ID).Views;
                 return View(model);
 
             }
 
             return View(model);
         }
-
+        [Authorize]
         public ActionResult UpVote(Guid ID)
         {
             var context = new StackOverflowContext();
@@ -114,7 +115,7 @@ namespace StackOverflow.Web.Controllers
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", new { ID = ID });
         }
-
+        [Authorize]
         public ActionResult DownVote(Guid ID)
         {
             var context = new StackOverflowContext();
@@ -122,7 +123,7 @@ namespace StackOverflow.Web.Controllers
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", new { ID = ID });
         }
-
+        [Authorize]
         public ActionResult DeleteQuestion(Guid ID)
         {
             var context = new StackOverflowContext();
@@ -159,6 +160,15 @@ namespace StackOverflow.Web.Controllers
 
             return RedirectToAction("QuestionDetail", new { ID = ID });
 
+        }
+
+        private void addQuestionViews(Guid qId)
+        {
+          
+            var context = new StackOverflowContext();
+            context.Questions.Find(qId).Views++;
+            context.SaveChanges();
+    
         }
        
     }

@@ -62,6 +62,7 @@ namespace StackOverflow.Web.Controllers{
 
         public ActionResult Login()
         {
+            Session["att"] = 0;
             ViewBag.Success = TempData["ss"];
             return View(new AccountLoginModel());
         }
@@ -69,25 +70,35 @@ namespace StackOverflow.Web.Controllers{
         [HttpPost]
         public async Task<ActionResult> Login(AccountLoginModel model)
         {
+
+            
+            ViewData["cont"] = 0;
             if (ModelState.IsValid)
             {
-               
-                
-                    RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
-                    if (String.IsNullOrEmpty(recaptchaHelper.Response))
+
+                if(Session!= null){
+                    if (Session["att"] != null)
                     {
-                        ViewBag.CapisEmpty = "Captcha answer cannot be empty";
-                        return View(model);
+                        if (((int) Session["att"]) >= 3)
+                        {
+                            RecaptchaVerificationHelper recaptchaHelper = this.GetRecaptchaVerificationHelper();
+                            if (String.IsNullOrEmpty(recaptchaHelper.Response))
+                            {
+                                ViewBag.CapisEmpty = "Captcha answer cannot be empty";
+                                return View(model);
+                            }
+                            RecaptchaVerificationResult recaptchaResult =
+                                await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
+                            if (recaptchaResult != RecaptchaVerificationResult.Success)
+                            {
+                                ViewBag.CapWrong = "Incorrect captcha answer";
+                                return View(model);
+                            }
+                        }
                     }
-                    RecaptchaVerificationResult recaptchaResult =
-                        await recaptchaHelper.VerifyRecaptchaResponseTaskAsync();
-                    if (recaptchaResult != RecaptchaVerificationResult.Success)
-                    {
-                        ViewBag.CapWrong = "Incorrect captcha answer";
-                        return View(model);
-                    }
-                
-                var context = new StackOverflowContext();
+                }
+
+            var context = new StackOverflowContext();
                 string pass = EncruptDecrypt.Encrypt(model.Password);
                 var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);    
                 if (account!=null)
@@ -97,12 +108,26 @@ namespace StackOverflow.Web.Controllers{
                 return RedirectToAction("Index", "Question");
                 }
                 ViewBag.Message = "Invalid Email or Password";
-
-                foreach (var a in context.Accounts.Where(a => a.Email.Equals(model.Email)))
+                if (Session != null)
                 {
-                    EmailVerifcations.SendAlertMessage(model.Email);
+                    if (Session["att"] != null)
+                    {
+                        int a = int.Parse(Session["att"].ToString());
+                        a++;
+                        Session["att"] = a;
+                    }
                 }
-               
+                else
+                {
+                    Session["att"] = 0;
+                }
+                
+
+               foreach (var a in context.Accounts.Where(a => a.Email.Equals(model.Email)))
+               {
+                    EmailVerifcations.SendAlertMessage(model.Email);
+               }
+
             }
             return View(model);
         }

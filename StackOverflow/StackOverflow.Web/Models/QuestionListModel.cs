@@ -9,6 +9,7 @@ namespace StackOverflow.Web.Models
     {
         public string Title { get; set; }
         public int Votes { get; set; }
+        public int Views { get; set; }
         public DateTime CreationDate { get; set; }
         public string OwnerName { get; set; }
 

@@ -52,7 +52,7 @@ namespace StackOverflow.Web.Controllers
             }
             return PartialView(models);
         }
-        [System.Web.Mvc.Authorize]
+        
         public ActionResult CreateAnswer()
         {
             return PartialView(new AnswerCreateModel());
@@ -82,6 +82,28 @@ namespace StackOverflow.Web.Controllers
             }
             return RedirectToAction("QuestionDetail","Question",new { ID=Guid.Parse(qID)});
           
+        }
+
+        public ActionResult UploadAnswer(string qId, string desc)
+        {
+            var answer=new Answer();
+            var context = new StackOverflowContext();
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                answer.CreationDate = DateTime.Now;
+                answer.ModififcationnDate = DateTime.Now;
+                answer.Description = desc;
+                answer.Votes = 0;
+                answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
+                answer.QuestionId = Guid.Parse(qId);
+                context.Answers.Add(answer);
+                context.SaveChanges();
+            }
+            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qId) });
+
         }
 
         public ActionResult AnswerDetails(Guid ID,string qID)

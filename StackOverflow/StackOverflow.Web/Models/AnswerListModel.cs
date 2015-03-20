@@ -7,6 +7,7 @@ namespace StackOverflow.Web.Controllers
         public int Votes { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
+        public string CreateComment { get; set; }
         public string OwnerName { get; set; }
         public Guid OwnerID { get; set; }
         public Guid QuestionID { get; set; }

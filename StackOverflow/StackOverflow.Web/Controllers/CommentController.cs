@@ -58,11 +58,11 @@ namespace StackOverflow.Web.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult CreateComment(CommentCreateModel model, string Fid)
+        public ActionResult CreateComment(QuestionDetailModel model, string Fid)
         {
-            if (ModelState.IsValid)
+            if (model.CreateComment!= null)
             {
-                var comment = _mappingEngine.Map<CommentCreateModel, Comment>(model);
+                var comment = new Comment();
                 var context = new StackOverflowContext();
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 if (cookie != null)
@@ -71,6 +71,7 @@ namespace StackOverflow.Web.Controllers
                     Guid ownerId = Guid.Parse(ticket.Name);
                     comment.CreationDate = DateTime.Now;
                     comment.Votes = 0;
+                    comment.Description = model.CreateComment;
                     comment.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
                     comment.FatherId = Guid.Parse(Fid);
                     context.Comments.Add(comment);
@@ -81,19 +82,12 @@ namespace StackOverflow.Web.Controllers
             return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(Fid)});
 
         }
-
-        [System.Web.Mvc.Authorize]
-        public ActionResult CreateAnswerComment()
-        {
-            return View(new CommentCreateModel());
-        }
-
         [System.Web.Mvc.HttpPost]
-        public ActionResult CreateAnswerComment(CommentCreateModel model, string qID,Guid ansID)
+        public ActionResult CreateAnswerComment(string description, string Fid,string qid)
         {
-            if (ModelState.IsValid)
+            if (description != null)
             {
-                var comment = _mappingEngine.Map<CommentCreateModel, Comment>(model);
+                var comment = new Comment();
                 var context = new StackOverflowContext();
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 if (cookie != null)
@@ -102,16 +96,18 @@ namespace StackOverflow.Web.Controllers
                     Guid ownerId = Guid.Parse(ticket.Name);
                     comment.CreationDate = DateTime.Now;
                     comment.Votes = 0;
+                    comment.Description =description;
                     comment.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
-                    comment.FatherId = ansID;
+                    comment.FatherId = Guid.Parse(Fid);
                     context.Comments.Add(comment);
                     context.SaveChanges();
                 }
 
             }
-            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qID)});
+            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qid) });
 
         }
+
         [System.Web.Mvc.Authorize]
         public ActionResult UpVote(Guid ID,Guid qID)
         {

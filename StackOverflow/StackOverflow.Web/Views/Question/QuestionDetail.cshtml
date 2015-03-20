@@ -60,11 +60,38 @@
 @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question", "DeleteQuestion", new { ID = Model.QuestionId }, null)
 
 @{ Html.RenderAction("CommentIndex", "Comment", new { Fid = Model.QuestionId });}
-@Html.ActionLink("Create New Comment", "CreateComment", "Comment", new { Fid = Model.QuestionId.ToString() }, null)
+<div class="row">
+
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        using (Html.BeginForm("CreateComment", "Comment", new {Fid = Model.QuestionId.ToString()}))
+        {
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreateComment, htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.CreateComment, new {htmlAttributes = new {@class = "form-control"}, style = "width:500px; height:100px;"})
+                        @Html.ValidationMessageFor(model => model.CreateComment, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default"/>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<hr/>
 
 <div class="row">
-    @{ Html.RenderAction("AnswerIndex", "Answer", new { qID = Model.QuestionId });}
+    @{ Html.RenderAction("AnswerIndex", "Answer", new {qID = Model.QuestionId});}
 </div>
+
+<hr/>
 <div class="row">
 
     @if (Context.User.Identity.IsAuthenticated)

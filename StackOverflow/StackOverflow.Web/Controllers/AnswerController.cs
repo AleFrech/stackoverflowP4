@@ -50,21 +50,14 @@ namespace StackOverflow.Web.Controllers
                 }
 
             }
+            models = models.OrderByDescending(x => x.Votes).ThenByDescending(x => x.CreationDate).ToList();
             if (models.Find(x => x.Marked == true) != null)
-            {
-                models = models.OrderByDescending(x => x.CreationDate).ToList();
+            {    
                 var tmp = models.Find(x => x.Marked == true);
                 models.Remove(models.Find(x => x.Marked == true));
                 models.Insert(0, tmp);
-                tmp = null;
-                
-            }
-            if(models.Find(x => x.Marked == true) == null)
-            {
-                models = models.OrderByDescending(x => x.Votes).ThenByDescending(x=>x.CreationDate).ToList();
-            }
-           
-
+                tmp = null;     
+            }        
             return PartialView(models);
         }
         
@@ -74,11 +67,11 @@ namespace StackOverflow.Web.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult CreateAnswer(AnswerCreateModel model, string qID)
+        public ActionResult CreateAnswer(QuestionDetailModel model,string qID)
         {
-            if (ModelState.IsValid)
+            if (model.CreateAnswer != null)
             {
-                var answer = _mappingEngine.Map<AnswerCreateModel,Answer>(model);
+                var answer = new Answer();
                 var context = new StackOverflowContext();
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 if (cookie != null)
@@ -87,6 +80,7 @@ namespace StackOverflow.Web.Controllers
                     Guid ownerId = Guid.Parse(ticket.Name);
                     answer.CreationDate = DateTime.Now;
                     answer.ModififcationnDate = DateTime.Now;
+                    answer.Description = model.CreateAnswer;
                     answer.Votes = 0;
                     answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
                     answer.QuestionId = Guid.Parse(qID);
@@ -95,12 +89,13 @@ namespace StackOverflow.Web.Controllers
                 }
 
             }
-            return RedirectToAction("QuestionDetail","Question",new { ID=Guid.Parse(qID)});
+            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qID) });
           
         }
 
-        public ActionResult UploadAnswer(string qId, string desc)
+        public ActionResult UploadAnswer( Guid qID,string desc)
         {
+            
             var answer=new Answer();
             var context = new StackOverflowContext();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -113,11 +108,11 @@ namespace StackOverflow.Web.Controllers
                 answer.Description = desc;
                 answer.Votes = 0;
                 answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
-                answer.QuestionId = Guid.Parse(qId);
+                answer.QuestionId = qID;
                 context.Answers.Add(answer);
                 context.SaveChanges();
             }
-            return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qId) });
+            return RedirectToAction("QuestionDetail", "Question", new { ID = qID });
 
         }
 

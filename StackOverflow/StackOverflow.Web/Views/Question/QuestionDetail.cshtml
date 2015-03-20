@@ -1,5 +1,7 @@
 ﻿@using StackOverflow.Web.Controllers
 @model StackOverflow.Web.Controllers.QuestionDetailModel
+
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -39,6 +41,13 @@
             @Html.DisplayFor(model => model.Votes)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Answers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Answers)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Views)
         </dt>
 
@@ -60,7 +69,24 @@
 
     @if (Context.User.Identity.IsAuthenticated)
     {
-        Html.RenderAction("CreateAnswer", "Answer", new {qID = Model.QuestionId});
+        using (Html.BeginForm("CreateAnswer", "Answer",new{qID=Model.QuestionId.ToString()}))
+        {
+              <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreateAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.CreateAnswer, new { htmlAttributes = new { @class = "form-control" }, style = "width:500px; height:100px;" })
+                        @Html.ValidationMessageFor(model => model.CreateAnswer, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
     }
 </div>
 

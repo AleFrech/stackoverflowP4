@@ -10,6 +10,7 @@ namespace StackOverflow.Domain.Entities
     {
         public Guid Id { get; private set;}
         public int Votes { get; set;}
+        public int Answers { get; set; }
         public int Views { get; set; }
         public string Description { get; set;}
         public virtual Account Owner { get; set; }

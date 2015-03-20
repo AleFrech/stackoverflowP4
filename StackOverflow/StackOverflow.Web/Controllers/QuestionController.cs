@@ -35,14 +35,12 @@ namespace StackOverflow.Web.Controllers
                 question.CreationDate = q.CreationDate;
                 question.Votes = q.Votes;
                 question.Views = q.Views;
+                question.Answers = q.Answers;
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
-              //context.Accounts.Remove(q)
             }
             models=models.OrderByDescending(x => x.CreationDate).ToList();
-            
-           //context.SaveChanges();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)
             {
@@ -76,6 +74,7 @@ namespace StackOverflow.Web.Controllers
                      question.ModififcationnDate = DateTime.Now;
                      question.Votes = 0;
                      question.Views = 0;
+                     question.Answers = 0;
                      question.Owner = context.Accounts.FirstOrDefault(x=>x.Id==ownerId);
                      context.Questions.Add(question);        
                      context.SaveChanges();
@@ -91,18 +90,23 @@ namespace StackOverflow.Web.Controllers
         [AllowAnonymous]
         public ActionResult QuestionDetail( Guid ID)
         {
+            ViewData["id"] = ID.ToString();
+            TempData["qID"] = ID;
            
             addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
-
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
                 model.QuestionId = ID;
                 model.Votes = context.Questions.FirstOrDefault(x => x.Id == ID).Votes;
                 model.Views = context.Questions.FirstOrDefault(x => x.Id == ID).Views;
+                int cont = Enumerable.Count(context.Answers, a => a.QuestionId == ID);
+                context.Questions.Find(ID).Answers=cont;
+                context.SaveChanges();
+                model.Answers = context.Questions.FirstOrDefault(x => x.Id == ID).Answers;
                 return View(model);
 
             }
@@ -167,14 +171,9 @@ namespace StackOverflow.Web.Controllers
 
         private void addQuestionViews(Guid qId)
         {
-         
             var context = new StackOverflowContext();
-            if (Session[qId.ToString()] == null)
-            {
-                context.Questions.Find(qId).Views++;
-                context.SaveChanges();
-                Session[qId.ToString()] = "y";
-            }    
+            context.Questions.Find(qId).Views++;
+            context.SaveChanges();         
         }
        
     }

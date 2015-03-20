@@ -39,7 +39,9 @@ namespace StackOverflow.Web.Controllers
                 question.QuestionID = q.Id;
                 question.ImageUrl = context.Accounts.Find(q.Owner.Id).ImageUrl;
                 models.Add(question);
+
             }
+
             models=models.OrderByDescending(x => x.CreationDate).ToList();
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)

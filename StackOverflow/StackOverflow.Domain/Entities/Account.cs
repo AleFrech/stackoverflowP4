@@ -9,6 +9,9 @@ namespace StackOverflow.Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string CreationDate { get; set; }
+        public int ProfileViews { get; set; }
+        public string LasTimeSeen { get; set; }
         public string ConfirmPassword { get; set; }
         public int Reputation { set; get; }
         public string ImageUrl { get; set; }

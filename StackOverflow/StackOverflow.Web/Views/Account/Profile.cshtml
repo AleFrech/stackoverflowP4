@@ -10,29 +10,71 @@
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
-                      @if (Model.ImageUrl != null)
-                      {
-                        <img src=@Model.ImageUrl alt="" class="img-rounded img-responsive" style="height: 128px; width: 128px" />
-                      }
-                      else
-                      {
-                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="" class="img-rounded img-responsive" />
-                      }
+                        @if (Model.ImageUrl != null)
+                        {
+                            <img src=@Model.ImageUrl alt="" class="img-rounded img-responsive" style="height: 128px; width: 128px"/>
+                        }
+                        else
+                        {
+                            <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="" class="img-rounded img-responsive"/>
+                        }
                     </div>
                     <div class="col-sm-6 col-md-8">
                         <h4>
-                            @Html.DisplayFor(model => model.Name)  @Html.DisplayFor(model => model.LastName)
-                            
+                            @Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)
+
                         </h4>
                         <p>
                             <i class="glyphicon glyphicon-envelope"></i> @Html.DisplayFor(model => model.Email)
-                            <br />
-                            <br />
+                            <br/>
+                            <br/>
                             <i class="glyphicon glyphicon-star"></i> @Html.DisplayFor(model => model.Reputacion)
+                            <br/>
+                            <br/>
+                            <i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate)
+                            <br/>
+                            <br/>
+                            <i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views)
+                            <br />
+                            <br />
+                            <i class="glyphicon glyphicon-eye-close"></i> @Html.DisplayFor(model => model.LastTimeSeen)
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
+    <strong>Latest 5 Questions</strong>
+
+    @if (Model.QuestionList != null)
+    {
+        foreach (var q in Model.QuestionList)
+        {
+
+            if (q != null)
+            {
+                <div>
+                    @Html.ActionLink(q.Title, "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
+
+                </div>
+            }
+        }
+    }
+
+    <hr>
+    <strong>Latest 5 Answers</strong>
+    @if (Model.AnswerList != null)
+    {
+        foreach (var q in Model.AnswerList)
+        {
+
+            if (q != null)
+            {
+                <div>
+                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description, "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div>
+                </div>
+            }
+        }
+    }
 </div>

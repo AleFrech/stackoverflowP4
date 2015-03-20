@@ -46,7 +46,8 @@ namespace StackOverflow.Web.Controllers
                     Guid ownerId = Guid.Parse(ticket.Name);
                     ViewData["loginUser"] = ownerId;
                 }
-               
+                models = models.OrderByDescending(x => x.CreationDate).ToList();
+
             }
             return PartialView(models);
         }

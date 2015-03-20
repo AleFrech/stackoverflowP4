@@ -17,18 +17,61 @@
                     </div>
                     <div class="col-sm-6 col-md-8">
                         <h4>
-                            @Html.DisplayFor(model => model.Name)  @Html.DisplayFor(model => model.LastName)
+                            @Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.LastName)
                         </h4>
                         <p>
                             <i class="glyphicon glyphicon-envelope"></i> @Html.DisplayFor(model => model.Email)
                             <br/>
                             <br/>
                             <i class="glyphicon glyphicon-star"></i> @Html.DisplayFor(model => model.Reputacion)
+                            <br/>
+                            <br/>
+                            <i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate)
+                            <br/>
+                            <br/>
+                            <i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views)
+                            <br />
+                            <br />
+                            <i class="glyphicon glyphicon-eye-close"></i> @Html.DisplayFor(model => model.LastTimeSeen)
+
                         </p>
-                        @Html.ActionLink("Change Password", "ChangePassword", new { id = Model.UserID })| @Html.ActionLink("Edit","EditProfile")
+                        @Html.ActionLink("Change Password", "ChangePassword", new {id = Model.UserID})| @Html.ActionLink("Edit", "EditProfile")
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
+    <strong>Latest 5 Questions</strong>
+    
+    @if (Model.QuestionList != null)
+    {
+        foreach (var q in Model.QuestionList)
+        {
+
+            if (q != null)
+            {
+                <div>
+                    @Html.ActionLink(q.Title, "QuestionDetail", "Question", new {ID = q.Id}, null)   @q.CreationDate
+                    
+                </div>
+            }
+        }
+    }
+
+    <hr>
+    <strong>Latest 5 Answers</strong>
+    @if (Model.AnswerList != null)
+    {
+        foreach (var q in Model.AnswerList)
+        {
+
+            if (q != null)
+            {
+                <div>  
+                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description, "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div> 
+                </div>
+            }
+        }
+    }
 </div>

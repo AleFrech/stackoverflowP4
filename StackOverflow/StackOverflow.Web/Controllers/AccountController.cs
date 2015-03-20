@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.WebPages;
 using AutoMapper;
+using Microsoft.Ajax.Utilities;
 using StackOverflow.Data;
 using StackOverflow.Domain;
 using StackOverflow.Domain.Entities;
@@ -44,6 +45,9 @@ namespace StackOverflow.Web.Controllers{
                 var account = _mappingEngine.Map<AccountRegisterModel, Account>(model);
                 account.Password = EncruptDecrypt.Encrypt(model.Password);
                 account.VerifyEmail = false;
+                account.CreationDate =(DateTime.Now).ToString();
+                account.ProfileViews = 0;
+                account.LasTimeSeen = DateTime.Now.ToString();
                 context.Accounts.Add(account);
                 context.SaveChanges();
                 EmailVerifcations.SendConfirmationMessage(model.Email,account.Id);
@@ -55,7 +59,7 @@ namespace StackOverflow.Web.Controllers{
         public ActionResult EmailConfy(Guid Aid)
         {
             var context = new StackOverflowContext();
-            context.Accounts.Find(Aid).VerifyEmail = true;
+            context.Accounts.FirstOrDefault(x=>x.Id==Aid).VerifyEmail = true;
             context.SaveChanges();
             return RedirectToAction("Login");
         }
@@ -104,6 +108,8 @@ namespace StackOverflow.Web.Controllers{
                 if (account!=null)
                 {
                 FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
+                account.LasTimeSeen = DateTime.Now.ToString();
+                context.SaveChanges();
                 
                 return RedirectToAction("Index", "Question");
                 }
@@ -206,12 +212,24 @@ namespace StackOverflow.Web.Controllers{
         {
             var context = new StackOverflowContext();
                 CalculateReputation(ID);
+                context.Accounts.Find(ID).ProfileViews++;
+                context.SaveChanges();
                 model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == ID).Reputation;
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == ID).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == ID).Name;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == ID).ImageUrl;
                 model.LastName = context.Accounts.FirstOrDefault(x => x.Id == ID).LastName;
-
+                model.RegistrationDate = TimetoRelative(DateTime.Parse(context.Accounts.FirstOrDefault(x => x.Id == ID).CreationDate));
+                model.LastTimeSeen = TimetoRelative(DateTime.Parse(context.Accounts.FirstOrDefault(x => x.Id == ID).LasTimeSeen));
+                model.Views = context.Accounts.FirstOrDefault(x => x.Id == ID).ProfileViews;
+            List<Question> tmpQ = context.Questions.Where(q => q.Owner.Id == ID).ToList();
+            tmpQ = tmpQ.OrderByDescending(x => x.CreationDate).ToList();
+            List<Answer> tmpA = context.Answers.Where(a => a.Owner.Id == ID).ToList();
+            tmpA = tmpA.OrderByDescending(x => x.CreationDate).ToList();
+            if (tmpQ.Count != 0)
+                model.QuestionList = tmpQ.Take(5).ToList();
+            if (tmpA.Count != 0)
+                model.AnswerList = tmpA.Take(5).ToList();
             return View(model); 
         }
         [Authorize]
@@ -224,12 +242,25 @@ namespace StackOverflow.Web.Controllers{
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                 Guid UserId = Guid.Parse(ticket.Name);
                 CalculateReputation(UserId);
+                context.Accounts.Find(UserId).ProfileViews++;
+                context.SaveChanges();
                 model.Reputacion = context.Accounts.FirstOrDefault(x => x.Id == UserId).Reputation;
                 model.Email = context.Accounts.FirstOrDefault(x => x.Id == UserId).Email;
                 model.Name = context.Accounts.FirstOrDefault(x => x.Id == UserId).Name;
                 model.LastName = context.Accounts.FirstOrDefault(x => x.Id == UserId).LastName;
                 model.ImageUrl = context.Accounts.FirstOrDefault(x => x.Id == UserId).ImageUrl;
+                model.RegistrationDate = TimetoRelative(DateTime.Parse(context.Accounts.FirstOrDefault(x => x.Id ==UserId).CreationDate));
+                model.LastTimeSeen = TimetoRelative(DateTime.Parse(context.Accounts.FirstOrDefault(x => x.Id == UserId).LasTimeSeen));
+                model.Views = context.Accounts.FirstOrDefault(x => x.Id == UserId).ProfileViews;
                 model.UserID = UserId;
+                List<Question> tmpQ = context.Questions.Where(q => q.Owner.Id == UserId).ToList();
+                tmpQ = tmpQ.OrderByDescending(x => x.CreationDate).ToList();
+                List<Answer> tmpA = context.Answers.Where(a => a.Owner.Id == UserId).ToList();
+                tmpA = tmpA.OrderByDescending(x => x.CreationDate).ToList();
+                if (tmpQ.Count != 0)
+                    model.QuestionList = tmpQ.Take(5).ToList();
+                if (tmpA.Count != 0)
+                    model.AnswerList = tmpA.Take(5).ToList();
             }
             return View(model);
         }
@@ -298,5 +329,27 @@ namespace StackOverflow.Web.Controllers{
             context.SaveChanges();
         }
 
+        private string TimetoRelative(DateTime dt)
+        {
+            TimeSpan timeSince = DateTime.Now.Subtract(dt);
+            if (timeSince.TotalMilliseconds < 1) return "not yet";
+            if (timeSince.TotalMinutes < 1) return "just now";
+            if (timeSince.TotalMinutes < 2) return "1 minute ago";
+            if (timeSince.TotalMinutes < 60) return string.Format("{0} minutes ago", timeSince.Minutes);
+            if (timeSince.TotalMinutes < 120) return "1 hour ago";
+            if (timeSince.TotalHours < 24) return string.Format("{0} hours ago", timeSince.Hours);
+            if (timeSince.TotalDays < 2) return "yesterday";
+            if (timeSince.TotalDays < 7) return string.Format("{0} days ago", timeSince.Days);
+            if (timeSince.TotalDays < 14) return "last week";
+            if (timeSince.TotalDays < 21) return "2 weeks ago";
+            if (timeSince.TotalDays < 28) return "3 weeks ago";
+            if (timeSince.TotalDays < 60) return "last month";
+            if (timeSince.TotalDays < 365) return string.Format("{0} months ago", Math.Round(timeSince.TotalDays / 30));
+            if (timeSince.TotalDays < 730) return "last year"; //last but not least...
+            return string.Format("{0} years ago", Math.Round(timeSince.TotalDays / 365));    
+        }
+
     }
 }
+
+

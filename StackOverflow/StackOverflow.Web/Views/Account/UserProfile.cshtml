@@ -32,8 +32,6 @@
                             <i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views)
                             <br />
                             <br />
-                            <i class="glyphicon glyphicon-eye-close"></i> @Html.DisplayFor(model => model.LastTimeSeen)
-
                         </p>
                         @Html.ActionLink("Change Password", "ChangePassword", new {id = Model.UserID})| @Html.ActionLink("Edit", "EditProfile")
                     </div>
@@ -69,7 +67,7 @@
             if (q != null)
             {
                 <div>  
-                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description, "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div> 
+                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description.Substring(0,20)+"...", "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div> 
                 </div>
             }
         }

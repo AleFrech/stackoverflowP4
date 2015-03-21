@@ -102,14 +102,13 @@ namespace StackOverflow.Web.Controllers{
                     }
                 }
 
-            var context = new StackOverflowContext();
+                var context = new StackOverflowContext();
                 string pass = EncruptDecrypt.Encrypt(model.Password);
                 var account = context.Accounts.FirstOrDefault(x => x.Email == model.Email && x.Password == pass);    
                 if (account!=null)
                 {
                 FormsAuthentication.SetAuthCookie(account.Id.ToString(), false);
-                account.LasTimeSeen = DateTime.Now.ToString();
-                context.SaveChanges();
+               
                 
                 return RedirectToAction("Index", "Question");
                 }
@@ -140,6 +139,16 @@ namespace StackOverflow.Web.Controllers{
 
         public ActionResult LogOut()
         {
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                var context = new StackOverflowContext();
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid UserId = Guid.Parse(ticket.Name);
+                var account = context.Accounts.FirstOrDefault(x => x.Id == UserId);
+                account.LasTimeSeen = DateTime.Now.ToString();
+                context.SaveChanges();
+            }
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Question");
         }

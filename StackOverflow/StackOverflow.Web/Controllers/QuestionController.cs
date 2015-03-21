@@ -94,7 +94,9 @@ namespace StackOverflow.Web.Controllers
         {
             ViewData["id"] = ID.ToString();
             TempData["qID"] = ID;
-           
+            if (TempData["AnswerBelow5word"] != null)
+                ViewData["AnswerBelow5word"] = TempData["AnswerBelow5word"];
+            
             addQuestionViews(ID);
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)

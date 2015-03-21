@@ -70,7 +70,15 @@ namespace StackOverflow.Web.Controllers
         public ActionResult CreateAnswer(QuestionDetailModel model,string qID)
         {
             if (model.CreateAnswer != null)
-            {
+            {       
+                System.Text.RegularExpressions.MatchCollection wordColl = System.Text.RegularExpressions.Regex.Matches(model.CreateAnswer, @"[\S]+");
+                System.Text.RegularExpressions.MatchCollection charColl = System.Text.RegularExpressions.Regex.Matches(model.CreateAnswer, @".");
+                if (wordColl.Count < 5||charColl.Count < 50)
+                {
+                    TempData["AnswerBelow5word"] = "Answer must have at least 5 words and 50 characters";
+                    return RedirectToAction("QuestionDetail", "Question", new { ID = Guid.Parse(qID) });
+                }
+              
                 var answer = new Answer();
                 var context = new StackOverflowContext();
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];

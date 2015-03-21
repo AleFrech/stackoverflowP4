@@ -10,7 +10,7 @@ namespace StackOverflow.Web.Controllers
         public int Answers { get; set; }
         public int Votes { get; set; }
         public int Views { get; set; }
-        [Required]
+        [Required(ErrorMessage = "mierdaaa")]
         public string CreateAnswer { get; set; }
         [Required]
         public string CreateComment { get;set; }

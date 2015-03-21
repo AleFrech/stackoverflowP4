@@ -72,7 +72,7 @@
             if (q != null)
             {
                 <div>
-                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description, "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div>
+                    <div style="word-wrap:break-word;"> @Html.ActionLink(q.Description.Substring(0,20)+"...", "QuestionDetail", "Question", new { ID = q.QuestionId }, null) @q.CreationDate </div>
                 </div>
             }
         }

@@ -71,7 +71,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.CreateComment, htmlAttributes: new {@class = "control-label col-md-2"})
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.CreateComment, new {htmlAttributes = new {@class = "form-control"}, style = "width:500px; height:100px;"})
+                        @Html.TextAreaFor(model => model.CreateComment, new {htmlAttributes = new {@class = "form-control"}, style = "width:500px; height:40px;"})
                         @Html.ValidationMessageFor(model => model.CreateComment, "", new {@class = "text-danger"})
                     </div>
                 </div>
@@ -103,7 +103,10 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.CreateAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.CreateAnswer, new { htmlAttributes = new { @class = "form-control" }, style = "width:500px; height:100px;" })
+                        @Html.TextAreaFor(model => model.CreateAnswer, new { htmlAttributes = new { @class = "form-control" }, style = "width:500px; height:100px;" })@if (TempData["AnswerBelow5word"] != null)
+                                                                                                                                                                      {
+                                                                                                                                                                          @Html.Label("*"+TempData["AnswerBelow5word"].ToString(),htmlAttributes:new{style="color: red"})
+                                                                                                                                                                      }
                         @Html.ValidationMessageFor(model => model.CreateAnswer, "", new {@class = "text-danger"})
                     </div>
                 </div>

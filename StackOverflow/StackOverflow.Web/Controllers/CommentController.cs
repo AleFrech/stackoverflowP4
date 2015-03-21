@@ -34,7 +34,7 @@ namespace StackOverflow.Web.Controllers
                     comment.CreationDate = c.CreationDate;
                     comment.Description = c.Description;
                     comment.OwnerId = c.Owner.Id;
-                    comment.OwnerName = c.Owner.Name;
+                    comment.OwnerName = c.Owner.Name+" "+c.Owner.LastName;
                     comment.CommentId = c.Id;
                     comment.Votes = c.Votes;
                     models.Add(comment);

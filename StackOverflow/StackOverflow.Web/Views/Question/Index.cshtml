@@ -50,7 +50,7 @@
                                         <div>@Html.DisplayNameFor(model=>model.Views) : @Html.DisplayFor(modelItem => item.Views)</div>
                                     </div>
                                     <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
-                                    <div>@Html.ActionLink(item.Title, "QuestionDetail", new { ID = item.QuestionID })</div>
+                                    <div>@Html.ActionLink(item.Title.Substring(0,20)+"...", "QuestionDetail", new { ID = item.QuestionID })</div>
                                 </header>
                             </div>
                         </div>

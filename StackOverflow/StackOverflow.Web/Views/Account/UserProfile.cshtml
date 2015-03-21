@@ -21,17 +21,15 @@
                         </h4>
                         <p>
                             <i class="glyphicon glyphicon-envelope"></i> @Html.DisplayFor(model => model.Email)
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <i class="glyphicon glyphicon-star"></i> @Html.DisplayFor(model => model.Reputacion)
-                            <br/>
-                            <br/>
-                            <i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate)
-                            <br/>
-                            <br/>
-                            <i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views)
-                            <br />
-                            <br />
+                            <ul class="list-inline list-unstyled">
+                                <li><span><i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate) </span></li>
+                                <li>|</li>
+                                <li><span><i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views) </span></li>
+                                
+                            </ul>
                         </p>
                         @Html.ActionLink("Change Password", "ChangePassword", new {id = Model.UserID})| @Html.ActionLink("Edit", "EditProfile")
                     </div>
@@ -50,7 +48,7 @@
             if (q != null)
             {
                 <div>
-                    @Html.ActionLink(q.Title, "QuestionDetail", "Question", new {ID = q.Id}, null)   @q.CreationDate
+                    @Html.ActionLink(q.Title.Substring(0, 20) + "...", "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
                     
                 </div>
             }

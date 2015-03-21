@@ -26,18 +26,17 @@
                         </h4>
                         <p>
                             <i class="glyphicon glyphicon-envelope"></i> @Html.DisplayFor(model => model.Email)
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <i class="glyphicon glyphicon-star"></i> @Html.DisplayFor(model => model.Reputacion)
-                            <br/>
-                            <br/>
-                            <i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate)
-                            <br/>
-                            <br/>
-                            <i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views)
-                            <br />
-                            <br />
-                            <i class="glyphicon glyphicon-eye-close"></i> @Html.DisplayFor(model => model.LastTimeSeen)
+                            <ul class="list-inline list-unstyled">
+                                <li><span><i class="glyphicon glyphicon-calendar"></i> @Html.DisplayFor(model => model.RegistrationDate) </span></li>
+                                <li>|</li>
+                                <li><span><i class="glyphicon glyphicon-eye-open"></i> @Html.DisplayFor(model => model.Views) </span></li>
+                                <li>|</li>
+                                <li><span><i class="glyphicon glyphicon-eye-close"></i> @Html.DisplayFor(model => model.LastTimeSeen) </span></li>
+                            </ul>
+                           
                         </p>
                     </div>
                 </div>
@@ -55,7 +54,7 @@
             if (q != null)
             {
                 <div>
-                    @Html.ActionLink(q.Title, "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
+                    @Html.ActionLink(q.Title.Substring(0, 20) + "...", "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
 
                 </div>
             }

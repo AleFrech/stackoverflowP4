@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using StackOverflow.Domain.Entities;
 
 namespace StackOverflow.Web.Controllers
 {
@@ -7,6 +8,7 @@ namespace StackOverflow.Web.Controllers
     {
         public string Title { get; set; }
         public string Decription { get; set; }
+        public Account Owner { get; set; }
         public int Answers { get; set; }
         public int Votes { get; set; }
         public int Views { get; set; }

@@ -31,7 +31,7 @@ namespace StackOverflow.Web.Controllers
                 QuestionListModel question = new QuestionListModel();
                 question.Title = q.Title;
                 question.OwnerID = q.Owner.Id;
-                question.OwnerName = q.Owner.Name;
+                question.OwnerName = q.Owner.Name+" "+q.Owner.LastName;
                 question.CreationDate = q.CreationDate;
                 question.Votes = q.Votes;
                 question.Views = q.Views;
@@ -101,10 +101,18 @@ namespace StackOverflow.Web.Controllers
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
+                HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                if (cookie != null)
+                {
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                    Guid ownerId = Guid.Parse(ticket.Name);
+                    ViewData["logUser"] = ownerId;
+                }
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
                 model.QuestionId = ID;
+                model.Owner = context.Questions.FirstOrDefault(x => x.Id == ID).Owner;
                 model.Votes = context.Questions.FirstOrDefault(x => x.Id == ID).Votes;
                 model.Views = context.Questions.FirstOrDefault(x => x.Id == ID).Views;
                 int cont = Enumerable.Count(context.Answers, a => a.QuestionId == ID);

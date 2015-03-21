@@ -45,6 +45,7 @@
                                             Best Answer : @if (item.Marked)
                                                           {
                                                               <img src="https://cdn4.iconfinder.com/data/icons/pc_de_hamburg_icon_pack/32x32/bestseller.png"/>
+                                                              @Html.ActionLink("Remove", "RemoveMarkAnswer", "Answer", new { ID = item.AnswerID, qId = Guid.Parse(ViewData["id"].ToString())},null)
                                                           }
                                             <div>
                                                 @Html.ActionLink("Delete ", "DelteAnswer", "Answer", new {ID = item.AnswerID}, null)

@@ -32,7 +32,7 @@ namespace StackOverflow.Web.Controllers
                 {
                     answer.AnswerCount = "Answer " + count++;
                     answer.OwnerID = a.Owner.Id;
-                    answer.OwnerName = a.Owner.Name;
+                    answer.OwnerName = a.Owner.Name+" "+a.Owner.LastName;
                     answer.CreationDate = a.CreationDate;
                     answer.ModificationDate = a.ModififcationnDate;
                     answer.Votes = a.Votes;
@@ -181,6 +181,17 @@ namespace StackOverflow.Web.Controllers
                 }
                
             }
+            return RedirectToAction("QuestionDetail", "Question", new { ID = qId });
+        }
+
+        public ActionResult RemoveMarkAnswer(Guid ID, Guid qId)
+        {
+            var context = new StackOverflowContext();
+            var question = context.Questions.Find(qId);
+            var answer = context.Answers.Find(ID);
+            answer.Marked = false;
+            question.HavedMark = false;
+            context.SaveChanges();
             return RedirectToAction("QuestionDetail", "Question", new { ID = qId });
         }
 

@@ -2,62 +2,49 @@
 @model StackOverflow.Web.Controllers.QuestionDetailModel
 
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <div class="row">
-            <a href="@Url.Action("UpVote", "Question", new {ID = Model.QuestionId})">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" />
+    <div class="container">
+        <div class="well">
+            <div class="media">
+                <div class="media-body">     
+                    <div style="word-wrap: break-word;">
+                        <h4 class="media-heading">@Html.DisplayFor(model => model.Title)</h4>
+                    </div>
+                    <p class="text-right">By @if (Model.Owner.Id.Equals(ViewData["logUser"]))
+                                             {
+                                                 @Html.ActionLink(Model.Owner.Name + " " + Model.Owner.LastName, "UserProfile", "Account", new {id = Model.Owner.Id}, null)
+                                             }
+                                             else
+                                             {
+                                                 @Html.ActionLink(Model.Owner.Name + " " + Model.Owner.LastName, "Profile", "Account", new {id = Model.Owner.Id}, null)
+                                             }</p>
+                    <p>
+                        <div style="word-wrap: break-word;">
+                            @Html.DisplayFor(model => model.Decription)
+                        </div>
+                    </p>
+                    <ul class="list-inline list-unstyled">
+                        <li><span><strong>Views: </strong> @Html.DisplayFor(model => model.Views) </span></li>
+                        <li>|</li>
+                        <li><span><strong>Answers: </strong> @Html.DisplayFor(model => model.Answers) </span></li>
+                        <li>|</li>
+                        <li><span><strong>Votes: </strong> @Html.DisplayFor(model => model.Votes) </span></li>
+                        
+                            <a href="@Url.Action("UpVote", "Question", new {ID = Model.QuestionId})">
 
-                <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
-            </a>
-            <a href="@Url.Action("DownVote", "Question", new {ID = Model.QuestionId})">
+                                <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
+                            </a>
+                            <a href="@Url.Action("DownVote", "Question", new {ID = Model.QuestionId})">
 
-                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px;">
-            </a>
-        </div>
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Decription)
-        </dt>
-
-        <dd>
-            <div style="word-wrap: break-word;">
-                @Html.DisplayFor(model => model.Decription)
+                                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px;">
+                            </a>
+                       
+                    </ul>
+                </div>
             </div>
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Votes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Votes)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Answers)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Answers)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-
-    </dl>
-</div>
-@Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question", "DeleteQuestion", new { ID = Model.QuestionId }, null)
+        </div>
+        @Html.ActionLink("Back to Questions", "Index") | @Html.ActionLink("Delete Question", "DeleteQuestion", new { ID = Model.QuestionId }, null)
+    </div>
 
 @{ Html.RenderAction("CommentIndex", "Comment", new { Fid = Model.QuestionId });}
 <div class="row">
@@ -103,10 +90,10 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.CreateAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.CreateAnswer, new { htmlAttributes = new { @class = "form-control" }, style = "width:500px; height:100px;" })@if (TempData["AnswerBelow5word"] != null)
-                                                                                                                                                                      {
-                                                                                                                                                                          @Html.Label("*"+TempData["AnswerBelow5word"].ToString(),htmlAttributes:new{style="color: red"})
-                                                                                                                                                                      }
+                           @Html.TextAreaFor(model => model.CreateAnswer, new { htmlAttributes = new { @class = "form-control" }, style = "width:500px; height:100px;"})@if (TempData["AnswerBelow5word"] != null)               
+                        { @Html.Label("*" + TempData["AnswerBelow5word"].ToString(), htmlAttributes: new { style = "color: red" })  }
+
+                      
                         @Html.ValidationMessageFor(model => model.CreateAnswer, "", new {@class = "text-danger"})
                     </div>
                 </div>

@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201503201946012_addInital.cs" />
-    <Compile Include="Migrations\201503201946012_addInital.Designer.cs">
-      <DependentUpon>201503201946012_addInital.cs</DependentUpon>
+    <Compile Include="Migrations\201503212349515_addInital.cs" />
+    <Compile Include="Migrations\201503212349515_addInital.Designer.cs">
+      <DependentUpon>201503212349515_addInital.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
@@ -70,8 +70,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503201946012_addInital.resx">
-      <DependentUpon>201503201946012_addInital.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503212349515_addInital.resx">
+      <DependentUpon>201503212349515_addInital.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

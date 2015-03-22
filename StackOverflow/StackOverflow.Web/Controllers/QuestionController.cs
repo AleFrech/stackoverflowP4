@@ -21,13 +21,14 @@ namespace StackOverflow.Web.Controllers
             _mappingEngine = mappingEngine;
         }
         
-        public ActionResult Index()
+        public ActionResult Index(string order)
         {
+            
             List<QuestionListModel>models =new List<QuestionListModel>();
             var context = new StackOverflowContext();
             foreach (var q in context.Questions)
             {
-
+              
                 QuestionListModel question = new QuestionListModel();
                 question.Title = q.Title;
                 question.OwnerID = q.Owner.Id;
@@ -41,8 +42,19 @@ namespace StackOverflow.Web.Controllers
                 models.Add(question);
 
             }
-
-            models=models.OrderByDescending(x => x.CreationDate).ToList();
+            models = models.OrderByDescending(x => x.CreationDate).ToList(); 
+            if (order != null)
+            {
+                if (order.Equals("Date"))
+                    models = models.OrderByDescending(x => x.CreationDate).ToList();
+                if (order.Equals("Vote"))
+                    models = models.OrderByDescending(x => x.Votes).ToList();
+                if (order.Equals("View"))
+                    models = models.OrderByDescending(x => x.Views).ToList();
+                if (order.Equals("Answer"))
+                    models = models.OrderByDescending(x => x.Answers).ToList();
+            }
+          
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)
             {
@@ -187,6 +199,24 @@ namespace StackOverflow.Web.Controllers
             context.Questions.Find(qId).Views++;
             context.SaveChanges();         
         }
-       
+
+        public ActionResult OrerByDate()
+        {
+            return RedirectToAction("Index",new{order="Date"});
+        }
+        public ActionResult OrerByVotes()
+        {
+            return RedirectToAction("Index", new { order = "Vote" });
+        }
+        public ActionResult OrerByAnswers()
+        {
+            return RedirectToAction("Index", new { order = "Answer" });
+        }
+        public ActionResult OrerByViews()
+        {
+            return RedirectToAction("Index", new { order = "View" });
+        }
+
+     
     }
 }

@@ -54,7 +54,7 @@
             if (q != null)
             {
                 <div>
-                    @Html.ActionLink(q.Title.Substring(0, 20) + "...", "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
+                    @Html.ActionLink(q.Title, "QuestionDetail", "Question", new { ID = q.Id }, null)   @q.CreationDate
 
                 </div>
             }

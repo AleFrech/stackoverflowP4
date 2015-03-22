@@ -13,18 +13,18 @@
             <h5>@Html.ActionLink("Create New Question", "NewQuestion")</h5>
             <div>
                 <strong>Order By</strong><ul class="list-inline list-unstyled">
-    <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
-    <li>|</li>
-    <li><span> @Html.ActionLink("Votes", "OrerByVotes")</span></li>
-    <li>|</li>
-    <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-    <li>|</li>
-    <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
-</ul>
+                    <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
+                    <li>|</li>
+                    <li><span> @Html.ActionLink("Votes", "OrerByVotes")</span></li>
+                    <li>|</li>
+                    <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
+                    <li>|</li>
+                    <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
+                </ul>
             </div>
-         
 
-            <hr />
+
+            <hr/>
             <section class="comment-list">
                 <!-- First Comment -->
                 @foreach (var item in Model)
@@ -34,21 +34,21 @@
                             <figure class="thumbnail">
                                 @if (item.ImageUrl != null)
                                 {
-                                    <img class="img-responsive" src=@item.ImageUrl style="height: 70px; width: 70px" />
+                                    <img class="img-responsive" src=@item.ImageUrl style="height: 70px; width: 70px"/>
                                 }
                                 else
                                 {
-                                    <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                    <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
                                 }
 
                                 <figcaption class="text-center">
                                     @if (item.OwnerID.Equals(ViewData["loginUser"]))
                                     {
-                                        @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new { id = item.OwnerID }, null)
+                                        @Html.ActionLink(item.OwnerName, "UserProfile", "Account", new {id = item.OwnerID}, null)
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(item.OwnerName, "Profile", "Account", new { id = item.OwnerID }, null)
+                                        @Html.ActionLink(item.OwnerName, "Profile", "Account", new {id = item.OwnerID}, null)
                                     }
                                 </figcaption>
                             </figure>
@@ -63,14 +63,21 @@
                                             <div>@Html.DisplayNameFor(model => model.Views) : @Html.DisplayFor(modelItem => item.Views)</div>
                                         </div>
                                         <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@Html.DisplayFor(modelItem => item.CreationDate)</time>
-                                        <div style="word-wrap: break-word;">@Html.ActionLink(item.Title, "QuestionDetail", new { ID = item.QuestionID })</div>
+                                        <div style="word-wrap: break-word;">@Html.ActionLink(item.Title, "QuestionDetail", new {ID = item.QuestionID})</div>
                                     </header>
                                 </div>
                             </div>
                         </div>
                     </article>
                 }
+
             </section>
+            <div class ="text-right">
+                <a href="@Url.Action("Index")">
+
+                    <img src="http://www.clker.com/cliparts/L/L/l/0/x/I/addmore-button-png-hi.png" style="height: 32px; width: 64px">
+                </a>
+            </div>
         </div>
     </div>
 </div>

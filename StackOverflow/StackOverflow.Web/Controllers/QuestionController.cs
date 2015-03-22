@@ -42,7 +42,8 @@ namespace StackOverflow.Web.Controllers
                 models.Add(question);
 
             }
-            models = models.OrderByDescending(x => x.CreationDate).ToList(); 
+            models = models.OrderByDescending(x => x.CreationDate).ToList();
+            models = models.Take(25).ToList();
             if (order != null)
             {
                 if (order.Equals("Date"))
@@ -53,7 +54,7 @@ namespace StackOverflow.Web.Controllers
                     models = models.OrderByDescending(x => x.Views).ToList();
                 if (order.Equals("Answer"))
                     models = models.OrderByDescending(x => x.Answers).ToList();
-            }
+            } 
           
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
             if (cookie != null)
@@ -62,7 +63,7 @@ namespace StackOverflow.Web.Controllers
                 Guid ownerId = Guid.Parse(ticket.Name);
                 ViewData["loginUser"] = ownerId; 
             }
-
+           
  
             return View(models);
         }
@@ -142,18 +143,59 @@ namespace StackOverflow.Web.Controllers
         public ActionResult UpVote(Guid ID)
         {
             var context = new StackOverflowContext();
-            context.Questions.Find(ID).Votes++;
+            var question = context.Questions.Find(ID);
+            var votes = context.Votes;
+            var vote = new Vote();
+             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerID = Guid.Parse(ticket.Name);
+
+                foreach (var v in votes)
+                {
+                    if(v.AccountID==ownerID&&v.FatherID==ID)
+                        return RedirectToAction("QuestionDetail", new { ID = ID });
+                }
+                vote.AccountID = ownerID;
+                vote.FatherID = ID;
+                votes.Add(vote);
+                question.Votes++;
+            }
+
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", new { ID = ID });
+           
         }
+
         [Authorize]
         public ActionResult DownVote(Guid ID)
         {
             var context = new StackOverflowContext();
-            context.Questions.Find(ID).Votes--;
+            var question = context.Questions.Find(ID);
+            var votes = context.Votes;
+            var vote = new Vote();
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerID = Guid.Parse(ticket.Name);
+
+                foreach (var v in votes)
+                {
+                    if (v.AccountID == ownerID && v.FatherID == ID)
+                        return RedirectToAction("QuestionDetail", new { ID = ID });
+                }
+                vote.AccountID = ownerID;
+                vote.FatherID = ID;
+                votes.Add(vote);
+                question.Votes--;
+            }
+
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", new { ID = ID });
         }
+
         [Authorize]
         public ActionResult DeleteQuestion(Guid ID)
         {
@@ -215,6 +257,11 @@ namespace StackOverflow.Web.Controllers
         public ActionResult OrerByViews()
         {
             return RedirectToAction("Index", new { order = "View" });
+        }
+
+        public ActionResult addMoreQuestion()
+        {
+            return RedirectToAction("Index",new{order="more"});
         }
 
      

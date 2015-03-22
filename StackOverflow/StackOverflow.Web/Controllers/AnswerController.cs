@@ -101,29 +101,6 @@ namespace StackOverflow.Web.Controllers
           
         }
 
-        public ActionResult UploadAnswer( Guid qID,string desc)
-        {
-            
-            var answer=new Answer();
-            var context = new StackOverflowContext();
-            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (cookie != null)
-            {
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
-                Guid ownerId = Guid.Parse(ticket.Name);
-                answer.CreationDate = DateTime.Now;
-                answer.ModififcationnDate = DateTime.Now;
-                answer.Description = desc;
-                answer.Votes = 0;
-                answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
-                answer.QuestionId = qID;
-                context.Answers.Add(answer);
-                context.SaveChanges();
-            }
-            return RedirectToAction("QuestionDetail", "Question", new { ID = qID });
-
-        }
-
         public ActionResult AnswerDetails(Guid ID,string qID)
         {
             var context = new StackOverflowContext();
@@ -138,19 +115,60 @@ namespace StackOverflow.Web.Controllers
         [System.Web.Mvc.Authorize]
         public ActionResult UpVote(Guid ID)
         {
+            
             var context = new StackOverflowContext();
-            context.Answers.Find(ID).Votes++;
+            var answer = context.Answers.Find(ID);
+            var votes = context.Votes;
+            var vote = new Vote();
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerID = Guid.Parse(ticket.Name);
+
+                foreach (var v in votes)
+                {
+                    if (v.AccountID == ownerID && v.FatherID == ID)
+                        return RedirectToAction("QuestionDetail", "Question", new { ID = context.Answers.Find(ID).QuestionId });
+                }
+
+                vote.AccountID = ownerID;
+                vote.FatherID = ID;
+                votes.Add(vote);
+            }
+            answer.Votes++;
             context.SaveChanges();
-            return RedirectToAction("QuestionDetail", "Question", new {ID = context.Answers.Find(ID).QuestionId});
+
+            return RedirectToAction("QuestionDetail", "Question", new { ID = context.Answers.Find(ID).QuestionId });
         }
 
         [System.Web.Mvc.Authorize]
         public ActionResult DownVote(Guid ID)
         {
             var context = new StackOverflowContext();
-            context.Answers.Find(ID).Votes--;
+            var answer = context.Answers.Find(ID);
+            var votes = context.Votes;
+            var vote = new Vote();
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerID = Guid.Parse(ticket.Name);
+
+                foreach (var v in votes)
+                {
+                    if (v.AccountID == ownerID && v.FatherID == ID)
+                        return RedirectToAction("QuestionDetail", "Question", new { ID = context.Answers.Find(ID).QuestionId });
+                }
+
+                vote.AccountID = ownerID;
+                vote.FatherID = ID;
+                votes.Add(vote);
+            }
+            answer.Votes--;
             context.SaveChanges();
-            return RedirectToAction("QuestionDetail","Question", new {ID = context.Answers.Find(ID).QuestionId });
+
+            return RedirectToAction("QuestionDetail", "Question", new { ID = context.Answers.Find(ID).QuestionId });
         }
 
         [System.Web.Mvc.Authorize]

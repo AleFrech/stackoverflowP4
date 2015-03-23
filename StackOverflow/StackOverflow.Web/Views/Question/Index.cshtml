@@ -73,7 +73,7 @@
 
             </section>
             <div class ="text-right">
-                <a href="@Url.Action("Index")">
+                <a href="@Url.Action("Index",new{cant=int.Parse(ViewData["cant"].ToString())+25})">
 
                     <img src="http://www.clker.com/cliparts/L/L/l/0/x/I/addmore-button-png-hi.png" style="height: 32px; width: 64px">
                 </a>

@@ -21,9 +21,10 @@ namespace StackOverflow.Web.Controllers
             _mappingEngine = mappingEngine;
         }
         
-        public ActionResult Index(string order)
+        public ActionResult Index(string order,int cant=25)
         {
-            
+            ViewData["cant"] = cant;
+
             List<QuestionListModel>models =new List<QuestionListModel>();
             var context = new StackOverflowContext();
             foreach (var q in context.Questions)
@@ -42,8 +43,9 @@ namespace StackOverflow.Web.Controllers
                 models.Add(question);
 
             }
+          
             models = models.OrderByDescending(x => x.CreationDate).ToList();
-            models = models.Take(25).ToList();
+            models = models.Take(cant).ToList();   
             if (order != null)
             {
                 if (order.Equals("Date"))
@@ -54,6 +56,9 @@ namespace StackOverflow.Web.Controllers
                     models = models.OrderByDescending(x => x.Views).ToList();
                 if (order.Equals("Answer"))
                     models = models.OrderByDescending(x => x.Answers).ToList();
+              
+                    
+
             } 
           
             HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName]; 
@@ -259,10 +264,6 @@ namespace StackOverflow.Web.Controllers
             return RedirectToAction("Index", new { order = "View" });
         }
 
-        public ActionResult addMoreQuestion()
-        {
-            return RedirectToAction("Index",new{order="more"});
-        }
 
      
     }

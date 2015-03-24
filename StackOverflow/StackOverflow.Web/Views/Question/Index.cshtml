@@ -18,52 +18,40 @@
                         if (ViewBag.filter.ToString().Equals("Date"))
                         {
                             <li><span><strong>@Html.ActionLink("Latest", "OrerByDate")</strong></span></li>
-                            <li>|</li>
-                            <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
-                            <li>|</li>
-                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-                            <li>|</li>
-                            <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
-
                         }
-
+                        else
+                        {
+                            <li><span>@Html.ActionLink("Latest", "OrerByDate")</span></li>
+                        }
+                        <li>|</li>
                         if (ViewBag.filter.ToString().Equals("Vote"))
                         {
-                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
-                            <li>|</li>
                             <li><span><strong>@Html.ActionLink("Votes", "OrerByVotes")</strong></span></li>
-                            <li>|</li>
-                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-                            <li>|</li>
-                            <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
-
                         }
-
-                        if (ViewBag.filter.ToString().Equals("View"))
+                        else
                         {
-                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
-                            <li>|</li>
                             <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
-                            <li>|</li>
-                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-                            <li>|</li>
-                            <li><span><strong>@Html.ActionLink("Views", "OrerByViews")</strong></span></li>
-
                         }
+                        <li>|</li>
 
                         if (ViewBag.filter.ToString().Equals("Answer"))
                         {
-                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
-                            <li>|</li>
-                            <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
-                            <li>|</li>
+                            <li><span> <strong>@Html.ActionLink("Answers", "OrerByAnswers")</strong></span></li>
+                        }
+                        else
+                        {
                             <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-                            <li>|</li>
-                            <li><span><strong>@Html.ActionLink("Views", "OrerByViews")</strong></span></li>
-
                         }
 
-
+                        <li>|</li>
+                        if (ViewBag.filter.ToString().Equals("View"))
+                        {
+                            <li><span><strong> @Html.ActionLink("Views", "OrerByViews")</strong></span></li>
+                        }
+                        else
+                        {
+                            <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
+                        }
                     }
                 </ul>
             </div>
@@ -117,12 +105,15 @@
                 }
 
             </section>
-            <div class ="text-right">
-                <a href="@Url.Action("Index",new{cant=int.Parse(ViewData["cant"].ToString())+25})">
+            @if (ViewBag.botton == null)
+            {
+                <div class="text-right">
+                    <a href="@Url.Action("Index", new {cant = int.Parse(ViewData["cant"].ToString()) + 25})">
 
-                    <img src="http://www.clker.com/cliparts/L/L/l/0/x/I/addmore-button-png-hi.png" style="height: 32px; width: 64px">
-                </a>
-            </div>
+                        <img src="http://www.clker.com/cliparts/L/L/l/0/x/I/addmore-button-png-hi.png" style="height: 32px; width: 64px">
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </div>

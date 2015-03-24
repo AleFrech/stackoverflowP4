@@ -45,6 +45,10 @@ namespace StackOverflow.Web.Controllers
             }
           
             models = models.OrderByDescending(x => x.CreationDate).ToList();
+            if (cant > models.Count)
+            {
+                ViewBag.botton = "Hide";
+            }
             models = models.Take(cant).ToList();
             ViewBag.filter = "Date";
             if (order != null)

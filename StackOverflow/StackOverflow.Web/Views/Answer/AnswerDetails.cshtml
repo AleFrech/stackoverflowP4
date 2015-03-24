@@ -4,20 +4,29 @@
 <div>
 
     <dl class="dl-horizontal">
-      
+
         <div class="comment-post">
-            <a href="@Url.Action("UpVote", "Answer", new {ID = Model.AnswerID})">
-
-                <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
-            </a>
-            <a href="@Url.Action("DownVote", "Answer", new {ID = Model.AnswerID})">
-
-                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px; rotation: 180deg">
-            </a>
             <a href="@Url.Action("MarkAnswer", "Answer", new {ID = Model.AnswerID, qId = Model.QuestionID})">
 
                 <img src="http://cliparts.co/cliparts/qcB/Bex/qcBBexbc5.png" style="height: 32px; width: 32px; rotation: 180deg">
             </a>
+            @if (ViewBag.Avoted != null)
+            {
+                <strong>@ViewBag.Avoted</strong>
+            }
+            else
+            {
+
+                <a href="@Url.Action("UpVote", "Answer", new {ID = Model.AnswerID})">
+
+                    <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
+                </a>
+            <a href="@Url.Action("DownVote", "Answer", new {ID = Model.AnswerID})">
+
+                <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px; rotation: 180deg">
+            </a>
+            }
+            
         </div>
         <div class="comment-post">
             <div>

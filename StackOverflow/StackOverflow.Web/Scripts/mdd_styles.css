@@ -187,7 +187,6 @@ div.mdd_editor_wrap
 textarea.mdd_editor
 {
 	width:100%;
-	resize:none;
 	margin:0;padding: 3px;
 }
 

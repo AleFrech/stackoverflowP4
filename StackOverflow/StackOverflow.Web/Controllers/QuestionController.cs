@@ -132,15 +132,21 @@ namespace StackOverflow.Web.Controllers
             QuestionDetailModel model = new QuestionDetailModel();
             if (ModelState.IsValid)
             {
+                var context = new StackOverflowContext();
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 if (cookie != null)
                 {
+                    
                     FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                     Guid ownerId = Guid.Parse(ticket.Name);
                     ViewData["logUser"] = ownerId;
+                    foreach (var v in context.Votes)
+                    {
+                        if (v.AccountID == ownerId && v.FatherID == ID)
+                            ViewBag.Voted = "You alredy voted for this Question";
+                    }
                 }
                 var md = new MarkdownDeep.Markdown();
-                var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
                 model.Decription = md.Transform(context.Questions.FirstOrDefault(x => x.Id == ID).Description);
                 model.QuestionId = ID;

@@ -32,7 +32,13 @@
                         <li><span><strong>Answers: </strong> @Html.DisplayFor(model => model.Answers) </span></li>
                         <li>|</li>
                         <li><span><strong>Votes: </strong> @Html.DisplayFor(model => model.Votes) </span></li>
-                        
+
+                        @if (ViewBag.Voted != null)
+                        {
+                            <strong>@ViewBag.Voted</strong>
+                        }
+                        else
+                        {
                             <a href="@Url.Action("UpVote", "Question", new {ID = Model.QuestionId})">
 
                                 <img src="http://www.clker.com/cliparts/z/z/h/C/V/5/up-white-arrow-hi.png" style="height: 32px; width: 32px">
@@ -41,6 +47,7 @@
 
                                 <img src="http://i.imgur.com/c345P37.png?1" style="height: 32px; width: 32px;">
                             </a>
+                        }
                        
                     </ul>
                 </div>
@@ -93,14 +100,16 @@
                   <div class="form-group">
                       @Html.LabelFor(model => model.CreateAnswer, htmlAttributes: new {@class = "control-label col-md-2"})
                       <div class="col-md-10">
-                          <div class="mdd_toolbar" style="word-wrap: break-word;"></div>
-                          @Html.TextAreaFor(model => model.CreateAnswer,  new { @class = "mdd_editor",style="width:800px; height:100px;" })
+                          <div style="word-wrap: break-word;">
+                              <div class="mdd_toolbar"></div>
+                              @Html.TextAreaFor(model => model.CreateAnswer, new { @class = "mdd_editor", style = "width:800px; height:100px;" })
 
-                          <div class="mdd_resizer"></div>
-                          @if (TempData["AnswerBelow5word"] != null)
-                          {
-                              @Html.Label("*" + TempData["AnswerBelow5word"].ToString(), htmlAttributes: new { style = "color: red" })
-                          }
+                              <div class="mdd_resizer"></div>
+                              @if (TempData["AnswerBelow5word"] != null)
+                              {
+                                  @Html.Label("*" + TempData["AnswerBelow5word"].ToString(), htmlAttributes: new { style = "color: red" })
+                              }
+                          </div>               
                       </div>
                   </div>
                   <script>

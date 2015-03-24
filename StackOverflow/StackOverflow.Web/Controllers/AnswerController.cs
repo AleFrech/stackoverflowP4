@@ -107,6 +107,19 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             var answer = context.Answers.Find(ID);
             AnswerDetailModel model = _mappingEngine.Map<Answer, AnswerDetailModel>(answer);
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+                ViewData["logUser"] = ownerId;
+                foreach (var v in context.Votes)
+                {
+                    if (v.AccountID == ownerId && v.FatherID == ID)
+                        ViewBag.Avoted = "You alredy voted for this Answer";
+                }
+            }
             model.AnswerID = ID;
             model.QuestionID = Guid.Parse(qID);
             return PartialView(model);

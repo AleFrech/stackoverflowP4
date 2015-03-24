@@ -10,6 +10,10 @@
 {
     <div class="alert alert-danger" role="alert">@ViewBag.Message</div>
 }
+@if (ViewBag.Verfied != null)
+{
+    <div class="alert alert-success" role="alert">@ViewBag.Verfied</div>
+}
 
 @if (ViewBag.Success != null)
 {

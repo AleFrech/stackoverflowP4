@@ -84,11 +84,12 @@ namespace StackOverflow.Web.Controllers
                 HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 if (cookie != null)
                 {
+                    var md = new MarkdownDeep.Markdown();
                     FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
                     Guid ownerId = Guid.Parse(ticket.Name);
                     answer.CreationDate = DateTime.Now;
                     answer.ModififcationnDate = DateTime.Now;
-                    answer.Description = model.CreateAnswer;
+                    answer.Description =  md.Transform(model.CreateAnswer);
                     answer.Votes = 0;
                     answer.Owner = context.Accounts.FirstOrDefault(x => x.Id == ownerId);
                     answer.QuestionId = Guid.Parse(qID);
@@ -207,8 +208,21 @@ namespace StackOverflow.Web.Controllers
             var context = new StackOverflowContext();
             var question = context.Questions.Find(qId);
             var answer = context.Answers.Find(ID);
-            answer.Marked = false;
-            question.HavedMark = false;
+            HttpCookie cookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+                Guid ownerId = Guid.Parse(ticket.Name);
+               
+                if (question.Owner.Id == ownerId)
+                {
+                    answer.Marked = false;
+                    question.HavedMark = false;
+                    context.SaveChanges();
+                }
+
+            }
+           
             context.SaveChanges();
             return RedirectToAction("QuestionDetail", "Question", new { ID = qId });
         }

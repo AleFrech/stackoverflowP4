@@ -13,13 +13,58 @@
             <h5>@Html.ActionLink("Create New Question", "NewQuestion")</h5>
             <div>
                 <strong>Order By</strong><ul class="list-inline list-unstyled">
-                    <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
-                    <li>|</li>
-                    <li><span> @Html.ActionLink("Votes", "OrerByVotes")</span></li>
-                    <li>|</li>
-                    <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
-                    <li>|</li>
-                    <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
+                    @if (ViewBag.filter != null)
+                    {
+                        if (ViewBag.filter.ToString().Equals("Date"))
+                        {
+                            <li><span><strong>@Html.ActionLink("Latest", "OrerByDate")</strong></span></li>
+                            <li>|</li>
+                            <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
+
+                        }
+
+                        if (ViewBag.filter.ToString().Equals("Vote"))
+                        {
+                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
+                            <li>|</li>
+                            <li><span><strong>@Html.ActionLink("Votes", "OrerByVotes")</strong></span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Views", "OrerByViews")</span></li>
+
+                        }
+
+                        if (ViewBag.filter.ToString().Equals("View"))
+                        {
+                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
+                            <li>|</li>
+                            <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
+                            <li>|</li>
+                            <li><span><strong>@Html.ActionLink("Views", "OrerByViews")</strong></span></li>
+
+                        }
+
+                        if (ViewBag.filter.ToString().Equals("Answer"))
+                        {
+                            <li><span> @Html.ActionLink("Latest", "OrerByDate")</span></li>
+                            <li>|</li>
+                            <li><span>@Html.ActionLink("Votes", "OrerByVotes")</span></li>
+                            <li>|</li>
+                            <li><span> @Html.ActionLink("Answers", "OrerByAnswers")</span></li>
+                            <li>|</li>
+                            <li><span><strong>@Html.ActionLink("Views", "OrerByViews")</strong></span></li>
+
+                        }
+
+
+                    }
                 </ul>
             </div>
 

@@ -61,6 +61,7 @@ namespace StackOverflow.Web.Controllers{
             var context = new StackOverflowContext();
             context.Accounts.FirstOrDefault(x=>x.Id==Aid).VerifyEmail = true;
             context.SaveChanges();
+            TempData["Verfied"] = "You have Successfully verified your password";
             return RedirectToAction("Login");
         }
 
@@ -68,6 +69,10 @@ namespace StackOverflow.Web.Controllers{
         {
             Session["att"] = 0;
             ViewBag.Success = TempData["ss"];
+            if (TempData["Verfied"] != null)
+            {
+                ViewBag.Verfied = "You have Successfully verified your password";
+            }
             return View(new AccountLoginModel());
         }
 

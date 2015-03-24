@@ -45,19 +45,32 @@ namespace StackOverflow.Web.Controllers
             }
           
             models = models.OrderByDescending(x => x.CreationDate).ToList();
-            models = models.Take(cant).ToList();   
+            models = models.Take(cant).ToList();
+            ViewBag.filter = "Date";
             if (order != null)
             {
                 if (order.Equals("Date"))
+                {
                     models = models.OrderByDescending(x => x.CreationDate).ToList();
+                    ViewBag.filter = "Date";
+                }
                 if (order.Equals("Vote"))
+                {
                     models = models.OrderByDescending(x => x.Votes).ToList();
+                    ViewBag.filter = "Vote";
+                }
                 if (order.Equals("View"))
+                {
+                    ViewBag.filter = "View";
                     models = models.OrderByDescending(x => x.Views).ToList();
+                }
                 if (order.Equals("Answer"))
+                {
+                    ViewBag.filter = "Answer";
                     models = models.OrderByDescending(x => x.Answers).ToList();
-              
-                    
+                }
+
+
 
             } 
           
@@ -126,9 +139,10 @@ namespace StackOverflow.Web.Controllers
                     Guid ownerId = Guid.Parse(ticket.Name);
                     ViewData["logUser"] = ownerId;
                 }
+                var md = new MarkdownDeep.Markdown();
                 var context = new StackOverflowContext();
                 model.Title = context.Questions.FirstOrDefault(x => x.Id == ID).Title;
-                model.Decription = context.Questions.FirstOrDefault(x => x.Id == ID).Description;
+                model.Decription = md.Transform(context.Questions.FirstOrDefault(x => x.Id == ID).Description);
                 model.QuestionId = ID;
                 model.Owner = context.Questions.FirstOrDefault(x => x.Id == ID).Owner;
                 model.Votes = context.Questions.FirstOrDefault(x => x.Id == ID).Votes;

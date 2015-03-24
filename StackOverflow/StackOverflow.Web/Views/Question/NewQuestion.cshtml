@@ -32,7 +32,7 @@
             <div class="col-md-10">
                 <div class="mdd_toolbar"></div>
                 @*@Html.TextArea("content", new {@class = "mdd_editor"})*@
-                @Html.TextAreaFor(model => model.Description, new { @class = "mdd_editor",style="width:600px; height:100px;" })
+                @Html.TextAreaFor(model => model.Description, new { @class = "mdd_editor",style="width:800px; height:100px;" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>

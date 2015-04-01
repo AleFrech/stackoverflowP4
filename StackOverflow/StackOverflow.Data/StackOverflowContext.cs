@@ -20,6 +20,7 @@ namespace StackOverflow.Data
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Session> Sessions { get; set; } 
     }
 
     public static class ConectionString

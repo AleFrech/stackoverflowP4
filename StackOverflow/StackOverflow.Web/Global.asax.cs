@@ -19,10 +19,11 @@ namespace StackOverflow.Web
             AutofacConfig.Register();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMaps();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+          
         }
         
     }

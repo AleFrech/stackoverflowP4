@@ -51,6 +51,10 @@
     <Compile Include="Migrations\201503220437060_addInital.Designer.cs">
       <DependentUpon>201503220437060_addInital.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503312126026_addSession.cs" />
+    <Compile Include="Migrations\201503312126026_addSession.Designer.cs">
+      <DependentUpon>201503312126026_addSession.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="StackOverflowContext.cs" />
@@ -72,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503220437060_addInital.resx">
       <DependentUpon>201503220437060_addInital.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503312126026_addSession.resx">
+      <DependentUpon>201503312126026_addSession.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

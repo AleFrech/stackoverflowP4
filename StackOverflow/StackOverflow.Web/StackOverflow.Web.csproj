@@ -159,12 +159,14 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\API\AccountRegisterApiController.cs" />
+    <Compile Include="Controllers\API\AccountLoginApiController.cs" />
+    <Compile Include="Controllers\API\QuestionApiController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="CostumeDataNotations\NewQuestionDescriptionValidation.cs" />
     <Compile Include="CostumeDataNotations\NewQuestionValidation.cs" />
     <Compile Include="Models\CommentCreateModel.cs" />
     <Compile Include="Models\CommentListModel.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="CostumeDataNotations\EmailDosentExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\EmailExistAttribute.cs" />
     <Compile Include="CostumeDataNotations\EmailVerifyAttribute.cs" />
@@ -257,6 +259,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AccountApi\" />
+    <Folder Include="Views\QuestionApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

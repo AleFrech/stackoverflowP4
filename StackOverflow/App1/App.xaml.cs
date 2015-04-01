@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,11 +32,11 @@ namespace App1
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        /// 
+     
         public App()
         {
             this.InitializeComponent();
-            StackoverflowApi api = new StackoverflowApi();
-            var list = api.GetQuestionListModels();
             this.Suspending += this.OnSuspending;
         }
 

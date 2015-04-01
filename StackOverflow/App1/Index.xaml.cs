@@ -25,9 +25,6 @@ namespace App1
         public Index()
         {
             this.InitializeComponent();
-            StackoverflowApi api = new StackoverflowApi();
-           var list = api.GetQuestionListModels();
-           if (list != null) { }
         }
 
         /// <summary>

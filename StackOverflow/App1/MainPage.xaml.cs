@@ -12,6 +12,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App1.Common;
+using RestSharp.Portable;
+using RestSharp.Portable.Deserializers;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace App1
@@ -24,10 +28,28 @@ namespace App1
         public MainPage()
         {
             this.InitializeComponent();
-            StackoverflowApi api = new StackoverflowApi();
-            var list = api.GetQuestionListModels();
-            QuestionList.Items.Add(list.First().Title);
+            GetQuestionList();
             this.NavigationCacheMode = NavigationCacheMode.Required;
+        }
+
+        private async void GetQuestionList()
+        {
+            RestClient client = new RestClient
+            {
+                BaseUrl = new Uri("http://localhost:16470/")
+            };
+            RestRequest req = new RestRequest
+            {
+                Resource = "api/QuestionApi"
+            };
+            var resp = await client.Execute(req);
+            RestSharp.Portable.Deserializers.JsonDeserializer des=new JsonDeserializer();
+            var questionlist = des.Deserialize<IEnumerable<QuestionListModel>>(resp);
+            foreach (var q in questionlist)
+            {
+                if(QuestionIndex.Items!=null)
+                    QuestionIndex.Items.Add(q.Title+" "+"By: "+q.OwnerName);
+            }
         }
 
         /// <summary>
@@ -46,14 +68,33 @@ namespace App1
             // this event is handled for you.
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+          
+        }
 
+
+
+        private void Button_SigIn(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SignIn));
+        }
+
+        private void Button_Home(object sender, RoutedEventArgs e)
+        {  
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Button_SignUp(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SignUp));
+        }
+
+        private void Button_CreateQuestion(object sender, RoutedEventArgs e)
+        {
+            //logic if user alredy login
+            Frame.Navigate(typeof (NewQuestion));
         }
     }
 }
